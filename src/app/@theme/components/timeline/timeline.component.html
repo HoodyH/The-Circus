@@ -1,0 +1,9 @@
+<div class="timeline">
+  <div *ngFor="let activity of activities" class="timeline-item">
+    <div class="timeline-item-content">
+      <h2 class="title">{{ activity.title }}</h2>
+      <p class="time">{{ activity.time }}</p>
+      <p class="description">{{ activity.description }}</p>
+    </div>
+  </div>
+</div>

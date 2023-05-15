@@ -1,0 +1,28 @@
+.section-banner {
+  min-height: 700px;
+  position: relative;
+  background: #eee no-repeat 65% 50%;
+  background-size: cover;
+}
+
+.section-banner .banner-content h1 {
+  font-size: 60px;
+  align-items: center;
+  text-align: center;
+}
+
+.section-banner .banner-content span {
+  color: #444;
+  font-size: 18px;
+
+}
+
+.stroke-text {
+  color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #ddd;
+  font-size: 120px;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+}
