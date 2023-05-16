@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Activity, Event, EventsData} from "@core/data/events";
+import {Component, OnInit} from '@angular/core';
+import {Activity, Staff, EventsData} from "@core/data/events";
 
 @Component({
   selector: 'app-home',
@@ -10,9 +10,12 @@ export class HomeComponent implements OnInit {
 
   eventDate = new Date('2023-06-10T23:59:59');
   activities: Activity[] = []
+  staff: Staff[] = []
 
   constructor(private eventService: EventsData) {
+  }
 
+  ngOnInit(): void {
     this.eventService.getEvent().subscribe((event) => {
       this.eventDate = event.timestamp
     })
@@ -20,9 +23,10 @@ export class HomeComponent implements OnInit {
     this.eventService.getActivities().subscribe((activities) => {
       this.activities = activities
     })
-  }
 
-  ngOnInit(): void {
+    this.eventService.getStaff().subscribe((staff) => {
+      this.staff = staff
+    })
   }
 
 }

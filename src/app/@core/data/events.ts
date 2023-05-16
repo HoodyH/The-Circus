@@ -12,8 +12,16 @@ export interface Activity {
   description: string;
 }
 
+export interface Staff {
+  id?: number;
+  name: string;
+  phone: string;
+  telegram?: string;
+}
+
 
 export abstract class EventsData {
   abstract getEvent(): Observable<Event>;
   abstract getActivities(): Observable<Activity[]>;
+  abstract getStaff(): Observable<Staff[]>;
 }

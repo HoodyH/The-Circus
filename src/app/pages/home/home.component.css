@@ -14,15 +14,21 @@
 .section-banner .banner-content span {
   color: #444;
   font-size: 18px;
-
 }
 
-.stroke-text {
-  color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #ddd;
-  font-size: 120px;
-  font-weight: 800;
+.title {
+  margin-top: 4em;
+  text-align: center;
   text-transform: uppercase;
-  line-height: 1;
+}
+
+.instructions {
+  text-align: center;
+}
+
+.staff-container {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  margin: auto;
 }

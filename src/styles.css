@@ -5,3 +5,9 @@ html, body {
 body {
   font-family: "Poppins", sans-serif;
 }
+
+h1 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-weight: 100;
+}

@@ -4,10 +4,40 @@
       <div class="col banner-content">
         <h1 class="mt-3 mb-5">Circus Maximus</h1>
       </div>
+    </div>
+    <div class="row">
       <app-countdown [eventDate]="eventDate"></app-countdown>
     </div>
   </div>
 </section>
 
-<app-timeline [activities]="activities"></app-timeline>
+<section class="container">
+  <app-timeline [activities]="activities"></app-timeline>
+</section>
+
+
+<section class="container">
+  <div class="row title">
+    <h2>Istruzioni</h2>
+  </div>
+  <div class="row instructions">
+    <p>Utile portarsi costume da bagno ed asciugamano in vista del probabile utilizzo della piscina.</p>
+    <p>Un cambio potrebbe rendersi necessario se c'è l'intenzione di partecipare alle attività.</p>
+    <p>Non sono previsti posti letto ma le macchine verranno parcheggiate in un ampio campo di proprietà quindi
+      eventualmente è possibile dormire.</p>
+    <p>Eventuali accompagnatori sono ben accetti, gentilmente quando confermate la presenza comunicate anche quanti
+      siete.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="row title">
+    <h2>Contatti</h2>
+  </div>
+  <div class="row staff-container">
+    <div class="col" *ngFor="let staffMember of staff">
+      <app-staff [staffMember]="staffMember"></app-staff>
+    </div>
+  </div>
+</section>
 

@@ -1,7 +1,7 @@
 <div class="card">
   <div class="row align-items-center">
-    <div class="col-lg-6 timer">
-      <div class="days">
+    <div class="col timer">
+      <div *ngIf="days" class="days">
         <div class="numbers">{{ days }}</div>
         days
       </div>
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col">
         <h2 class="font-weight-light">
           {{eventDate | customDate}}
         </h2>
