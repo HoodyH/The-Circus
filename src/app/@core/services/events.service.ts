@@ -15,7 +15,7 @@ export class EventsService extends EventsData {
     id: 2,
     title: 'Tojito',
     time: '2023-06-10T19:00:00Z',
-    description: 'Il cocktail pensato dalle migliori menti',
+    description: 'Il cocktail pensato dalle migliori menti olimpiche',
   },
   {
     id: 3,
@@ -27,13 +27,13 @@ export class EventsService extends EventsData {
     id: 4,
     title: 'Toga Award',
     time: '2023-06-10T21:00:00Z',
-    description: 'Il miglior costume della serata riceverà il magico Toga Award',
+    description: 'Vota per eleggere il miglior costume della serata, che riceverà il magico Toga Award.',
   },
   {
     id: 5,
     title: 'Toga strip',
     time: '2023-06-10T22:00:00Z',
-    description: 'Liberate la vostra mente',
+    description: 'Liberate la vostra mente, e perchè no, anche i vostri corpi',
   }];
 
   private staffData: Staff[] = [
