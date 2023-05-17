@@ -1,7 +1,9 @@
 .timeline {
   position: relative;
+  margin: auto;
   list-style: none;
   width: auto;
+  max-width: 700px;
 }
 
 .timeline:before {

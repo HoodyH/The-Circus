@@ -12,6 +12,8 @@ import {TimelineComponent} from './components/timeline/timeline.component';
 // pipes
 import {CustomDatePipe} from "@theme/pipes/date.pipe";
 import { StaffComponent } from './components/staff/staff.component';
+import { LocationComponent } from './components/location/location.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
 
 
 const COMPONENTS: any = [
@@ -34,12 +36,14 @@ const PIPES: any = [
     ...PIPES,
     TimelineComponent,
     StaffComponent,
+    LocationComponent,
+    GalleryComponent,
   ],
   imports: [
     CommonModule,
   ],
   entryComponents: [],
-  exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES, TimelineComponent, StaffComponent],
+  exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES, TimelineComponent, StaffComponent, LocationComponent, GalleryComponent],
 })
 export class ThemeModule {
 }

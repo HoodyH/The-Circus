@@ -6,15 +6,18 @@
       </div>
     </div>
     <div class="row">
-      <app-countdown [eventDate]="eventDate"></app-countdown>
+      <app-countdown [eventDate]="event.timestamp"></app-countdown>
+    </div>
+    <br>
+    <div class="row">
+      <app-location [location]="event.location"></app-location>
     </div>
   </div>
 </section>
 
 <section class="container">
-  <app-timeline [activities]="activities"></app-timeline>
+  <app-timeline [activities]="event.activities"></app-timeline>
 </section>
-
 
 <section class="container">
   <div class="row title">
@@ -32,12 +35,21 @@
 
 <section class="container">
   <div class="row title">
+    <h2>Gallery</h2>
+    <p>Hai bisogno di inspirazione su come vestirti, dai un occhiata alla collezione</p>
+  </div>
+  <app-gallery [gallery]="gallery"></app-gallery>
+</section>
+
+<section class="container">
+  <div class="row title">
     <h2>Contatti</h2>
   </div>
   <div class="row staff-container">
-    <div class="col" *ngFor="let staffMember of staff">
+    <div class="col" *ngFor="let staffMember of event.staff">
       <app-staff [staffMember]="staffMember"></app-staff>
     </div>
   </div>
 </section>
 
+<br>
