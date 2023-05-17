@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ios-manned-pages-component',
+  selector: 'app-pages-component',
   template: `
     <app-header></app-header>
     <router-outlet></router-outlet>

@@ -5,28 +5,17 @@ import {EventsData, Event, Activity, Staff} from '@core/data/events';
 @Injectable()
 export class EventsService extends EventsData {
 
-  private eventData: Event = {
-    id: 1,
-    timestamp: new Date('2023-06-10T18:30:00'),
-  };
-
   private activitiesData: Activity[] = [{
     id: 1,
-    title: 'Welcome',
-    time: '2023-06-10T16:30:00Z',
-    description: ""
+    title: 'Aperitoga',
+    time: '2023-06-10T17:00:00Z',
+    description: "Panini, pizzette, olive ascolane, tramezzini, fritture varie e molti altri stuzzichini",
   },
   {
     id: 2,
-    title: 'Aperitoga',
-    time: '2023-06-10T17:00:00Z',
-    description: 'Panini, pizzette, olive ascolane, tramezzini, fritture varie e molti altri stuzzichini',
-  },
-  {
-    id: 3,
     title: 'Tojito',
     time: '2023-06-10T19:00:00Z',
-    description: 'Il cocktail pensato dalle migliori menti',
+    description: 'Il cocktail pensato dalle migliori menti olimpiche',
   },
   {
     id: 3,
@@ -35,27 +24,40 @@ export class EventsService extends EventsData {
     description: 'Si alza il volume della musica e si inizia a ballare, la rimozione della toga non è ancora consentito',
   },
   {
-    id: 3,
+    id: 4,
+    title: 'Toga Award',
+    time: '2023-06-10T21:00:00Z',
+    description: 'Vota per eleggere il miglior costume della serata, che riceverà il magico Toga Award.',
+  },
+  {
+    id: 5,
     title: 'Toga strip',
     time: '2023-06-10T22:00:00Z',
-    description: 'Ognuno si senta libero di fare quello che crede',
+    description: 'Liberate la vostra mente, e perchè no, anche i vostri corpi',
   }];
 
   private staffData: Staff[] = [
     {
       name: "Simone",
-      phone: "+39 333 3333333",
-      telegram: '@telegram'
     },
     {
       name: "Luca",
-      phone: "+39 333 3333333",
     },
     {
       name: "Alessandro",
-      phone: "+39 333 3333333",
     }
   ]
+
+  private eventData: Event = {
+    id: 1,
+    timestamp: new Date('2023-06-10T18:30:00'),
+    activities: this.activitiesData,
+    staff: this.staffData,
+    location: {
+      name: 'Not House',
+      street: 'Magnano in Riviera (UD)'
+    }
+  }
 
   getEvent(): Observable<Event> {
     return observableOf(this.eventData);
@@ -65,7 +67,7 @@ export class EventsService extends EventsData {
     return observableOf(this.activitiesData);
   }
 
-  override getStaff(): Observable<Staff[]> {
+  getStaff(): Observable<Staff[]> {
     return observableOf(this.staffData);
   }
 }

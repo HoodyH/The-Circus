@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Activity, Staff, EventsData} from "@core/data/events";
+import {Event, EventsData} from "@core/data/events";
+import {Gallery, GalleryData} from "@core/data/galley";
 
 @Component({
   selector: 'app-home',
@@ -8,24 +9,19 @@ import {Activity, Staff, EventsData} from "@core/data/events";
 })
 export class HomeComponent implements OnInit {
 
-  eventDate = new Date('2023-06-10T23:59:59');
-  activities: Activity[] = []
-  staff: Staff[] = []
+  event: Event;
+  gallery: Gallery[] = []
 
-  constructor(private eventService: EventsData) {
+  constructor(private eventService: EventsData, private galleryService: GalleryData) {
   }
 
   ngOnInit(): void {
     this.eventService.getEvent().subscribe((event) => {
-      this.eventDate = event.timestamp
+      this.event = event
     })
 
-    this.eventService.getActivities().subscribe((activities) => {
-      this.activities = activities
-    })
-
-    this.eventService.getStaff().subscribe((staff) => {
-      this.staff = staff
+    this.galleryService.getGallery().subscribe((gallery) => {
+      this.gallery = gallery
     })
   }
 

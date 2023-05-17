@@ -1,5 +1,5 @@
 .section-banner {
-  min-height: 700px;
+  min-height: 100vh;
   position: relative;
   background: #eee no-repeat 65% 50%;
   background-size: cover;
@@ -11,9 +11,32 @@
   text-align: center;
 }
 
-.section-banner .banner-content span {
-  color: #444;
-  font-size: 18px;
+.banner-content {
+  margin: 3em;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+@keyframes bounceEffect {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.scroll-arrow i {
+  width: 2em;
+  height: 2em;
+  background-color: #fff;
+  border-radius: 50%;
+  line-height: 40px;
+  font-size: 20px;
+  color: #000;
+  animation: bounceEffect 1.8s infinite;
 }
 
 .title {
@@ -22,8 +45,26 @@
   text-transform: uppercase;
 }
 
+.sub-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
 .instructions {
   text-align: center;
+  max-width: 700px;
+  margin: auto;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.img-disclaimer {
+  text-align: center;
+  font-size: 0.5em;
+  letter-spacing: 2px;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
 .staff-container {
@@ -31,4 +72,5 @@
   align-items: stretch;
   width: 100%;
   margin: auto;
+  max-width: 600px;
 }

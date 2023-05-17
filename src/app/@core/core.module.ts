@@ -5,10 +5,13 @@ import {throwIfAlreadyLoaded} from "@core/module-import-guard";
 // services
 import {EventsData} from "@core/data/events";
 import {EventsService} from "@core/services/events.service";
+import {GalleryData} from "@core/data/galley";
+import {GalleryService} from "@core/services/gallery.service";
 
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
+  {provide: GalleryData, useClass: GalleryService},
 ]
 
 

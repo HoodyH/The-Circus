@@ -7,22 +7,24 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CountdownComponent implements OnInit {
 
-  @Input() eventDate = new Date('2023-06-10T23:59:59');
+  @Input() eventDate: Date;
 
   days: number = 0;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  hours: number = 23;
+  minutes: number = 59;
+  seconds: number = 59;
 
   ngOnInit() {
     setInterval(() => {
-      const now = new Date();
-      const difference = Math.floor((this.eventDate.getTime() - now.getTime()) / 1000);
+      if (this.eventDate) {
+        const now = new Date();
+        const difference = Math.floor((this.eventDate.getTime() - now.getTime()) / 1000);
 
-      this.days = Math.floor(difference / 86400);
-      this.hours = Math.floor((difference % 86400) / 3600);
-      this.minutes = Math.floor((difference % 3600) / 60);
-      this.seconds = difference % 60;
+        this.days = Math.floor(difference / 86400);
+        this.hours = Math.floor((difference % 86400) / 3600);
+        this.minutes = Math.floor((difference % 3600) / 60);
+        this.seconds = difference % 60;
+      }
     }, 1000);
   }
 
