@@ -5,16 +5,6 @@
   background-size: cover;
 }
 
-.section-banner .banner-content h1 {
-  font-size: 60px;
-  align-items: center;
-  text-align: center;
-}
-
-.banner-content {
-  margin: 3em;
-}
-
 .scroll-arrow {
   position: absolute;
   bottom: 20px;
@@ -39,31 +29,14 @@
   animation: bounceEffect 1.8s infinite;
 }
 
-.title {
-  margin-top: 4em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.sub-title {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 300;
-}
-
 .instructions {
   text-align: center;
-  max-width: 700px;
   margin: auto;
-  letter-spacing: 2px;
-  font-weight: 300;
 }
 
 .img-disclaimer {
   text-align: center;
   font-size: 0.5em;
-  letter-spacing: 2px;
-  font-weight: 300;
   text-transform: uppercase;
 }
 
@@ -72,5 +45,4 @@
   align-items: stretch;
   width: 100%;
   margin: auto;
-  max-width: 600px;
 }

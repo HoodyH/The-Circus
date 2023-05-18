@@ -10,11 +10,9 @@
 .font-weight-light {
   align-items: center;
   text-align: center;
-  font-weight: 300;
   margin-top: 2em;
   font-size: 1em;
   text-transform: uppercase;
-  letter-spacing: 5px;
 }
 
 .timer {

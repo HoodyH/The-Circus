@@ -7,11 +7,14 @@ import {EventsData} from "@core/data/events";
 import {EventsService} from "@core/services/events.service";
 import {GalleryData} from "@core/data/galley";
 import {GalleryService} from "@core/services/gallery.service";
+import {PaymentsData} from "@core/data/payments";
+import {PaymentsService} from "@core/services/payments.service";
 
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
   {provide: GalleryData, useClass: GalleryService},
+  {provide: PaymentsData, useClass: PaymentsService},
 ]
 
 

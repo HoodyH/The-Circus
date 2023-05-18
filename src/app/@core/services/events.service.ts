@@ -52,6 +52,7 @@ export class EventsService extends EventsData {
     id: 1,
     timestamp: new Date('2023-06-10T18:30:00'),
     activities: this.activitiesData,
+    price: 10,
     staff: this.staffData,
     location: {
       name: 'Not House',

@@ -24,6 +24,7 @@ export interface Location {
 export interface Event {
   id: number;
   timestamp: Date;
+  price: number;
   activities: Activity[];
   staff: Staff[];
   location: Location;
