@@ -8,17 +8,14 @@ export class PaymentsService extends PaymentsData {
   private eventData: PaymentMethod[] = [{
     name: 'Paypal',
     url: 'https://www.paypal.com/paypalme/slimphone/10EUR',
-    description: 'Clicca per pagare'
   },{
     name: 'Satispay',
-    description: '',
     url: '',
   },{
     name: 'Hype',
-    description: "Utilizza l'app per inviare la quota",
   },{
     name: 'Contanti',
-    description: 'Paga direttamente all ingresso',
+    description: "Preferibilmente già giusti",
   }];
 
   getPaymentMethods(): Observable<PaymentMethod[]> {

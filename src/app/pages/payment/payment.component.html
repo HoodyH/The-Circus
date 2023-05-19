@@ -1,20 +1,36 @@
-<div class="container">
+<div class="section d-flex align-items-center">
+  
+  <div class="card">
 
   <div class="title">
-    <h2>{{ event.price }}</h2>
+    <h2>Tiket evento</h2>
+    <h1>{{ event.price }}€</h1>
   </div>
 
   <div class="payment-methods">
 
-    <a
-      *ngFor="let method of paymentMethods"
-      class="payment-method secondary"
+    <div *ngFor="let method of paymentMethods">
+      <a
+      *ngIf="method.url"
+      class="payment-method button primary"
       [href]="method.url"
       target="_blank"
-      [class.button]="method.url"
     >
-      <h6>{{method.name}}</h6>
-      <p>{{method.description}}</p>
+        <h6>{{method.name}}</h6>
     </a>
+  </div>
+  <h6 class="title">Altri metodi di pagamento</h6>
+    <div *ngFor="let method of paymentMethods">
+      
+        <div *ngIf="!method.url" class="payment-method payment-method-no-url">
+          <div>
+            <h6>{{method.name}}</h6>
+            <p *ngIf="method.description">{{method.description}}</p>
+          </div>
+        </div>
+    </div>
+    
+
+  </div>  
   </div>
 </div>

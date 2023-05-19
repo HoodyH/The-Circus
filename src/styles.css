@@ -3,12 +3,14 @@
   --primary-color-accent: #555555;
   --secondary-color: #eee;
   --secondary-color-accent: #e4e4e4;
+  --text-color: #353535;
   --font-family: "Poppins", sans-serif;
   --border-radius: 3em
 }
 
 html, body {
   height: 100%;
+  color: var(--text-color) !important;
 }
 
 body {
@@ -33,7 +35,7 @@ p {
 }
 
 .container {
-  max-width: 70em;
+  max-width: 60em !important;
 }
 
 .title {
@@ -61,7 +63,8 @@ p {
 }
 
 .primary {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
+  color: #eee !important;
 }
 
 .secondary {
