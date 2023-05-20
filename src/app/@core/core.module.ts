@@ -9,12 +9,15 @@ import {GalleryData} from "@core/data/galley";
 import {GalleryService} from "@core/services/gallery.service";
 import {PaymentsData} from "@core/data/payments";
 import {PaymentsService} from "@core/services/payments.service";
+import { PollData } from './data/poll';
+import { PollService } from './services/poll.service';
 
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
   {provide: GalleryData, useClass: GalleryService},
   {provide: PaymentsData, useClass: PaymentsService},
+  {provide: PollData, useClass: PollService}
 ]
 
 

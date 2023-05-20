@@ -14,9 +14,18 @@ const routes: Routes = [
       {
         path: 'pay',
         loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
+      },
+      {
+        path: 'poll',
+        loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
+      },
+      {
+        path: 'access',
+        loadChildren: () => import('./access/access.module').then(m => m.AccessModule),
       }
     ]
   }
+
 ];
 
 @NgModule({
