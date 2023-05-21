@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AccessRoutingModule } from './access-routing.module';
 import { AccessComponent } from './access.component';
 import { LoginComponent } from './login/login.component';
@@ -12,7 +13,8 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    AccessRoutingModule
+    FormsModule,
+    AccessRoutingModule,
   ]
 })
 export class AccessModule { }

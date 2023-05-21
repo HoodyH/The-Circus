@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
+import { AuthData } from '@app/@core/data/auth';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import {Location} from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private location: Location) {
+  constructor(private router: Router, private location: Location, public authService: AuthData) {
   }
 
   ngOnInit(): void {
@@ -29,6 +30,10 @@ export class HeaderComponent implements OnInit {
   goBack(): void {
     // Naviga alla route precedente
     this.location.back();
+  }
+
+  logout() {
+    this.authService.logout().subscribe();
   }
 
 }

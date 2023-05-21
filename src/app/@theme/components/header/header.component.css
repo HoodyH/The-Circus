@@ -1,12 +1,10 @@
-header {
-  background-color: var(--primary-color);
-  padding: 1em;
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-header button {
+nav button {
   background-color: transparent;
   border: none;
   color: #fff;
@@ -14,8 +12,4 @@ header button {
   cursor: pointer;
   display: flex;
   align-items: center;
-}
-
-.header {
-
 }

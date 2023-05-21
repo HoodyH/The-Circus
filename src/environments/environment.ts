@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  event: 'xeamar-encore',
+  api: 'http://localhost:8000/'
 };
 
 /*

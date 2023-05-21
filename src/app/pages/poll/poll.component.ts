@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PollData } from '@app/@core/data/poll';
+import { Poll, PollData } from '@app/@core/data/poll';
 
 @Component({
   selector: 'app-poll',
@@ -11,9 +11,14 @@ export class PollComponent implements OnInit {
   phoneNumber: string;
   nationalPrefix = '+39';
 
+  poll: Poll
+
   constructor(private pollService: PollData) { }
 
   ngOnInit(): void {
+    this.pollService.getPoll().subscribe((poll) => {
+      this.poll = poll[0];
+    })
   }
 
   formatPhoneNumber() {

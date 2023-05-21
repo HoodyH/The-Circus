@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthData } from '@core/data/auth';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  phoneNumber: string;
+  password: string;
+
+  constructor(private router: Router, private authService: AuthData) {}
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['']);
+    }
+  }
+
+  onSubmit() {
+    this.router.navigate(['']);
   }
 
 }

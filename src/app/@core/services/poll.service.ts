@@ -1,25 +1,31 @@
 import {Injectable} from '@angular/core';
-import {of as observableOf, Observable} from 'rxjs';
-import {PollChoice, PollData} from "@core/data/poll";
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ApiUrls } from '@core/data/api';
+import {PollVoteDetail, Poll, PollData} from "@core/data/poll";
+
+
 
 @Injectable()
 export class PollService extends PollData {
 
-  private pollChoices: PollChoice[] = [{
-    phone: '33333333',
-  },{
-    phone: '33333333',
-  },{
-    phone: '33333333',
-  },{
-    phone: '33333333',
-  }];
-
-  getPollStatus(): Observable<PollChoice[]> {
-    return observableOf(this.pollChoices);
+  constructor(private http: HttpClient) {
+    super();
   }
 
-  postPollChoice(): Observable<PollChoice> {
-    return observableOf({phone: '33333333'});
+  getPoll(): Observable<Poll[]> {
+    return this.http.get<Poll[]>(ApiUrls.U_POLL());
+  }
+
+  postPollVote(data: PollVoteDetail): Observable<PollVoteDetail> {
+    return this.http.post<PollVoteDetail>(ApiUrls.U_POLL(), data);
+  }
+
+  putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail> {
+    return this.http.post<PollVoteDetail>(`${ApiUrls.U_POLL()}${id}/`, data);
+  }
+
+  deletePollVote(id: number): Observable<PollVoteDetail> {
+    return this.http.delete<PollVoteDetail>(`${ApiUrls.U_POLL()}${id}/`);
   }
 }
