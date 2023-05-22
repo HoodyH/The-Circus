@@ -9,7 +9,7 @@ import { AuthData } from '@core/data/auth';
 })
 export class LoginComponent implements OnInit {
 
-  phoneNumber: string;
+  phone: string;
   password: string;
 
   constructor(private router: Router, private authService: AuthData) {}
@@ -21,7 +21,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.router.navigate(['']);
+    this.authService.login({phone: this.phone, password: this.password}).subscribe(
+      (success) => {
+        if (success) {
+          this.router.navigate(['']).then();
+        }
+      }
+    )
   }
 
 }

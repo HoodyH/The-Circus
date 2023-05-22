@@ -1,7 +1,7 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {throwIfAlreadyLoaded} from "@core/module-import-guard";
+import {throwIfAlreadyLoaded} from "@core/guards/module-import-guard";
 
 // services
 import {EventsData} from "@core/data/events";

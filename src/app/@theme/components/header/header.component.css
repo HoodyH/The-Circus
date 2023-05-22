@@ -2,6 +2,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
 }
 
 nav button {
@@ -12,4 +13,5 @@ nav button {
   cursor: pointer;
   display: flex;
   align-items: center;
+  text-transform: none;
 }

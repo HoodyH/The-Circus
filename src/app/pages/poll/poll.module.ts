@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme/theme.module';
 import { PollRoutingModule } from './poll-routing.module';
 import { PollComponent } from './poll.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -10,6 +11,7 @@ import { PollComponent } from './poll.component';
   declarations: [PollComponent],
   imports: [
     CommonModule,
+    FormsModule,
     ThemeModule,
     PollRoutingModule,
   ]

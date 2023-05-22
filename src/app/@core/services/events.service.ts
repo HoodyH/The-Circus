@@ -15,7 +15,7 @@ export class EventsService extends EventsData {
     id: 2,
     title: 'Tojito',
     time: '2023-06-10T19:00:00Z',
-    description: 'Il cocktail pensato dalle migliori menti olimpiche',
+    description: 'Il cocktail pensato dalle migliori menti divine',
   },
   {
     id: 3,

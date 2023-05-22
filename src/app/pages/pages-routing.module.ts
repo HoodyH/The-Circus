@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PagesComponent} from "./pages.component";
+import {AuthGuard} from "@core/guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'poll',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
       },
       {

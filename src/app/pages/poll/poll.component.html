@@ -1,25 +1,26 @@
 <div class="section d-flex align-items-center">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <label class="title">Vota il tuo costume preferito</label>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">+39</span>
-                    </div>
-                    <input type="number" placeholder="000 000 0000" class="form-control">
-                </div>
-                <div>
-                    <button class="button primary">
-                        Vota!
-                    </button>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <label class="title">{{poll.question}}</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">+39</span>
+          </div>
+          <input type="number" [(ngModel)]="vote.vote" placeholder="000 000 0000" class="form-control">
         </div>
-        <div class="row justify-content-center">
-            <div class="col">
-                <app-poll-chart></app-poll-chart>
-            </div>
+        <div>
+          <button (click)="sendVote()" class="button primary">
+            Invia
+          </button>
         </div>
+      </div>
     </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col">
+        <app-poll-chart [poll]="poll"></app-poll-chart>
+      </div>
+    </div>
+  </div>
 </div>

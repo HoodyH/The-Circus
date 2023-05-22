@@ -17,6 +17,10 @@ export class PollService extends PollData {
     return this.http.get<Poll[]>(ApiUrls.U_POLL());
   }
 
+  getPollVote(): Observable<PollVoteDetail[]> {
+    return this.http.get<PollVoteDetail[]>(ApiUrls.U_POLL());
+  }
+
   postPollVote(data: PollVoteDetail): Observable<PollVoteDetail> {
     return this.http.post<PollVoteDetail>(ApiUrls.U_POLL(), data);
   }

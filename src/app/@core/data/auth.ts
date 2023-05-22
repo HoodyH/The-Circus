@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
 export interface LoginPost {
-    username: string;
+    phone: string;
     password: string;
 }
 

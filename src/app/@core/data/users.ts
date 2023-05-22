@@ -1,9 +1,9 @@
 import {Observable} from "rxjs";
 
 export interface User {
-  id?: number;
+  id: number;
   phone: string;
-  fisrt_name: string;
+  first_name: string;
   last_name: string;
   date_joined: string;
   last_login: string;

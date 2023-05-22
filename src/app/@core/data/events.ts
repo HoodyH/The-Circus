@@ -1,10 +1,19 @@
 import {Observable} from "rxjs";
+import {User} from "@core/data/users";
 
 export interface Activity {
   id: number;
   title: string;
   time: string;
   description: string;
+}
+
+export interface Participant {
+  id?: number;
+  event?: number;
+  user: User;
+  vip?: boolean;
+  ticket?: boolean;
 }
 
 export interface Staff {
