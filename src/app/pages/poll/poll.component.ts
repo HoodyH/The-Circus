@@ -8,15 +8,14 @@ import {Poll, PollData, PollVoteDetail} from '@app/@core/data/poll';
 })
 export class PollComponent implements OnInit {
 
-  poll: Poll = {
-    question: '',
-    votes: []
-  };
-  vote: PollVoteDetail = {
-    poll: 0,
-    vote: '',
-  };
+  poll: Poll;
+  vote: PollVoteDetail;
   nationalPrefix = '+39';
+
+  // Variabili per gestire gli errori
+  participantNotFoundError = false;
+  selfVoteError = false;
+  editTimeExpiredError = false;
 
   constructor(private pollService: PollData) { }
 
@@ -39,6 +38,15 @@ export class PollComponent implements OnInit {
     this.pollService.postPollVote(this.vote).subscribe(
       (data) => {
         console.log(data)
+      },
+      (error) => {
+        if (error.code === 'participant_not_found') {
+          this.participantNotFoundError = true;
+        } else if (error.code === 'self_vote') {
+          this.selfVoteError = true;
+        } else if (error.code === 'edit_time_expired') {
+          this.editTimeExpiredError = true;
+        }
       }
     )
   }

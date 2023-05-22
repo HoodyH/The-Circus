@@ -18,18 +18,18 @@ export class PollService extends PollData {
   }
 
   getPollVote(): Observable<PollVoteDetail[]> {
-    return this.http.get<PollVoteDetail[]>(ApiUrls.U_POLL());
+    return this.http.get<PollVoteDetail[]>(ApiUrls.U_POLL_VOTE());
   }
 
   postPollVote(data: PollVoteDetail): Observable<PollVoteDetail> {
-    return this.http.post<PollVoteDetail>(ApiUrls.U_POLL(), data);
+    return this.http.post<PollVoteDetail>(ApiUrls.U_POLL_VOTE(), data);
   }
 
   putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail> {
-    return this.http.post<PollVoteDetail>(`${ApiUrls.U_POLL()}${id}/`, data);
+    return this.http.post<PollVoteDetail>(`${ApiUrls.U_POLL_VOTE()}${id}/`, data);
   }
 
   deletePollVote(id: number): Observable<PollVoteDetail> {
-    return this.http.delete<PollVoteDetail>(`${ApiUrls.U_POLL()}${id}/`);
+    return this.http.delete<PollVoteDetail>(`${ApiUrls.U_POLL_VOTE()}${id}/`);
   }
 }

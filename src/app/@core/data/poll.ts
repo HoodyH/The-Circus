@@ -8,7 +8,7 @@ export interface PollVote {
 export interface PollVoteDetail {
   id?: number;
   poll: number;
-  vote: Participant | string;
+  vote: Participant | any;
   voted_at?: Date;
   is_vote_editable?: boolean
 }

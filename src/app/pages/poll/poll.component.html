@@ -2,6 +2,23 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
+
+        <div *ngIf="vote.vote" class="voted-for">
+          Hai votato per: {{ vote.vote.user.first_name }}
+        </div>
+
+        <div *ngIf="participantNotFoundError" class="error-message">
+          Participant not found in this event
+        </div>
+        <!-- Mostra l'errore "You can't vote for yourself" -->
+        <div *ngIf="selfVoteError" class="error-message">
+          You can't vote for yourself
+        </div>
+        <!-- Mostra l'errore "Vote editing time has expired" -->
+        <div *ngIf="editTimeExpiredError" class="error-message">
+          Vote editing time has expired
+        </div>
+
         <label class="title">{{poll.question}}</label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
