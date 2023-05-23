@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeModule } from '@app/@theme/theme.module';
 import { PollRoutingModule } from './poll-routing.module';
 import { PollComponent } from './poll.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ThemeModule,
     PollRoutingModule,
   ]

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiUrls } from '@core/data/api';
-import {PollVoteDetail, Poll, PollData} from "@core/data/poll";
+import {PollVoteDetail, Poll, PollData, PollVoteCreation} from "@core/data/poll";
 
 
 
@@ -14,19 +14,19 @@ export class PollService extends PollData {
   }
 
   getPoll(): Observable<Poll[]> {
-    return this.http.get<Poll[]>(ApiUrls.U_POLL());
+    return this.http.get<Poll[]>(`${ApiUrls.U_POLL()}?event__code=${ApiUrls.EVENT_ID}`);
   }
 
   getPollVote(): Observable<PollVoteDetail[]> {
-    return this.http.get<PollVoteDetail[]>(ApiUrls.U_POLL_VOTE());
+    return this.http.get<PollVoteDetail[]>(`${ApiUrls.U_POLL_VOTE()}?poll__event__code=${ApiUrls.EVENT_ID}`);
   }
 
-  postPollVote(data: PollVoteDetail): Observable<PollVoteDetail> {
+  postPollVote(data: PollVoteCreation): Observable<PollVoteDetail> {
     return this.http.post<PollVoteDetail>(ApiUrls.U_POLL_VOTE(), data);
   }
 
   putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail> {
-    return this.http.post<PollVoteDetail>(`${ApiUrls.U_POLL_VOTE()}${id}/`, data);
+    return this.http.put<PollVoteDetail>(`${ApiUrls.U_POLL_VOTE()}${id}/`, data);
   }
 
   deletePollVote(id: number): Observable<PollVoteDetail> {

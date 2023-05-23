@@ -21,7 +21,7 @@ export class AuthAppInterceptor implements HttpInterceptor {
           if (error.status === 401) {
             this.storage.clearStorage();
           }
-          return of(error);
+          throw error;
         }
       )
     );
