@@ -32,8 +32,4 @@ export class HeaderComponent implements OnInit {
     this.location.back();
   }
 
-  logout() {
-    this.authService.logout().subscribe();
-  }
-
 }

@@ -3,13 +3,14 @@ import {Participant} from "@core/data/events";
 
 export interface PollVote {
   vote: Participant;
+  voted_at: Date;
 }
 
 export interface PollVoteDetail {
   id: number;
   poll: number;
   vote: Participant;
-  voted_at?: Date;
+  voted_at: Date;
   is_vote_editable?: boolean
 }
 

@@ -20,10 +20,6 @@ const routes: Routes = [
         path: 'poll',
         canActivate: [AuthGuard],
         loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
-      },
-      {
-        path: 'access',
-        loadChildren: () => import('./access/access.module').then(m => m.AccessModule),
       }
     ]
   }

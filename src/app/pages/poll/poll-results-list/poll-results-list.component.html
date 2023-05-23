@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card mb-3" *ngFor="let result of results; let i = index">
+          <div class="card-body">
+            <h5 class="card-title">Posizione: {{ i + 1 }}</h5>
+            <p class="card-text">{{ result.firstName }} {{ result.lastName }} - {{ result.count }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

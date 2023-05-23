@@ -25,8 +25,7 @@
             <input type="number" formControlName="phone" placeholder="000 000 0000" class="form-control">
           </div>
 
-          <div *ngIf="form.controls['phone'].invalid && form.controls['phone'].touched"
-               class="alert alert-danger">
+          <div *ngIf="form.controls['phone'].invalid && form.controls['phone'].touched" class="alert alert-danger">
             Numero di telefono non valido
           </div>
           <div *ngIf="error==errorService.editTimeExpired" class="alert alert-danger">
@@ -46,7 +45,12 @@
     <br>
     <div class="row justify-content-center">
       <div class="col">
-        <app-poll-chart [poll]="currentPoll"></app-poll-chart>
+        <app-poll-chart [results]="currentPollResults"></app-poll-chart>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col">
+        <app-poll-results-list [results]="currentPollResults"></app-poll-results-list>
       </div>
     </div>
   </div>
