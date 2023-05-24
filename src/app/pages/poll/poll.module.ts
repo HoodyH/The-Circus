@@ -5,11 +5,12 @@ import { PollRoutingModule } from './poll-routing.module';
 import { PollComponent } from './poll.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { PollResultsListComponent } from './poll-results-list/poll-results-list.component';
+import { NoPollActiveComponent } from './no-poll-active/no-poll-active.component';
 
 
 
 @NgModule({
-  declarations: [PollComponent, PollResultsListComponent],
+  declarations: [PollComponent, PollResultsListComponent, NoPollActiveComponent],
   imports: [
     CommonModule,
     FormsModule,

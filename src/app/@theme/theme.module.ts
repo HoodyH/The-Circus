@@ -18,6 +18,7 @@ import {PollChartComponent} from './components/poll-chart/poll-chart.component';
 
 // pipes
 import {CustomDatePipe} from "@theme/pipes/date.pipe";
+import { LoadingAnimationComponent } from './components/loading-animation/loading-animation.component';
 
 
 const COMPONENTS: any = [
@@ -44,6 +45,7 @@ const PIPES: any = [
     ...COMPONENTS,
     ...DIRECTIVES,
     ...PIPES,
+    LoadingAnimationComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,7 @@ const PIPES: any = [
     NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
   ],
   entryComponents: [],
-  exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES, TimelineComponent, StaffComponent, LocationComponent, GalleryComponent],
+    exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES, TimelineComponent, StaffComponent, LocationComponent, GalleryComponent, LoadingAnimationComponent],
 })
 export class ThemeModule {
 }

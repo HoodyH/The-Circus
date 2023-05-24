@@ -1,29 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {Event, EventsData} from "@core/data/events";
-import {PaymentMethod, PaymentsData} from "@core/data/payments";
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-payment',
-  templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css']
+  template: `<router-outlet></router-outlet>`
 })
-export class PaymentComponent implements OnInit {
-
-  event: Event;
-  paymentMethods: PaymentMethod[] = []
-
-
-  constructor(private eventService: EventsData, private paymentService: PaymentsData) {
-  }
-
-  ngOnInit(): void {
-    this.eventService.getEvent().subscribe((event) => {
-      this.event = event
-    })
-
-    this.paymentService.getPaymentMethods().subscribe((paymentMethods) => {
-      this.paymentMethods = paymentMethods
-    })
-  }
-
+export class PaymentComponent {
 }

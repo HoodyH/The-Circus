@@ -1,5 +1,5 @@
 <div class="section d-flex align-items-center">
-  
+
   <div class="card">
 
   <div class="title">
@@ -21,7 +21,7 @@
   </div>
   <h6 class="title">Altri metodi di pagamento</h6>
     <div *ngFor="let method of paymentMethods">
-      
+
         <div *ngIf="!method.url" class="payment-method payment-method-no-url">
           <div>
             <h6>{{method.name}}</h6>
@@ -29,8 +29,8 @@
           </div>
         </div>
     </div>
-    
 
-  </div>  
+
+  </div>
   </div>
 </div>

@@ -5,7 +5,8 @@
   --secondary-color-accent: #e4e4e4;
   --text-color: #353535;
   --font-family: "Poppins", sans-serif;
-  --border-radius: 3em
+  --border-radius: 3em;
+  --animation-time: 3s;
 }
 
 html, body {
@@ -69,4 +70,9 @@ p {
 
 .secondary {
   background-color: var(--secondary-color);
+}
+
+.card {
+  border: none;
+  background-color: #eee
 }

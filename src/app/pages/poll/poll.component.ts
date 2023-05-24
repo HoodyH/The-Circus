@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { Participant } from '@app/@core/data/events';
+import {Participant} from '@app/@core/data/events';
 import {Poll, PollData, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
+import {delay, retry} from "rxjs";
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -21,12 +22,14 @@ export class ErrorService {
 export class PollComponent implements OnInit, OnDestroy {
 
   polls: Poll[];
-  currentPoll: Poll;
+  currentPoll: Poll | null;
   currentPollSubscription: any;
   currentPollResults: { firstName: string, lastName: string, count: number }[] = [];
   vote: PollVoteDetail;
 
   form: FormGroup;
+
+  loading: boolean = true;
 
   errorService = new ErrorService()
   error: string
@@ -41,15 +44,16 @@ export class PollComponent implements OnInit, OnDestroy {
 
     this.currentPollSubscription = setInterval(() => {
       this.getData();
-    }, 4000);
+    }, 5000);
 
-    this.pollService.getPollVote().subscribe(
-      (votes) => {
+    this.pollService.getPollVote().subscribe({
+      next: (votes) => {
         if (votes.length) {
           this.vote = votes[0];
         }
+        this.loading = false;
       }
-    )
+    });
   }
 
   ngOnDestroy(): void {
@@ -61,36 +65,48 @@ export class PollComponent implements OnInit, OnDestroy {
   getData() {
     this.pollService.getPoll().subscribe((polls) => {
       this.polls = polls;
-      // load the fist usable poll
+
+      // load the fist active poll
+      let populated = false;
       for (const poll of polls) {
-        if (!this.isExpired(poll.end_datetime)) {
+        if (this.isCurrentlyActive(poll.start_datetime, poll.end_datetime)) {
           this.currentPoll = poll;
-          
-          const counts: { [key: number]: { firstName: string, lastName: string, count: number } } = {};
-          for (const element of this.currentPoll.votes) {
-            const vote: Participant = element.vote;
-
-            if (vote.user.id in counts) {
-              counts[vote.user.id]['count']++;
-            } else {
-              counts[vote.user.id] = {
-                firstName: vote.user.first_name,
-                lastName: vote.user.last_name,
-                count: 1
-              };
-            }
-          }
-
-          this.currentPollResults = Object.values(counts).sort((a, b) => b.count - a.count);
+          populated = true;
           break;
         }
+      }
+
+      // if the poll has changed status or has been deleted, do actions
+      // if no active pool found load the latest one as closed
+      if (!populated) {
+        polls.length > 0 ? this.currentPoll = polls[polls.length - 1] : this.currentPoll = null;
+      }
+
+      // if a poll has been loaded, calculate the data
+      if (this.currentPoll) {
+        const counts: { [key: number]: { firstName: string, lastName: string, count: number } } = {};
+        for (const element of this.currentPoll.votes) {
+          const vote: Participant = element.vote;
+
+          if (vote.user.id in counts) {
+            counts[vote.user.id]['count']++;
+          } else {
+            counts[vote.user.id] = {
+              firstName: vote.user.first_name,
+              lastName: vote.user.last_name,
+              count: 1
+            };
+          }
+        }
+
+        this.currentPollResults = Object.values(counts).sort((a, b) => b.count - a.count);
       }
     })
   }
 
   sendVote() {
     if (this.form.valid) {
-      
+
       this.error = this.errorService.noError;
 
       const observer = {
@@ -117,7 +133,7 @@ export class PollComponent implements OnInit, OnDestroy {
           }
 
           if (error.error['poll']) {
-            switch (error.error['vote']['code']) {
+            switch (error.error['poll']['code']) {
               case this.errorService.pollClosed: {
                 this.error = this.errorService.pollClosed;
                 break;
@@ -144,11 +160,13 @@ export class PollComponent implements OnInit, OnDestroy {
         this.vote.vote = this.form.value['phone']
         this.pollService.putPollVote(this.vote.id, this.vote).subscribe(observer)
       } else {
-        const newVote: PollVoteCreation = {
-          poll: this.currentPoll.id,
-          vote: this.form.value['phone']
+        if (this.currentPoll) {
+          const newVote: PollVoteCreation = {
+            poll: this.currentPoll.id,
+            vote: this.form.value['phone']
+          }
+          this.pollService.postPollVote(newVote).subscribe(observer)
         }
-        this.pollService.postPollVote(newVote).subscribe(observer)
       }
     }
   }
@@ -157,14 +175,16 @@ export class PollComponent implements OnInit, OnDestroy {
     return end_datetime ? new Date() > end_datetime : false
   };
 
-  isCurrentlyActive(start_datetime: Date, end_datetime: Date): boolean {
+  isCurrentlyActive(start_datetime: string, end_datetime: string): boolean {
     const now = new Date();
-    if (start_datetime && end_datetime) {
-      return now >= start_datetime && now <= end_datetime;
-    } else if (start_datetime) {
-      return now >= start_datetime;
-    } else if (end_datetime) {
-      return now <= end_datetime;
+    const start = new Date(start_datetime);
+    const end = new Date(end_datetime);
+    if (start && end_datetime) {
+      return now >= start && now <= end;
+    } else if (start) {
+      return now >= start;
+    } else if (end) {
+      return now <= end;
     }
     return false;
   };
