@@ -22,7 +22,7 @@ export class PollChartComponent implements OnChanges {
           data: data.map(item => `${item.firstName} ${item.lastName}`),
           axisLabel: {
             interval: 0,
-            formatter: function (value: string) {    
+            formatter: function (value: string) {
               return value.split(' ').join('\n');
             }
           }
@@ -42,7 +42,7 @@ export class PollChartComponent implements OnChanges {
           itemStyle: {
             color: function(params: any) {
               const medalColors = ['gold', 'silver', '#CD7F32'];
-              return params.dataIndex < 3 ? medalColors[params.dataIndex] : '#eee';
+              return params.dataIndex < 3 ? medalColors[params.dataIndex] : '#4f4f4f';
             },
             borderRadius: [10, 10, 0, 0],
           },

@@ -3,19 +3,11 @@
 }
 
 .card {
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin: auto;
-  border: 0;
-  padding: 1em;
-  background-color:  var(--secondary-color);
-  border-radius: var(--border-radius);
 }
 
-.title {
-  margin: 1em;
+.white-text {
+  color: white;
 }
 
 .payment-methods {
@@ -26,11 +18,6 @@
   text-transform: uppercase;
 }
 
-.payment-method {
-  margin: 0.5em auto;
-  text-align: center;
-  justify-content: center;
-}
 
 .payment-method-no-url {
   display: flex;

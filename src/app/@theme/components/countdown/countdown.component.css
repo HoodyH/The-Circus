@@ -1,18 +1,11 @@
 .card {
-  align-items: center;
-  margin: auto;
-  border-radius: 3rem;
-  padding: 1.5rem;
-  border: 0;
+  background-color: white;
   width: fit-content;
+  margin: auto;
 }
 
-.font-weight-light {
-  align-items: center;
-  text-align: center;
-  margin-top: 2em;
-  font-size: 1em;
-  text-transform: uppercase;
+.event-date {
+  font-size: 0.8em;
 }
 
 .timer {

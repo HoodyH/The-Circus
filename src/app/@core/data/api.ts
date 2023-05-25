@@ -15,7 +15,7 @@ export class ApiUrls {
   static U_USER = () => `${ApiUrls.API_URL}/api/user/detail/`;
   static U_USERS = () => `${ApiUrls.API_URL}/api/user/list/`;
 
-  static U_EVENT = () => `${ApiUrls.API_URL}/api/event/detail/`;
+  static U_EVENT = (id: string) => `${ApiUrls.API_URL}/api/event/detail/${id}/`;
 
   static U_POLL = () => `${ApiUrls.API_URL}/api/event/poll/`;
   static U_POLL_VOTE = () => `${ApiUrls.API_URL}/api/event/poll-vote/`;

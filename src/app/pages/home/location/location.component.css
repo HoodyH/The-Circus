@@ -1,0 +1,34 @@
+
+
+.location-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 3rem;
+  width: fit-content;
+  margin: auto;
+}
+
+.logo {
+  margin-right: 0.7em;
+  margin-left: 0.4em;
+  scale: 1.5
+}
+
+.info h3 {
+  margin: 0;
+  text-align: left;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: bold;
+}
+
+.info p {
+  margin: 5px 0;
+  font-size: 14px;
+  letter-spacing: 3px;
+  font-weight: 300;
+}

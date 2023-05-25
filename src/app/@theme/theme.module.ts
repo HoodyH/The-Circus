@@ -7,10 +7,6 @@ import {RouterModule} from "@angular/router";
 import {CountdownComponent} from './components/countdown/countdown.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
-import {TimelineComponent} from './components/timeline/timeline.component';
-import {PhoneInputComponent} from './components/phone-input/phone-input.component';
-import {StaffComponent} from './components/staff/staff.component';
-import {LocationComponent} from './components/location/location.component';
 import {GalleryComponent} from './components/gallery/gallery.component';
 import {PollChartComponent} from './components/poll-chart/poll-chart.component';
 
@@ -25,12 +21,9 @@ const COMPONENTS: any = [
   CountdownComponent,
   FooterComponent,
   HeaderComponent,
-  TimelineComponent,
-  StaffComponent,
-  LocationComponent,
   GalleryComponent,
-  PhoneInputComponent,
   PollChartComponent,
+  LoadingAnimationComponent
 ];
 
 const DIRECTIVES: any = [];
@@ -45,7 +38,6 @@ const PIPES: any = [
     ...COMPONENTS,
     ...DIRECTIVES,
     ...PIPES,
-    LoadingAnimationComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +45,7 @@ const PIPES: any = [
     NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
   ],
   entryComponents: [],
-    exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES, TimelineComponent, StaffComponent, LocationComponent, GalleryComponent, LoadingAnimationComponent],
+    exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES],
 })
 export class ThemeModule {
 }

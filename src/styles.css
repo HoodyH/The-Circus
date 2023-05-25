@@ -3,40 +3,41 @@
   --primary-color-accent: #555555;
   --secondary-color: #eee;
   --secondary-color-accent: #e4e4e4;
-  --text-color: #353535;
+  --text-color: #3f3f3f;
   --font-family: "Poppins", sans-serif;
   --border-radius: 3em;
-  --animation-time: 3s;
+  --animation-time: 2s;
 }
 
 html, body {
   height: 100%;
   color: var(--text-color) !important;
+  font-family: var(--font-family) !important;
 }
 
 body {
-  font-family: var(--font-family);
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   letter-spacing: 5px;
   text-transform: uppercase;
-  font-weight: 100;
   align-items: center;
   text-align: center;
 }
 
 h1 {
   font-size: 60px;
+  font-weight: bold;
 }
 
-p {
-  letter-spacing: 2px;
-  font-weight: 300;
+p, label {
+  letter-spacing: 3px;
+  font-size: 1em;
+  font-weight: normal;
 }
 
 .container {
-  max-width: 60em !important;
+  max-width: 50em;
 }
 
 .title {
@@ -45,34 +46,30 @@ p {
   text-transform: uppercase;
 }
 
-.sub-title {
-  text-align: center;
-  text-transform: uppercase;
+.btn {
+  border-radius: var(--border-radius);
+}
+.form-control {
+  border-radius: var(--border-radius);
+  background-color: white;
 }
 
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3em;
-  border: 0;
-  padding: 0.5em;
-}
-
-.button:hover {
-  box-shadow: 0 0 3px 2px var(--secondary-color-accent);
-}
-
-.primary {
-  background-color: var(--primary-color);
-  color: #eee !important;
-}
-
-.secondary {
-  background-color: var(--secondary-color);
+.form-control:focus {
+  box-shadow: none;
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .card {
   border: none;
-  background-color: #eee
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+}
+
+.alert {
+  border-radius: var(--border-radius);
+}
+
+.alert-danger {
+  border: none;
 }

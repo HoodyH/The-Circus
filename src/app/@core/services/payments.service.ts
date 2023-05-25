@@ -10,7 +10,6 @@ export class PaymentsService extends PaymentsData {
     url: 'https://www.paypal.com/paypalme/slimphone/10EUR',
   },{
     name: 'Satispay',
-    url: '',
   },{
     name: 'Hype',
   },{

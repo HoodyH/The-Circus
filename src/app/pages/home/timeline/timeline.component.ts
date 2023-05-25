@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Activity} from "@core/data/events";
 
 @Component({
   selector: 'app-timeline',
@@ -7,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class TimelineComponent implements OnInit {
 
-  @Input() activities: any = []
+  @Input() activities: Activity[] = []
 
   ngOnInit(): void {
   }

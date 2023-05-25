@@ -24,7 +24,7 @@ export class AuthService extends AuthData {
         if (error.status == 401 || error.status == 403) {
           return of(error.status);
         }
-        return of(error);
+        throw error;
       }),
       map((r) => {
         console.log(r)

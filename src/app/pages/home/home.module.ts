@@ -2,20 +2,32 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {ThemeModule} from "@theme/theme.module";
-import {CoreModule} from "@core/core.module";
-import {HomeRoutingModule} from "./home-routing.module";
 
 // components
 import {HomeComponent} from './home.component';
+import {TimelineComponent} from "./timeline/timeline.component";
+import {StaffComponent} from "./staff/staff.component";
+import {LocationComponent} from "@app/pages/home/location/location.component";
+
+
+const COMPONENTS: any = [
+  HomeComponent,
+  TimelineComponent,
+  StaffComponent,
+  LocationComponent,
+]
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [
+    ...COMPONENTS
+  ],
   imports: [
-    HomeRoutingModule,
     CommonModule,
     ThemeModule,
   ],
+  exports: [HomeComponent],
+  bootstrap: [HomeComponent]
 })
 export class HomeModule {
 }

@@ -8,7 +8,7 @@ import {Staff} from "@core/data/events";
 })
 export class StaffComponent implements OnInit {
 
-  @Input() staffMember: Staff | undefined
+  @Input() staffMember: Staff
 
   constructor() { }
 
