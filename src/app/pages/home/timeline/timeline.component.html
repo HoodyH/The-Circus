@@ -2,9 +2,9 @@
   <div *ngFor="let activity of activities" class="timeline-item">
     <div class="timeline-item-content">
       <div class="start-time">
-        <h4>{{ activity.time | date: 'HH:mm' }}</h4>
+        <h4>{{ activity.start_datetime | date: 'HH:mm' }}</h4>
       </div>
-      <h2 class="title">{{ activity.title }}</h2>
+      <h2 class="title mb-2">{{ activity.title }}</h2>
       <p *ngIf="activity.description" class="description">{{ activity.description }}</p>
     </div>
   </div>

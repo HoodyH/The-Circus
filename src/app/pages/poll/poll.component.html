@@ -1,0 +1,75 @@
+<div class="section d-flex align-items-center min-vh-100">
+
+  <div class="container" *ngIf="loading || polls == undefined">
+    <div class="row justify-content-center">
+        <app-loading-animation></app-loading-animation>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="!loading && !currentPoll && (polls && !polls.length)">
+    <div class="row justify-content-center">
+        <app-no-poll-active></app-no-poll-active>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="!loading && currentPoll">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+
+        <h2 class="mb-3 title">{{currentPoll.question}}</h2>
+        <p *ngIf="currentPoll.is_active && !vote">Inserisci il numero di telefono di un Partecipante per votare</p>
+        <p *ngIf="!currentPoll.is_active">Poll chiuso, non si accettano più voti</p>
+
+        <div *ngIf="vote && vote.vote.user" class="card mb-3 vote-result">
+          <div class="card-body">
+            <p>Hai votato per:</p>
+            <h4>{{ vote.vote.user.first_name }} {{ vote.vote.user.last_name }}</h4>
+            <p *ngIf="!vote || (vote && vote.is_vote_editable)">
+              Vota di nuovo per modificare il voto, hai 5 minuti per modificare la tua scelta
+            </p>
+          </div>
+        </div>
+
+        <form
+          *ngIf="currentPoll.is_active && !vote || (vote && vote.is_vote_editable)"
+          [formGroup]="form"
+          (ngSubmit)="sendVote()"
+          class="mt-3 text-center"
+        >
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">+39</span>
+            </div>
+            <input type="number" formControlName="phone" placeholder="000 000 0000" class="form-control">
+          </div>
+
+          <div *ngIf="form.controls['phone'].invalid && form.controls['phone'].touched" class="alert alert-danger">
+            Numero di telefono non valido
+          </div>
+          <div *ngIf="error==errorService.editTimeExpired" class="alert alert-danger">
+            Il tuo tempo per votare è terminato, ricarica la pagina
+          </div>
+          <div *ngIf="error==errorService.participantNotFound" class="alert alert-danger">
+            Contatto non trovato
+          </div>
+          <div *ngIf="error==errorService.selfVote" class="alert alert-danger">
+            Non puoi votare per te stesso, daiii
+          </div>
+
+          <button type="submit" [disabled]="form.invalid" class="btn btn-secondary">Invia</button>
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+      <div class="col">
+        <app-poll-chart [results]="currentPollResults"></app-poll-chart>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col">
+        <app-poll-results-list [results]="currentPollResults"></app-poll-results-list>
+      </div>
+    </div>
+  </div>
+</div>

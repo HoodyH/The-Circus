@@ -1,0 +1,35 @@
+<div class="section d-flex align-items-center">
+
+  <div class="card p-3">
+
+    <div class="mt-3">
+      <h4>Tiket evento</h4>
+      <h2>{{ event.price }}€</h2>
+    </div>
+
+    <div class="payment-methods text-center">
+
+      <div *ngFor="let method of paymentMethods">
+        <a
+          *ngIf="method.url"
+          class="btn btn-secondary"
+          [href]="method.url"
+          target="_blank"
+        >
+          <h6 class="mb-0 white-text">{{method.name}}</h6>
+        </a>
+      </div>
+      <h5 class="mt-4">Altri metodi di pagamento</h5>
+      <div *ngFor="let method of paymentMethods">
+
+        <div *ngIf="!method.url" class="mt-2 payment-method-no-url">
+          <div>
+            <h6>{{method.name}}</h6>
+            <p *ngIf="method.description">{{method.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

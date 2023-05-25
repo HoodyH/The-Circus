@@ -1,0 +1,8 @@
+.input-group-text {
+    border-radius: 10px 0 0 10px;
+    background-color: var(--secondary-color);
+}
+
+.vote-result {
+  background-color: #8fd3a7;
+}

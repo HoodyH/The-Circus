@@ -24,19 +24,17 @@
 
 .timeline-item-content {
   padding: 20px;
-  background-color: #eee;
-  border-radius: 6px;
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
   text-align: right;
 }
 
 .title {
   font-size: 20px;
-  margin-top: 0;
+  margin-top: -20px;
   margin-bottom: 5px;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  font-weight: 300;
 }
 
 .description {
@@ -44,17 +42,14 @@
   margin-top: 0;
   margin-bottom: 0;
   text-align: center;
-  letter-spacing: 2px;
-  font-weight: 300;
 }
 
 .start-time h4 {
   font-size: 17px;
   line-height: 23px;
-  color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  background-color: #4F4F4FFF;
+  color: white;
+  font-weight: bold;
+  background-color: var(--primary-color);
   border-radius: 16px;
   display: block;
   width: auto;
@@ -62,6 +57,7 @@
   padding: 5px 20px;
   position: relative;
   top: -35px;
+  letter-spacing: 1px;
 }
 
 .start-time {

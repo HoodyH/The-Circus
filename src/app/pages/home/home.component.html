@@ -1,91 +1,58 @@
-<section class="section-banner d-flex align-items-center">
-  <div class="container">
-    <div class="row">
-      <div class="col banner-content">
-        <h1 class="">Circus Maximus</h1>
-        <div class="sub-title">
-          <p>L'eveneto a cui non puoi mancare</p>
+  <section class="section-banner d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col banner-content">
+          <h1 *ngIf="event">{{event.name}}</h1>
+          <div class="text-center mb-4 tagline">
+            <p *ngIf="event">{{event.tagline}}</p>
+          </div>
         </div>
       </div>
+      <div class="row">
+        <app-countdown *ngIf="event" [eventDate]="event.start_datetime"></app-countdown>
+      </div>
+      <br>
+      <div class="row">
+        <app-location *ngIf="event" [location]="event.location"></app-location>
+      </div>
+      <div class="scroll-arrow">
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </div>
-    <div class="row">
-      <app-countdown [eventDate]="event.timestamp"></app-countdown>
+  </section>
+
+  <br>
+
+  <section class="container" *ngIf="event">
+    <div class="row text-center" [innerHTML]="event.description"></div>
+  </section>
+
+  <section class="container" *ngIf="event">
+    <app-timeline [activities]="event.activities"></app-timeline>
+  </section>
+
+  <section class="container">
+    <div class="row title">
+      <h2>Gallery</h2>
     </div>
-    <br>
-    <div class="row">
-      <app-location [location]="event.location"></app-location>
+    <div class="text-center">
+      <p>Hai bisogno di inspirazione su come vestirti? Dai un occhiata alla collezione</p>
     </div>
-    <div class="scroll-arrow">
-      <i class="fas fa-chevron-down"></i>
+    <app-gallery [gallery]="gallery"></app-gallery>
+    <div class="row img-disclaimer">
+      <p>generated with dall-e</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<br>
-
-<section class="container">
-  <div class="row instructions">
-    <p>
-      Preparati a partecipare ad una festa di miti e leggende, dove anche le antiche divinità torneranno a camminare tra
-      noi.
-    </p>
-    <p>
-      Indossa la tua toga più sontuosa, avvolgiti nel tessuto che ha visto danzare le muse e sollevato gli eroi.
-      Sarai libero di scegliere il tuo personaggio mitico preferito o inventare una nuova figura dell'Olimpo.
-    </p>
-    <p>
-      Sbizzarrisciti con la creatività,
-      perché solo le più affascinanti figure greche si raduneranno in questa serata indimenticabile.
-    </p>
-    <p>
-      Sarà una festa all'insegna di misteriose danze, giochi degli dèi e un banchetto degno degli ospiti divini.
-      Le bevande scorreranno come nettare degli dèi e il cibo sarà preparato con il gusto degli antichi ricettari.
-      Ma dobbiamo avvisarti che il vino potrebbe sfuggire di mano in mezzo alla gioia e all'allegria.
-      Pertanto, ti consigliamo vivamente di portare una toga di riserva,
-      nel caso in cui il tuo abito dovesse subire qualche incidente vinicolo.
-    </p>
-    <p>
-      Sii libero di invitare eventuali accompagnatori.
-      Quando confermi la tua presenza, ti preghiamo di informarci anche sul numero di persone che ti accompagneranno,
-      in modo da organizzare al meglio la serata.
-    </p>
-    <p>
-      In vista del possibile utilizzo della piscina, ti consigliamo di portare con te un costume da bagno e un
-      asciugamano.
-    </p>
-    <p>
-      Non sono previsti posti letto ma le macchine verranno parcheggiate in un ampio campo di proprietà quindi
-      è possibile dormire all'interno del veicolo.
-    </p>
-  </div>
-</section>
-
-<section class="container">
-  <app-timeline [activities]="event.activities"></app-timeline>
-</section>
-
-<section class="container">
-  <div class="row title">
-    <h2>Gallery</h2>
-  </div>
-  <div class="sub-title">
-    <p>Hai bisogno di inspirazione su come vestirti? Dai un occhiata alla collezione</p>
-  </div>
-  <app-gallery [gallery]="gallery"></app-gallery>
-  <div class="row img-disclaimer">
-    <p>generated with dall-e</p>
-  </div>
-</section>
-
-<section class="container">
-  <div class="row title">
-    <h2>Contatti</h2>
-  </div>
-  <div class="row staff-container">
-    <div class="col" *ngFor="let staffMember of event.staff">
-      <app-staff [staffMember]="staffMember"></app-staff>
+  <section class="container" *ngIf="event">
+    <div class="row title">
+      <h2>Contatti</h2>
     </div>
-  </div>
-</section>
+    <div class="row staff-container">
+      <div class="col" *ngFor="let staffMember of event.staff">
+        <app-staff [staffMember]="staffMember"></app-staff>
+      </div>
+    </div>
+  </section>
 
-<br>
+  <br>

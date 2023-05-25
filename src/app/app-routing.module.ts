@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('@app/pages/pages.module').then(m => m.PagesModule),
   },
+  {
+    path: 'access',
+    loadChildren: () => import('./pages/access/access.module').then(m => m.AccessModule),
+  },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: '' },
 ];

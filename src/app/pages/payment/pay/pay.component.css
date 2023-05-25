@@ -1,0 +1,48 @@
+.section {
+  min-height: 100vh;
+}
+
+.card {
+  margin: auto;
+}
+
+.white-text {
+  color: white;
+}
+
+.payment-methods {
+  align-items: stretch;
+  justify-content: center;
+  max-width: 25em;
+  margin: 1em auto;
+  text-transform: uppercase;
+}
+
+
+.payment-method-no-url {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: var(--border-radius);
+  padding: 0.5em;
+}
+
+.payment-method-no-url h6, p {
+  margin: 0;
+}
+
+.payment-method-no-url p {
+  text-transform: none;
+}
+
+.payment-method p {
+  font-size: 0.8em;
+}
+
+.payment-methods a {
+  text-decoration: none;
+  color: var(--text-color)
+}
+
+

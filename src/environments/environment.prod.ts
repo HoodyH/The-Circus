@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  event: 'xeamar-encore',
+  api: 'https://dioniso.azurewebsites.net'
 };

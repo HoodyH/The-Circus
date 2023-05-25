@@ -1,29 +1,29 @@
-<div class="card">
-  <div class="row align-items-center">
+<div class="card p-4">
+  <div class="row align-items-center text-center">
     <div class="col timer">
       <div *ngIf="days" class="days">
         <div class="numbers">{{ days }}</div>
-        days
+        giorni
       </div>
       <div class="hours">
         <div class="numbers"> {{ hours }}</div>
-        hours
+        ore
       </div>
       <div class="minutes">
         <div class="numbers">{{ minutes }}</div>
-        minutes
+        minuti
       </div>
       <div class="seconds">
         <div class="numbers">{{ seconds }}</div>
-        seconds
+        secondi
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
-        <h2 class="font-weight-light">
-          {{eventDate | customDate}}
-        </h2>
+        <h4 *ngIf="date" class="event-date mt-4">
+          {{date | customDate}}
+        </h4>
     </div>
   </div>
 </div>

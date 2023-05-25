@@ -1,0 +1,29 @@
+.badge-circle {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  background-color: var(--primary-color);
+}
+
+.badge-gold {
+  background-color: gold;
+  color: black;
+}
+
+.badge-silver {
+  background-color: silver;
+  color: black;
+}
+
+.badge-brown {
+  background-color: #CD7F32;
+  color: black;
+}
+
+.vote-label {
+  font-size: 0.8em;
+  margin: 0;
+}

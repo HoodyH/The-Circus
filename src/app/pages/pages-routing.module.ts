@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PagesComponent} from "./pages.component";
+import {AuthGuard} from "@core/guards/auth.guard";
+import {HomeComponent} from "@app/pages/home/home.component";
 
 const routes: Routes = [
   {
@@ -9,10 +11,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+        component: HomeComponent
+      },
+      {
+        path: 'pay',
+        loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
+      },
+      {
+        path: 'poll',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
       }
     ]
   }
+
 ];
 
 @NgModule({
