@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Poll} from "@core/data/poll";
 
 @Component({
   selector: 'app-no-poll-active',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./no-poll-active.component.css']
 })
 export class NoPollActiveComponent implements OnInit {
+
+  @Input() nextPoll: Poll | null;
 
   constructor() { }
 

@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'poll',
         canActivate: [AuthGuard],
         loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
+      },
+      {
+        path: 'black-hole',
+        loadChildren: () => import('./miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule),
       }
     ]
   }

@@ -6,9 +6,9 @@
     </div>
   </div>
 
-  <div class="container" *ngIf="!loading && !currentPoll && (polls && !polls.length)">
+  <div class="container" *ngIf="!loading && !currentPoll && (polls && nextPoll)">
     <div class="row justify-content-center">
-        <app-no-poll-active></app-no-poll-active>
+        <app-no-poll-active [nextPoll]="nextPoll"></app-no-poll-active>
     </div>
   </div>
 
@@ -18,7 +18,10 @@
 
         <h2 class="mb-3 title">{{currentPoll.question}}</h2>
         <p *ngIf="currentPoll.is_active && !vote">Inserisci il numero di telefono di un Partecipante per votare</p>
-        <p *ngIf="!currentPoll.is_active">Poll chiuso, non si accettano più voti</p>
+        <div *ngIf="!currentPoll.is_active">
+          <p>Sondaggio chiuso, non si accettano più voti</p>
+          <p *ngIf="nextPoll">Prossima votazione {{nextPoll.start_datetime | customDate}}</p>
+        </div>
 
         <div *ngIf="vote && vote.vote.user" class="card mb-3 vote-result">
           <div class="card-body">

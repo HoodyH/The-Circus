@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Participant} from '@app/@core/data/events';
-import {Poll, PollData, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
-import {delay, retry} from "rxjs";
+import {Poll, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -23,9 +22,11 @@ export class PollComponent implements OnInit, OnDestroy {
 
   polls: Poll[];
   currentPoll: Poll | null;
+  nextPoll: Poll | null;
+  votes: PollVoteDetail[];
+  vote: PollVoteDetail | null;
   currentPollSubscription: any;
   currentPollResults: { firstName: string, lastName: string, count: number }[] = [];
-  vote: PollVoteDetail;
 
   form: FormGroup;
 
@@ -41,19 +42,10 @@ export class PollComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.getData();
     this.currentPollSubscription = setInterval(() => {
       this.getData();
     }, 5000);
-
-    this.pollService.getPollVote().subscribe({
-      next: (votes) => {
-        if (votes.length) {
-          this.vote = votes[0];
-        }
-        this.loading = false;
-      }
-    });
   }
 
   ngOnDestroy(): void {
@@ -65,25 +57,58 @@ export class PollComponent implements OnInit, OnDestroy {
   getData() {
     this.pollService.getPoll().subscribe((polls) => {
       this.polls = polls;
-
-      // load the fist active poll
+      this.nextPoll = null;
       let populated = false;
+      const currentPoll = this.currentPoll
+
       for (const poll of polls) {
-        if (this.isCurrentlyActive(poll.start_datetime, poll.end_datetime)) {
+
+        if (this.pollService.isActive(poll.start_datetime, poll.end_datetime)) {
+          // if the poll has changed from the current one
           this.currentPoll = poll;
           populated = true;
-          break;
-        }
-      }
 
-      // if the poll has changed status or has been deleted, do actions
-      // if no active pool found load the latest one as closed
-      if (!populated) {
-        polls.length > 0 ? this.currentPoll = polls[polls.length - 1] : this.currentPoll = null;
+          // update vote only on poll change
+          if ((!currentPoll && currentPoll !== poll )|| (currentPoll && currentPoll.id !== poll.id)) {
+            this.vote = null;
+            // load the votes on poll change
+            this.pollService.getPollVote().subscribe({
+              next: (votes) => {
+                this.votes = votes.filter(vote => {
+                  if (this.currentPoll) { return vote.poll === this.currentPoll.id }
+                  return false
+                });
+                if (this.votes.length) {
+                  this.vote = this.votes[0];
+                }
+                this.loading = false;
+              }
+            });
+          }
+          break;
+
+        } else {
+          // if the poll has changed status or has been deleted, do actions
+          // if no active pool found load the latest one as closed
+          if (this.pollService.isClosed(poll.end_datetime) && !populated) {
+            this.currentPoll = poll;
+          }
+        }
+
+        // get fist future poll
+        if (!this.nextPoll && this.pollService.isFuture(poll.start_datetime)) {
+          this.nextPoll = poll;
+        }
       }
 
       // if a poll has been loaded, calculate the data
       if (this.currentPoll) {
+
+        // sort votes based on voting time
+        this.currentPoll.votes.sort((a: PollVote, b: PollVote) => {
+          return new Date(a.voted_at).getTime() - new Date(b.voted_at).getTime();
+        });
+
         const counts: { [key: number]: { firstName: string, lastName: string, count: number } } = {};
         for (const element of this.currentPoll.votes) {
           const vote: Participant = element.vote;
@@ -170,22 +195,4 @@ export class PollComponent implements OnInit, OnDestroy {
       }
     }
   }
-
-  isExpired(end_datetime: Date): boolean {
-    return end_datetime ? new Date() > end_datetime : false
-  };
-
-  isCurrentlyActive(start_datetime: string, end_datetime: string): boolean {
-    const now = new Date();
-    const start = new Date(start_datetime);
-    const end = new Date(end_datetime);
-    if (start && end_datetime) {
-      return now >= start && now <= end;
-    } else if (start) {
-      return now >= start;
-    } else if (end) {
-      return now <= end;
-    }
-    return false;
-  };
 }

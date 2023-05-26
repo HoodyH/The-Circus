@@ -3,18 +3,20 @@ import {CommonModule} from '@angular/common';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {RouterModule} from "@angular/router";
 
+// directives
+
+// pipes
+import {CustomDatePipe} from "@theme/pipes/date.pipe";
+
 // components
 import {CountdownComponent} from './components/countdown/countdown.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
 import {GalleryComponent} from './components/gallery/gallery.component';
 import {PollChartComponent} from './components/poll-chart/poll-chart.component';
-
-// directives
-
-// pipes
-import {CustomDatePipe} from "@theme/pipes/date.pipe";
-import { LoadingAnimationComponent } from './components/loading-animation/loading-animation.component';
+import {LoadingAnimationComponent} from './components/loading-animation/loading-animation.component';
+import {SpotifyPlaylistComponent} from './components/spotify-playlist/spotify-playlist.component';
+import {MeteoStatusComponent} from './components/meteo-status/meteo-status.component';
 
 
 const COMPONENTS: any = [
@@ -23,7 +25,10 @@ const COMPONENTS: any = [
   HeaderComponent,
   GalleryComponent,
   PollChartComponent,
-  LoadingAnimationComponent
+  LoadingAnimationComponent,
+  SpotifyPlaylistComponent,
+  MeteoStatusComponent,
+
 ];
 
 const DIRECTIVES: any = [];
@@ -45,7 +50,7 @@ const PIPES: any = [
     NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
   ],
   entryComponents: [],
-    exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES],
+  exports: [...COMPONENTS, ...DIRECTIVES, ...PIPES],
 })
 export class ThemeModule {
 }

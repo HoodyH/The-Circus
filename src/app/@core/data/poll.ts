@@ -37,4 +37,26 @@ export abstract class PollData {
   abstract postPollVote(data: PollVoteCreation): Observable<PollVoteDetail>;
   abstract putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail>;
   abstract deletePollVote(id: number): Observable<PollVoteDetail>;
+
+  isClosed(end_datetime: string): boolean {
+    return new Date() > new Date(end_datetime)
+  };
+
+  isActive(start_datetime: string, end_datetime: string): boolean {
+    const now = new Date();
+    const start = new Date(start_datetime);
+    const end = new Date(end_datetime);
+    if (start && end_datetime) {
+      return now >= start && now <= end;
+    } else if (start) {
+      return now >= start;
+    } else if (end) {
+      return now <= end;
+    }
+    return false;
+  };
+
+  isFuture(start_datetime: string): boolean {
+    return new Date() < new Date(start_datetime);
+  }
 }

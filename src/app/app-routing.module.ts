@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/access/access.module').then(m => m.AccessModule),
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'black-hole/404' },
 ];
 
 const config: ExtraOptions = {
