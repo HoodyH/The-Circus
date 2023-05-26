@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {environment} from "../environments/environment";
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: environment.useHash,
 };
 
 @NgModule({
