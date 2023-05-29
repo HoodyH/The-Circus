@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "@core/guards/auth.guard";
 
 
 const routes: Routes = [
@@ -10,6 +11,11 @@ const routes: Routes = [
   {
     path: 'access',
     loadChildren: () => import('./pages/access/access.module').then(m => m.AccessModule),
+  },
+  {
+    path: 'live',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/live/live.module').then(m => m.LiveModule),
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: 'black-hole/404' },

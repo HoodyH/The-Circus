@@ -1,0 +1,9 @@
+.carousel-item {
+  height: auto;
+  max-height: 50%;
+}
+
+.carousel-inner img {
+  width: 50%;
+  height: auto;
+}

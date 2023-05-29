@@ -1,0 +1,6 @@
+.section-live {
+  min-height: 100vh;
+  position: relative;
+  background: #eee no-repeat 65% 50%;
+  background-size: cover;
+}

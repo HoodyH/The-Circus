@@ -1,0 +1,13 @@
+<div class="card p-2">
+  <div class="card-body">
+    <app-countdown *ngIf="!currentActivity" [eventDate]="eventDate"></app-countdown>
+    <div *ngIf="currentActivity" class="text-center">
+      <div class="badge mb-4">
+        <span class="dot"></span>
+        <p class="now-live-text mb-0">Now Live</p>
+      </div>
+      <app-activity [title]="currentActivity.title" [description]="currentActivity.description"></app-activity>
+    </div>
+
+  </div>
+</div>

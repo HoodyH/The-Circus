@@ -77,3 +77,7 @@ p, label {
 .emoji-big {
   font-size: 6em;
 }
+
+img {
+  border-radius: var(--border-radius);
+}

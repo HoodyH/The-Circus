@@ -47,4 +47,8 @@ export abstract class EventsData {
   abstract getEvent(): Observable<Event>;
   abstract getActivities(): Observable<Activity[]>;
   abstract getStaff(): Observable<Staff[]>;
+
+  isEventStarted(end_datetime: string): boolean {
+    return new Date() > new Date(end_datetime)
+  };
 }

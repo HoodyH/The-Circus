@@ -9,7 +9,11 @@
         </div>
       </div>
       <div class="row">
-        <app-countdown *ngIf="event" [eventDate]="event.start_datetime"></app-countdown>
+        <app-current-activity
+          *ngIf="event"
+          [eventDate]="event.start_datetime"
+          [activities]="event.activities"
+        ></app-current-activity>
       </div>
       <br>
       <div class="row">
@@ -24,7 +28,7 @@
   <br>
 
   <section class="container" *ngIf="event">
-    <div class="row text-center" [innerHTML]="event.description"></div>
+    <div class="row" [innerHTML]="event.description"></div>
   </section>
 
   <section class="container" *ngIf="event">

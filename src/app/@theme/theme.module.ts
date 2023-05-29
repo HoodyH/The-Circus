@@ -8,6 +8,7 @@ import {RouterModule} from "@angular/router";
 // pipes
 import {CustomDatePipe} from "@theme/pipes/date.pipe";
 
+
 // components
 import {CountdownComponent} from './components/countdown/countdown.component';
 import {FooterComponent} from './components/footer/footer.component';
@@ -17,6 +18,8 @@ import {PollChartComponent} from './components/poll-chart/poll-chart.component';
 import {LoadingAnimationComponent} from './components/loading-animation/loading-animation.component';
 import {SpotifyPlaylistComponent} from './components/spotify-playlist/spotify-playlist.component';
 import {MeteoStatusComponent} from './components/meteo-status/meteo-status.component';
+import { CurrentStatusComponent } from './components/current-status/current-status.component';
+import { ActivityComponent } from './components/activity/activity.component';
 
 
 const COMPONENTS: any = [
@@ -28,7 +31,8 @@ const COMPONENTS: any = [
   LoadingAnimationComponent,
   SpotifyPlaylistComponent,
   MeteoStatusComponent,
-
+  ActivityComponent,
+  CurrentStatusComponent,
 ];
 
 const DIRECTIVES: any = [];

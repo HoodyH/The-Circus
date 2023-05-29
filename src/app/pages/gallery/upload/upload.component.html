@@ -1,0 +1,6 @@
+<div class="section d-flex align-items-center min-vh-100">
+  <div>
+    <input type="file" (change)="onFileSelected($event)">
+    <button (click)="uploadPhoto()" [disabled]="!selectedFile">Carica Foto</button>
+  </div>
+</div>

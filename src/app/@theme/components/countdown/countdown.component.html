@@ -1,29 +1,27 @@
-<div class="card p-4">
-  <div class="row align-items-center text-center">
-    <div class="col timer">
-      <div *ngIf="days" class="days">
-        <div class="numbers">{{ days }}</div>
-        giorni
-      </div>
-      <div class="hours">
-        <div class="numbers"> {{ hours }}</div>
-        ore
-      </div>
-      <div class="minutes">
-        <div class="numbers">{{ minutes }}</div>
-        minuti
-      </div>
-      <div class="seconds">
-        <div class="numbers">{{ seconds }}</div>
-        secondi
-      </div>
+<div class="row align-items-center text-center">
+  <div class="col timer">
+    <div *ngIf="days" class="days">
+      <div class="numbers">{{ days }}</div>
+      giorni
+    </div>
+    <div class="hours">
+      <div class="numbers"> {{ hours }}</div>
+      ore
+    </div>
+    <div class="minutes">
+      <div class="numbers">{{ minutes }}</div>
+      minuti
+    </div>
+    <div class="seconds">
+      <div class="numbers">{{ seconds }}</div>
+      secondi
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-        <h4 *ngIf="eventDate" class="event-date mt-4">
-          {{eventDate | customDate}}
-        </h4>
-    </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h4 *ngIf="eventDate" class="event-date mt-4">
+      {{eventDate | customDate}}
+    </h4>
   </div>
 </div>
