@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   useHash: true,
   event: 'xeamar-encore',
-  api: 'https://dioniso.azurewebsites.net'
+  api: 'http://localhost:8000'
 };
 
 /*

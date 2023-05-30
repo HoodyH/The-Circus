@@ -1,7 +1,9 @@
+import { ThisReceiver } from '@angular/compiler';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Participant} from '@app/@core/data/events';
+import {EventsData, Participant} from '@app/@core/data/events';
 import {Poll, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -25,6 +27,8 @@ export class PollComponent implements OnInit, OnDestroy {
   nextPoll: Poll | null;
   votes: PollVoteDetail[];
   vote: PollVoteDetail | null;
+  participants: Participant[];
+  filteredParticipants: Participant[] = [];
   currentPollSubscription: any;
   currentPollResults: { firstName: string, lastName: string, count: number }[] = [];
 
@@ -35,9 +39,10 @@ export class PollComponent implements OnInit, OnDestroy {
   errorService = new ErrorService()
   error: string
 
-  constructor(private fb: FormBuilder, private pollService: PollData) {
+  constructor(private fb: FormBuilder, private pollService: PollData, private eventService: EventsData) {
     this.form = this.fb.group({
-      phone: ['', Validators.required]
+      id: [null, Validators.required],
+      vote: ['', Validators.required]
     });
   }
 
@@ -46,6 +51,23 @@ export class PollComponent implements OnInit, OnDestroy {
     this.currentPollSubscription = setInterval(() => {
       this.getData();
     }, 5000);
+
+    this.eventService.getParticipants().subscribe({
+      next: (participants) => {
+        this.participants = participants;
+      }
+    });
+
+    this.form.controls['vote'].valueChanges.subscribe((data: string) => {
+      const vote: string = data.toLowerCase();
+
+      if (vote.length >= 3) {
+        this.filteredParticipants = this.filterParticipants(vote);
+      } else {
+        this.filteredParticipants = [];
+      }
+      console.log(this.filteredParticipants);
+    });
   }
 
   ngOnDestroy(): void {
@@ -56,10 +78,14 @@ export class PollComponent implements OnInit, OnDestroy {
 
   getData() {
     this.pollService.getPoll().subscribe((polls) => {
+
+      if (!polls.length) {
+        this.loading = false;
+      }
       this.polls = polls;
       this.nextPoll = null;
       let populated = false;
-      const currentPoll = this.currentPoll
+      const currentPoll = this.currentPoll;
 
       for (const poll of polls) {
 
@@ -129,6 +155,19 @@ export class PollComponent implements OnInit, OnDestroy {
     })
   }
 
+  filterParticipants(value: string): Participant[] {
+    return this.participants.filter((participant: Participant) => {
+      const fullName = `${participant.user.first_name} ${participant.user.last_name}`.toLowerCase();
+      return fullName.includes(value);
+    });
+  }
+
+  selectParticipant(participant: any): void {
+    // Esegui le operazioni desiderate con il partecipante selezionato
+    this.form.patchValue({id: participant.id, vote: `${participant.user.first_name} ${participant.user.last_name}`})
+    this.filteredParticipants = [];
+  }
+
   sendVote() {
     if (this.form.valid) {
 
@@ -182,13 +221,13 @@ export class PollComponent implements OnInit, OnDestroy {
       }
 
       if (this.vote) {
-        this.vote.vote = this.form.value['phone']
+        this.vote.vote = this.form.value['id']
         this.pollService.putPollVote(this.vote.id, this.vote).subscribe(observer)
       } else {
         if (this.currentPoll) {
           const newVote: PollVoteCreation = {
             poll: this.currentPoll.id,
-            vote: this.form.value['phone']
+            vote: this.form.value['id']
           }
           this.pollService.postPollVote(newVote).subscribe(observer)
         }

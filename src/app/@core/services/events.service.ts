@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {of as observableOf, Observable} from 'rxjs';
-import {EventsData, Event, Activity, Staff} from '@core/data/events';
+import {EventsData, Event, Activity, Staff, Participant} from '@core/data/events';
 import {Poll} from "@core/data/poll";
 import {ApiUrls} from "@core/data/api";
 import {HttpClient} from "@angular/common/http";
@@ -39,9 +39,6 @@ export class EventsService extends EventsData {
     description: 'Liberate la vostra mente, e perchè no, anche i vostri corpi',
   }];
 
-  private staffData: Staff[] = [
-  ]
-
   constructor(private http: HttpClient) {
     super();
   }
@@ -50,11 +47,7 @@ export class EventsService extends EventsData {
     return this.http.get<Event>(`${ApiUrls.U_EVENT(ApiUrls.EVENT_ID)}`);
   }
 
-  getActivities(): Observable<Activity[]> {
-    return observableOf(this.activitiesData);
-  }
-
-  getStaff(): Observable<Staff[]> {
-    return observableOf(this.staffData);
+  getParticipants(): Observable<Participant[]> {
+    return this.http.get<Participant[]>(`${ApiUrls.U_PARTICIPANTS()}?event__code=${ApiUrls.EVENT_ID}`);
   }
 }

@@ -45,8 +45,7 @@ export interface Event {
 
 export abstract class EventsData {
   abstract getEvent(): Observable<Event>;
-  abstract getActivities(): Observable<Activity[]>;
-  abstract getStaff(): Observable<Staff[]>;
+  abstract getParticipants(): Observable<Participant[]>;
 
   isEventStarted(end_datetime: string): boolean {
     return new Date() > new Date(end_datetime)

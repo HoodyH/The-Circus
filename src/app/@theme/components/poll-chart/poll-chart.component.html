@@ -1,1 +1,6 @@
-<div echarts [options]="chartOptions" class="chart"></div>
+<div class="chart-container">
+  <div echarts [options]="chartOptions" class="chart"></div>
+  <div *ngIf="!results || results.length === 0" class="no-data-banner p-4"> 
+    <h4 class="mb-0">In attesa di voti</h4>
+</div>
+</div>
