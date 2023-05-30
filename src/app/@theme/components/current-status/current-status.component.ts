@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Activity} from "@core/data/events";
 
 @Component({
-  selector: 'app-current-activity',
+  selector: 'app-current-status',
   templateUrl: './current-status.component.html',
   styleUrls: ['./current-status.component.css']
 })

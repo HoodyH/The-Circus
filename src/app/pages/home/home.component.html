@@ -9,11 +9,11 @@
         </div>
       </div>
       <div class="row">
-        <app-current-activity
+        <app-current-status
           *ngIf="event"
           [eventDate]="event.start_datetime"
           [activities]="event.activities"
-        ></app-current-activity>
+        ></app-current-status>
       </div>
       <br>
       <div class="row">

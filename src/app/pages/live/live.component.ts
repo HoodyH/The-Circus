@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Poll, PollData } from '@app/@core/data/poll';
 import {Event, EventsData} from "@core/data/events";
 import {Gallery, GalleryData} from "@core/data/galley";
 
@@ -11,8 +12,9 @@ export class LiveComponent implements OnInit {
 
   event: Event;
   gallery: Gallery[];
+  polls: Poll[];
 
-  constructor(private eventService: EventsData, private galleryService: GalleryData) {
+  constructor(private eventService: EventsData, private galleryService: GalleryData, private pollService: PollData) {
   }
 
   ngOnInit(): void {
@@ -25,6 +27,12 @@ export class LiveComponent implements OnInit {
     this.galleryService.getGallery().subscribe({
       next: (galley) => {
         this.gallery = galley;
+      }
+    })
+
+    this.pollService.getPoll().subscribe({
+      next: (polls) => {
+        this.polls = polls;
       }
     })
   }
