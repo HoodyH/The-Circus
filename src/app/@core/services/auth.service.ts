@@ -39,9 +39,9 @@ export class AuthService extends AuthData {
   }
 
   logout(): Observable<Boolean> {
+    this.storage.clearStorage();
     return this.http.delete(ApiUrls.U_LOGOUT(), {}).pipe(
       map((r) => {
-        this.storage.clearStorage();
         return true
       })
     );

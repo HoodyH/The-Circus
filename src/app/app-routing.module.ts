@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {environment} from "environments/environment";
 import {AuthGuard} from "@core/guards/auth.guard";
 
 
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 const config: ExtraOptions = {
-  useHash: false,
+  useHash: environment.useHash,
 };
 
 @NgModule({
