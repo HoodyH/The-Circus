@@ -35,8 +35,6 @@ export class GalleryService extends GalleryData {
   }
 
   postFile(data: FormData): Observable<FileStore> {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    return this.http.post<FileStore>(`${ApiUrls.U_GALLERY_UPLOAD()}`, data, { headers });
+    return this.http.post<FileStore>(`${ApiUrls.U_GALLERY_UPLOAD()}`, data);
   }
 }
