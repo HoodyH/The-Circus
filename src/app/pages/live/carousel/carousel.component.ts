@@ -8,7 +8,7 @@ import {Gallery} from "@core/data/galley";
 })
 export class CarouselComponent implements OnInit {
 
-  @Input() photos: Gallery[];
+  @Input() photos: any[];
 
   ngOnInit(): void {
   }

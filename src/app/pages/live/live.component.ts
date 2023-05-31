@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { Poll, PollData } from '@app/@core/data/poll';
 import {Event, EventsData} from "@core/data/events";
-import {Gallery, GalleryData} from "@core/data/galley";
+import {StaticGallery, GalleryData} from "@core/data/galley";
 
 @Component({
   selector: 'app-live',
@@ -11,7 +11,7 @@ import {Gallery, GalleryData} from "@core/data/galley";
 export class LiveComponent implements OnInit {
 
   event: Event;
-  gallery: Gallery[];
+  gallery: StaticGallery[];
   polls: Poll[];
 
   constructor(private eventService: EventsData, private galleryService: GalleryData, private pollService: PollData) {
@@ -24,7 +24,7 @@ export class LiveComponent implements OnInit {
       }
     })
 
-    this.galleryService.getGallery().subscribe({
+    this.galleryService.getStaticGallery().subscribe({
       next: (galley) => {
         this.gallery = galley;
       }

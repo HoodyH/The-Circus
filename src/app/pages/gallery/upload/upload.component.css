@@ -1,0 +1,11 @@
+.img-preview {
+    max-height: 70vh;
+    max-width: 90%;
+}
+
+.btn-reset {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+  }

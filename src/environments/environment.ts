@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   useHash: true,
   event: 'xeamar-encore',
-  api: 'http://localhost:8000'
+  api: 'http://192.168.1.46:8000'
 };
 
 /*
