@@ -81,6 +81,7 @@ export class PollComponent implements OnInit, OnDestroy {
       if (!polls.length) {
         this.loading = false;
       }
+      
       this.polls = polls;
       this.nextPoll = null;
       let populated = false;
@@ -123,6 +124,7 @@ export class PollComponent implements OnInit, OnDestroy {
         // get fist future poll
         if (!this.nextPoll && this.pollService.isFuture(poll.start_datetime)) {
           this.nextPoll = poll;
+          this.loading = false;
         }
       }
 

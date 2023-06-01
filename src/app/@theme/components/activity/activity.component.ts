@@ -8,8 +8,9 @@ import {ActivityAction} from "@core/data/events";
 })
 export class ActivityComponent {
 
-  @Input() title: string
-  @Input() description: string
-  @Input() actions: ActivityAction[] = []
+  @Input() live: boolean = false;
+  @Input() title: string;
+  @Input() description: string;
+  @Input() actions: ActivityAction[] = [];
 
 }

@@ -6,7 +6,12 @@
         <span class="dot"></span>
         <p class="now-live-text mb-0">Now Live</p>
       </div>
-      <app-activity [title]="currentActivity.title" [description]="currentActivity.live_description" [actions]="currentActivity.actions"></app-activity>
+      <app-activity 
+        [live]="true";
+        [title]="currentActivity.title" 
+        [description]="currentActivity.live_description" 
+        [actions]="currentActivity.actions"
+      ></app-activity>
     </div>
 
   </div>

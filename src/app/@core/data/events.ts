@@ -8,6 +8,7 @@ export interface ActivityAction {
   name: string;
   url: string;
   blank: boolean;
+  is_live_only: boolean;
   description: string;
 }
 
