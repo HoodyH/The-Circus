@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {of as observableOf, Observable} from 'rxjs';
 import { ApiUrls } from '@core/data/api';
-import {Gallery, GalleryData, StaticGallery, FileStore, FileUpload} from '@core/data/galley';
+import {Gallery, GalleryData, StaticGallery, FileStore, FileUpload, PaginatedFiles} from '@core/data/galley';
 
 
 @Injectable()
@@ -32,6 +32,10 @@ export class GalleryService extends GalleryData {
 
   getGallery(): Observable<Gallery> {
     return this.http.get<Gallery>(`${ApiUrls.U_GALLERY(ApiUrls.EVENT_ID)}`);
+  }
+
+  getFiles(): Observable<PaginatedFiles> {
+    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${ApiUrls.EVENT_ID}`);
   }
 
   postFile(data: FormData): Observable<FileStore> {

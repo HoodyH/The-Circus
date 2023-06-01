@@ -1,4 +1,12 @@
-<div>
-  <h2 class="title mb-2">{{ title }}</h2>
-  <p *ngIf="description" class="description">{{ description }}</p>
+<div class="text-center">
+  <div>
+    <h2 class="title mb-2">{{ title }}</h2>
+    <p *ngIf="description" class="description">{{ description }}</p>
+  </div>
+  <div class="m-2" *ngFor="let action of actions">
+    <p class="mb-0" *ngIf="action.description">{{action.description}}</p>
+    <a *ngIf="action.type == 'website'" class="btn btn-secondary" [href]="action.url" [target]="action.blank ? '_blank' : ''">
+      <h6 class="mb-0 white-text">{{action.name}}</h6>
+    </a>
+  </div>
 </div>

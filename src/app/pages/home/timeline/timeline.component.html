@@ -4,7 +4,7 @@
       <div class="start-time">
         <h4>{{ activity.start_datetime | date: 'HH:mm' }}</h4>
       </div>
-      <app-activity  [title]="activity.title" [description]="activity.description"></app-activity>
+      <app-activity  [title]="activity.title" [description]="activity.description" [actions]="activity.actions"></app-activity>
     </div>
   </div>
 </div>

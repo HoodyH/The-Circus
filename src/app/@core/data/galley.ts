@@ -9,12 +9,20 @@ export interface FileUpload {
 
 
 export interface FileStore {
+  id: number;
   gallery: number;
   user: User;
   type: string;
   received_at: string;
   blob: string;
   url: string;
+}
+
+export interface PaginatedFiles {
+  count: number;
+  next: any;
+  previous: any;
+  results: FileStore[];
 }
 
 export interface Gallery {
@@ -32,5 +40,6 @@ export interface StaticGallery {
 export abstract class GalleryData {
   abstract getStaticGallery(): Observable<StaticGallery[]>;
   abstract getGallery(): Observable<Gallery>;
+  abstract getFiles(): Observable<PaginatedFiles>;
   abstract postFile(data: FormData): Observable<FileStore>;
 }

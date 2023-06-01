@@ -2,8 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventsData, Participant} from '@app/@core/data/events';
-import {Poll, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import {Poll, PollCountResult, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -30,7 +29,7 @@ export class PollComponent implements OnInit, OnDestroy {
   participants: Participant[];
   filteredParticipants: Participant[] = [];
   currentPollSubscription: any;
-  currentPollResults: { firstName: string, lastName: string, count: number }[] = [];
+  currentPollResults: PollCountResult[] = [];
 
   form: FormGroup;
 
@@ -129,28 +128,7 @@ export class PollComponent implements OnInit, OnDestroy {
 
       // if a poll has been loaded, calculate the data
       if (this.currentPoll) {
-
-        // sort votes based on voting time
-        this.currentPoll.votes.sort((a: PollVote, b: PollVote) => {
-          return new Date(a.voted_at).getTime() - new Date(b.voted_at).getTime();
-        });
-
-        const counts: { [key: number]: { firstName: string, lastName: string, count: number } } = {};
-        for (const element of this.currentPoll.votes) {
-          const vote: Participant = element.vote;
-
-          if (vote.user.id in counts) {
-            counts[vote.user.id]['count']++;
-          } else {
-            counts[vote.user.id] = {
-              firstName: vote.user.first_name,
-              lastName: vote.user.last_name,
-              count: 1
-            };
-          }
-        }
-
-        this.currentPollResults = Object.values(counts).sort((a, b) => b.count - a.count);
+        this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
       }
     })
   }

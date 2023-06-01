@@ -5,7 +5,8 @@ import {User} from "@core/data/users";
 export interface ActivityAction {
   id: number;
   type: string;
-  link: string;
+  name: string;
+  url: string;
   blank: boolean;
   description: string;
 }
@@ -17,7 +18,7 @@ export interface Activity {
   start_datetime: string;
   description: string;
   live_description: string;
-  actions: ActivityAction;
+  actions: ActivityAction[];
 }
 
 export interface Participant {

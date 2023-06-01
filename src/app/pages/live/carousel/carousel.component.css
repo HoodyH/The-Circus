@@ -3,7 +3,18 @@
   max-height: 50%;
 }
 
-.carousel-inner img {
-  width: 50%;
-  height: auto;
+img, video {
+  max-height: 60vh;
 }
+
+.file-tag {
+  position: relative;
+  bottom: 25px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  padding: 0.6em;
+  color: #eee;
+  width: fit-content; 
+  margin: auto;
+}
+

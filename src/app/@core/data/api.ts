@@ -19,6 +19,7 @@ export class ApiUrls {
   static U_PARTICIPANTS = () => `${ApiUrls.API_URL}/api/event/participants/`;
 
   static U_GALLERY = (id: string) => `${ApiUrls.API_URL}/api/gallery/containers/${id}/`;
+  static U_GALLERY_FILES = () => `${ApiUrls.API_URL}/api/gallery/files/`;
   static U_GALLERY_UPLOAD = () => `${ApiUrls.API_URL}/api/gallery/upload/`;
 
   static U_POLL = () => `${ApiUrls.API_URL}/api/event/poll/`;

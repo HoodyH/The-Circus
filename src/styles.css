@@ -78,6 +78,6 @@ p, label {
   font-size: 6em;
 }
 
-img {
+img, video {
   border-radius: var(--border-radius);
 }

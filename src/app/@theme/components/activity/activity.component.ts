@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Activity} from "@core/data/events";
+import {ActivityAction} from "@core/data/events";
 
 @Component({
   selector: 'app-activity',
@@ -10,5 +10,6 @@ export class ActivityComponent {
 
   @Input() title: string
   @Input() description: string
+  @Input() actions: ActivityAction[] = []
 
 }
