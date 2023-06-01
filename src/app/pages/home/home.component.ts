@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Event, EventsData} from "@core/data/events";
-import {Gallery, GalleryData} from "@core/data/galley";
+import {StaticGallery, GalleryData} from "@core/data/galley";
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import {Gallery, GalleryData} from "@core/data/galley";
 export class HomeComponent implements OnInit {
 
   event: Event;
-  gallery: Gallery[] = []
+  staticGallery: StaticGallery[] = []
 
   constructor(private eventService: EventsData, private galleryService: GalleryData) {
   }
@@ -20,8 +20,8 @@ export class HomeComponent implements OnInit {
       this.event = event
     })
 
-    this.galleryService.getGallery().subscribe((gallery) => {
-      this.gallery = gallery
+    this.galleryService.getStaticGallery().subscribe((staticGallery) => {
+      this.staticGallery = staticGallery
     })
   }
 

@@ -1,0 +1,16 @@
+<div class="p-3" *ngIf="currentFile">
+  <div class="">
+    <div class="">
+      <ng-container *ngIf="currentFile.type !== 'video/mp4'">
+        <img class="img-fluid" [src]="currentFile.url" [alt]="currentFile.id">
+      </ng-container>
+      <ng-container *ngIf="currentFile.type === 'video/mp4'">
+        <video #videoPlayer class="video-fluid" autoplay loop [muted]="true" (playing)="calculateVideoTime($event)">
+          <source [src]="currentFile.url" type="video/mp4">
+          Il tuo browser non supporta la visualizzazione dei video.
+        </video>
+      </ng-container>
+      <p *ngIf="currentFile" class="file-tag">Caricato da: <strong>{{currentFile.user.first_name}} {{currentFile.user.last_name}}</strong></p>
+    </div>
+  </div>
+</div>

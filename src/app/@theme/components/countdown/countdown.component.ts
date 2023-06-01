@@ -33,6 +33,10 @@ export class CountdownComponent implements OnInit {
       this.hours = Math.floor((difference % 86400) / 3600);
       this.minutes = Math.floor((difference % 3600) / 60);
       this.seconds = difference % 60;
+
+      if (difference < 0) {
+        this.days = this.hours = this.minutes = this.seconds = 0;
+      }
     }
   }
 

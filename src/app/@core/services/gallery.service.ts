@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {of as observableOf, Observable} from 'rxjs';
-import {GalleryData, Gallery} from '@core/data/galley';
+import { ApiUrls } from '@core/data/api';
+import {Gallery, GalleryData, StaticGallery, FileStore, FileUpload, PaginatedFiles} from '@core/data/galley';
+
 
 @Injectable()
 export class GalleryService extends GalleryData {
 
-  private eventData: Gallery[] = [{
+  private eventData: StaticGallery[] = [{
     src: '_00bf5be5-8bef-4731-b8b0-4de1af09e981.jpg',
   },{
     src: '_3f17be17-0bb5-4bbf-aefa-63fc30da31b4.jpg',
@@ -19,7 +22,23 @@ export class GalleryService extends GalleryData {
     src: '_f3372cea-fbc7-48f2-ad8d-9db1d8ed1a62.jpg',
   }];
 
-  getGallery(): Observable<Gallery[]> {
+  constructor(private http: HttpClient) {
+    super();
+  }
+
+  getStaticGallery(): Observable<StaticGallery[]> {
     return observableOf(this.eventData);
+  }
+
+  getGallery(): Observable<Gallery> {
+    return this.http.get<Gallery>(`${ApiUrls.U_GALLERY(ApiUrls.EVENT_ID)}`);
+  }
+
+  getFiles(): Observable<PaginatedFiles> {
+    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${ApiUrls.EVENT_ID}`);
+  }
+
+  postFile(data: FormData): Observable<FileStore> {
+    return this.http.post<FileStore>(`${ApiUrls.U_GALLERY_UPLOAD()}`, data);
   }
 }

@@ -1,12 +1,25 @@
 import {Observable} from "rxjs";
 import {User} from "@core/data/users";
 
+
+export interface ActivityAction {
+  id: number;
+  type: string;
+  name: string;
+  url: string;
+  blank: boolean;
+  is_live_only: boolean;
+  description: string;
+}
+
 export interface Activity {
   id: number;
   event?: number;
   title: string;
   start_datetime: string;
   description: string;
+  live_description: string;
+  actions: ActivityAction[];
 }
 
 export interface Participant {
@@ -45,6 +58,9 @@ export interface Event {
 
 export abstract class EventsData {
   abstract getEvent(): Observable<Event>;
-  abstract getActivities(): Observable<Activity[]>;
-  abstract getStaff(): Observable<Staff[]>;
+  abstract getParticipants(): Observable<Participant[]>;
+
+  isEventStarted(end_datetime: string): boolean {
+    return new Date() > new Date(end_datetime)
+  };
 }

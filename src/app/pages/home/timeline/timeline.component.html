@@ -4,8 +4,7 @@
       <div class="start-time">
         <h4>{{ activity.start_datetime | date: 'HH:mm' }}</h4>
       </div>
-      <h2 class="title mb-2">{{ activity.title }}</h2>
-      <p *ngIf="activity.description" class="description">{{ activity.description }}</p>
+      <app-activity  [title]="activity.title" [description]="activity.description" [actions]="activity.actions"></app-activity>
     </div>
   </div>
 </div>

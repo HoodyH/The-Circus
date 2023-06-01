@@ -1,3 +1,16 @@
 .chart {
-    height: 400px;
-  }
+  height: 400px;
+}
+
+.chart-container {
+  position: relative;
+}
+
+.no-data-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+}

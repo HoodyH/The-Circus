@@ -1,4 +1,7 @@
 <div class="col-md-12 text-center">
-  <p><span class="emoji">😭</span></p>
-  <p>Non ci sono poll attivi in questo momento, riprova più tardi</p>
+  <p><span class="emoji-big">😭</span></p>
+  <p>Non ci sono sondaggi attivi in questo momento</p>
+  <br>
+  <p *ngIf="nextPoll">Prossima votazione:</p>
+  <p *ngIf="nextPoll">{{nextPoll.start_datetime | customDate}}</p>
 </div>

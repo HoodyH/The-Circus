@@ -28,8 +28,11 @@ export class HeaderComponent implements OnInit {
   }
 
   goBack(): void {
-    // Naviga alla route precedente
-    this.location.back();
+    if (this.location.back) {
+      this.location.back();
+    } else {
+      this.goHome();
+    }
   }
 
 }

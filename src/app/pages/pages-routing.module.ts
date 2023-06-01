@@ -21,6 +21,15 @@ const routes: Routes = [
         path: 'poll',
         canActivate: [AuthGuard],
         loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
+      },
+      {
+        path: 'gallery',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./gallery/gallery.module').then(m => m.GalleryModule),
+      },
+      {
+        path: 'black-hole',
+        loadChildren: () => import('./miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule),
       }
     ]
   }

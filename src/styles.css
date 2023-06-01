@@ -73,3 +73,11 @@ p, label {
 .alert-danger {
   border: none;
 }
+
+.emoji-big {
+  font-size: 6em;
+}
+
+img, video {
+  border-radius: var(--border-radius);
+}

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PollCountResult } from '@app/@core/data/poll';
 
 @Component({
   selector: 'app-poll-results-list',
@@ -7,6 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PollResultsListComponent {
   
-  @Input() results: { firstName: string, lastName: string, count: number }[];
+  @Input() results: PollCountResult[];
 
 }
