@@ -1,8 +1,22 @@
-<section class="section-live min-vh-100 d-flex align-items-center">
+<section class="vh-100 d-flex align-items-center" [style.background]="background ? background.color : '#eee'">
+
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
 
   <div class="container">
     <div class="row" *ngIf="currentLiveDisplay == currentLiveService.carusel">
-      <app-carousel class="col text-center mx-auto" [files]="files" (lastScrolledPhoto)="getCaruselData($event)"></app-carousel>
+      <app-carousel class="col text-center mx-auto" [files]="files"
+        (lastScrolledPhoto)="getCaruselData($event)"></app-carousel>
     </div>
 
     <div class="row" *ngIf="currentLiveDisplay == currentLiveService.poll">

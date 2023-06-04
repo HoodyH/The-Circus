@@ -1,4 +1,4 @@
-<section (scroll)="onScroll()" class="min-vh-100 d-flex align-items-center">
+<section class=" min-vh-100 d-flex align-items-center">
   <div class="container">
 
     <div>
@@ -10,7 +10,7 @@
       <button class="btn btn-secondary" (click)="navigateToUpload()">Pubblica Foto</button>
     </div>
 
-    <div class="row justify-content-between">
+    <div class="row justify-content-start mb-4">
       <div class="col-4 p-0" *ngFor="let media of mediaList" (click)="openModal(media)">
         <div class="square-container">
           <ng-container *ngIf="media.type !== 'video/mp4'">

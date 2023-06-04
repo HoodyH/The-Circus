@@ -15,9 +15,9 @@ import { PollService } from './services/poll.service';
 import { StorageService } from './services/storage.service';
 import { AuthData } from './data/auth';
 import { AuthService } from './services/auth.service';
-
 import { AuthAppInterceptor } from './interceptors/auth.interceptor';
-
+import { LiveData } from './data/live';
+import { LiveService } from './services/live.service';
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
@@ -25,6 +25,7 @@ const DATA_SERVICES = [
   {provide: PaymentsData, useClass: PaymentsService},
   {provide: PollData, useClass: PollService},
   {provide: AuthData, useClass: AuthService},
+  {provide: LiveData, useClass: LiveService},
 ]
 
 

@@ -40,6 +40,7 @@ export interface StaticGallery {
 export abstract class GalleryData {
   abstract getStaticGallery(): Observable<StaticGallery[]>;
   abstract getGallery(): Observable<Gallery>;
-  abstract getFiles(index?: number): Observable<PaginatedFiles>;
+  abstract getFiles(page?: number): Observable<PaginatedFiles>;
+  abstract getFilesNextPage(next: string): Observable<PaginatedFiles>;
   abstract postFile(data: FormData): Observable<FileStore>;
 }

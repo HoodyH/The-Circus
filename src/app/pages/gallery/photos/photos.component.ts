@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FileStore, GalleryData, PaginatedFiles } from '@core/data/galley';
 
@@ -9,44 +9,47 @@ import { FileStore, GalleryData, PaginatedFiles } from '@core/data/galley';
 })
 export class PhotosComponent implements OnInit {
 
-  paginatedFiles: PaginatedFiles;
+  currentPaginatedFiles: PaginatedFiles;
   mediaList: FileStore[];
 
   isModalOpen = false;
   selectedMedia: FileStore;
 
-  scrollContainer: HTMLElement;
-  scrollThreshold = 200;
+  scrollThreshold = 400;
   loading = false;
 
-  constructor(private galleryService: GalleryData, private router: Router) {
+  constructor(private galleryService: GalleryData, private router: Router, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
     this.galleryService.getFiles().subscribe({
       next: (paginatedFiles) => {
-        this.paginatedFiles = paginatedFiles
+        this.currentPaginatedFiles = paginatedFiles
         this.mediaList = paginatedFiles.results;
+        this.loadMoreFiles();
       }
     })
   }
 
+  @HostListener('window:scroll')
   onScroll(): void {
-    const scrollHeight = this.scrollContainer.scrollHeight;
-    const scrollTop = this.scrollContainer.scrollTop;
-    const clientHeight = this.scrollContainer.clientHeight;
+    console.log('scroll')
+    const windowHeight = window.innerHeight;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset;
 
-    if (scrollHeight - scrollTop - clientHeight < this.scrollThreshold && !this.loading) {
+    if (scrollHeight - (windowHeight + scrollTop) < this.scrollThreshold && !this.loading) {
       this.loadMoreFiles();
     }
   }
 
   loadMoreFiles(): void {
-    if (this.paginatedFiles.next && !this.loading) {
+    if (this.currentPaginatedFiles && this.currentPaginatedFiles.next && !this.loading) {
       this.loading = true;
-      this.galleryService.getFiles(this.paginatedFiles.next).subscribe({
+      const nextPage = this.currentPaginatedFiles.next.split('=').pop();
+      this.galleryService.getFiles(nextPage).subscribe({
         next: (paginatedFiles: PaginatedFiles) => {
-          this.paginatedFiles = paginatedFiles;
+          this.currentPaginatedFiles = paginatedFiles;
           this.mediaList.push(...paginatedFiles.results);
           this.loading = false;
         },
