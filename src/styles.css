@@ -5,7 +5,7 @@
   --secondary-color-accent: #e4e4e4;
   --text-color: #3f3f3f;
   --font-family: "Poppins", sans-serif;
-  --border-radius: 3em;
+  --border-radius: 2em;
   --animation-time: 2s;
 }
 
@@ -60,7 +60,7 @@ p, label {
   border-color: var(--primary-color);
 }
 
-.card {
+.card, .modal-content {
   border: none;
   background-color: var(--secondary-color);
   border-radius: var(--border-radius);
@@ -79,5 +79,10 @@ p, label {
 }
 
 img, video {
+  border-radius: var(--border-radius);
+}
+
+.dropdown {
+  margin-top: 1px;
   border-radius: var(--border-radius);
 }

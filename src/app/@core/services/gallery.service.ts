@@ -34,8 +34,12 @@ export class GalleryService extends GalleryData {
     return this.http.get<Gallery>(`${ApiUrls.U_GALLERY(ApiUrls.EVENT_ID)}`);
   }
 
-  getFiles(): Observable<PaginatedFiles> {
-    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${ApiUrls.EVENT_ID}`);
+  getFiles(page: number = 1): Observable<PaginatedFiles> {
+    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${ApiUrls.EVENT_ID}&page=${page}`);
+  }
+
+  getFilesNextPage(next: string): Observable<PaginatedFiles> {
+    return this.http.get<PaginatedFiles>(next);
   }
 
   postFile(data: FormData): Observable<FileStore> {

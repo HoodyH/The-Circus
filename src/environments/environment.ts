@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   useHash: true,
-  event: 'xeamar-encore',
+  event: 'backdrop',
   api: 'https://dioniso.azurewebsites.net'
 };
 

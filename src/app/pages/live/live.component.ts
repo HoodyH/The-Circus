@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Background, LiveData } from '@app/@core/data/live';
 import { Poll, PollCountResult, PollData } from '@app/@core/data/poll';
 import { Event, EventsData } from "@core/data/events";
 import { FileStore, Gallery, GalleryData } from "@core/data/galley";
@@ -16,7 +17,7 @@ export class CurrentLiveService {
   templateUrl: './live.component.html',
   styleUrls: ['./live.component.css']
 })
-export class LiveComponent implements OnInit {
+export class LiveComponent implements OnInit, OnDestroy {
 
   event: Event;
   gallery: Gallery;
@@ -30,8 +31,12 @@ export class LiveComponent implements OnInit {
   currentLiveService = new CurrentLiveService()
   currentLiveDisplay: string = this.currentLiveService.carusel
 
+  background: Background;
+  backgroundSubscription: any = null;
 
-  constructor(private eventService: EventsData, private galleryService: GalleryData, private pollService: PollData) {
+
+  constructor(private eventService: EventsData, private galleryService: GalleryData, 
+    private pollService: PollData, private liveService: LiveData) {
   }
 
   ngOnInit(): void {
@@ -41,22 +46,27 @@ export class LiveComponent implements OnInit {
       }
     })
 
-    this.galleryService.getGallery().subscribe({
-      next: (galley) => {
-        this.gallery = galley;
-        if (galley.files.length > 0){
-          this.files = galley.files.slice(0, 1);
-        } else {
-          this.files = []
-        }
-      }
-    })
+    this.getCaruselData();
 
     this.pollService.getPoll().subscribe({
       next: (polls) => {
         this.polls = polls;
       }
     })
+
+    this.liveService.backgroundSubject.subscribe({
+      next: (background) => {
+        this.background = background;
+      }
+    })
+
+    this.backgroundSubscription = this.liveService.subscribeBackground()
+  }
+
+  ngOnDestroy(): void {
+    if (this.backgroundSubscription) {
+      this.backgroundSubscription.unsubscrive();
+    }
   }
 
   checkAction() {
@@ -79,7 +89,7 @@ export class LiveComponent implements OnInit {
     });
   }
 
-  getCaruselData(lastFile: FileStore) {
+  getCaruselData(lastFile: FileStore | undefined = undefined) {
     this.galleryService.getFiles().subscribe({
       next: (PaginatedFiles) => {
         // get the new images
@@ -88,10 +98,13 @@ export class LiveComponent implements OnInit {
           const index = files.findIndex(file => file.id === lastFile.id);
           if (index > 0) {
             this.files = files.slice(0, index);
-            return;
           }
+          if (index == -1) {
+            this.files = files;
+          }
+        } else {
+          this.files = files;
         }
-        this.files = files;
       }
     })
   }
