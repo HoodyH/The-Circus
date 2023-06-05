@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { AuthData } from '@core/data/auth';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { AUTO_STYLE } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,21 @@ export class LoginComponent implements OnInit {
     if (this.route.snapshot.queryParams['next']) {
         this.next = this.route.snapshot.queryParams['next'];
     }
+
+    if (this.route.snapshot.queryParams['access']) {
+     this.autoLogin(this.route.snapshot.queryParams['access']);
+    }
+  }
+
+  autoLogin(key: string) {
+    const decodedKey = Buffer.from(key, 'base64').toString('latin1');
+    const [phone, password] = decodedKey.split(",");
+
+    this.loginForm.patchValue({phone, password});
+
+    setTimeout(() => {
+      this.onSubmit();
+    }, 1000);
   }
 
   onSubmit() {
