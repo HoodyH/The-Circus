@@ -81,3 +81,8 @@ p, label {
 img, video {
   border-radius: var(--border-radius);
 }
+
+.dropdown {
+  margin-top: 1px;
+  border-radius: var(--border-radius);
+}

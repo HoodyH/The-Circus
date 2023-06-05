@@ -2,13 +2,13 @@
 
   <div class="container" *ngIf="loading || polls == undefined">
     <div class="row justify-content-center">
-        <app-loading-animation></app-loading-animation>
+      <app-loading-animation></app-loading-animation>
     </div>
   </div>
 
   <div class="container" *ngIf="!loading && !currentPoll && ((polls && nextPoll) || !loading)">
     <div class="row justify-content-center">
-        <app-no-poll-active [nextPoll]="nextPoll"></app-no-poll-active>
+      <app-no-poll-active [nextPoll]="nextPoll"></app-no-poll-active>
     </div>
   </div>
 
@@ -17,7 +17,7 @@
       <div class="col-md-6 text-center">
 
         <h2 class="mb-3 title">{{currentPoll.question}}</h2>
-        <p *ngIf="currentPoll.is_active && !vote">Inserisci il nome di un Partecipante per votare</p>
+        <p *ngIf="currentPoll.is_active && !vote">Scrivi il nome di un Partecipante per votare</p>
         <div *ngIf="!currentPoll.is_active">
           <p>Sondaggio chiuso, non si accettano più voti</p>
           <p *ngIf="nextPoll">Prossima votazione {{nextPoll.start_datetime | customDate}}</p>
@@ -39,30 +39,13 @@
           (ngSubmit)="sendVote()"
           class="mt-3 text-center"
         >
-        
-          <div class="input-group">
-            <input
-              type="text"
-              formControlName="vote"
-              placeholder="Scrivi un nome"
-              class="form-control"
-              (selectItem)="selectParticipant($event)"
-            />
-          </div>
-          <div>
-            <div class="dropdown" *ngIf="filteredParticipants.length > 0">
-              <ul class="search-suggestions" aria-labelledby="searchDropdown">
-                <li *ngFor="let participant of filteredParticipants">
-                  <a (click)="selectParticipant(participant)">
-                    {{ participant.user.first_name }} {{ participant.user.last_name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <app-dropdown
+            [options]="options"
+            (valueSelected)="form.setValue({vote: $event?.id})"
+          ></app-dropdown>
 
           <br>
-          
+
           <div *ngIf="form.controls['vote'].invalid && form.controls['vote'].touched" class="alert alert-danger">
             Voto non valido
           </div>
@@ -80,7 +63,6 @@
         </form>
       </div>
     </div>
-    <br>
     <div class="row justify-content-center">
       <div class="col">
         <app-poll-chart [results]="currentPollResults"></app-poll-chart>

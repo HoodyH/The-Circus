@@ -1,8 +1,9 @@
-import { ThisReceiver } from '@angular/compiler';
+import {ThisReceiver} from '@angular/compiler';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventsData, Participant} from '@app/@core/data/events';
 import {Poll, PollCountResult, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
+import {Option} from "@theme/components/dropdown/dropdown.component";
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -26,8 +27,8 @@ export class PollComponent implements OnInit, OnDestroy {
   nextPoll: Poll | null;
   votes: PollVoteDetail[];
   vote: PollVoteDetail | null;
-  participants: Participant[];
-  filteredParticipants: Participant[] = [];
+  options: Option[] = [];
+
   currentPollSubscription: any;
   currentPollResults: PollCountResult[] = [];
 
@@ -40,8 +41,7 @@ export class PollComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private pollService: PollData, private eventService: EventsData) {
     this.form = this.fb.group({
-      id: [null, Validators.required],
-      vote: ['', Validators.required]
+      vote: [null, Validators.required]
     });
   }
 
@@ -53,19 +53,10 @@ export class PollComponent implements OnInit, OnDestroy {
 
     this.eventService.getParticipants().subscribe({
       next: (participants) => {
-        this.participants = participants;
+        this.options = participants.map((participant) => {
+          return {id: participant.id, value: `${participant.user.first_name} ${participant.user.last_name}`};
+        });
       }
-    });
-
-    this.form.controls['vote'].valueChanges.subscribe((data: string) => {
-      const vote: string = data.toLowerCase();
-
-      if (vote.length >= 3) {
-        this.filteredParticipants = this.filterParticipants(vote);
-      } else {
-        this.filteredParticipants = [];
-      }
-      console.log(this.filteredParticipants);
     });
   }
 
@@ -81,7 +72,7 @@ export class PollComponent implements OnInit, OnDestroy {
       if (!polls.length) {
         this.loading = false;
       }
-      
+
       this.polls = polls;
       this.nextPoll = null;
       let populated = false;
@@ -95,13 +86,15 @@ export class PollComponent implements OnInit, OnDestroy {
           populated = true;
 
           // update vote only on poll change
-          if ((!currentPoll && currentPoll !== poll )|| (currentPoll && currentPoll.id !== poll.id)) {
+          if ((!currentPoll && currentPoll !== poll) || (currentPoll && currentPoll.id !== poll.id)) {
             this.vote = null;
             // load the votes on poll change
             this.pollService.getPollVote().subscribe({
               next: (votes) => {
                 this.votes = votes.filter(vote => {
-                  if (this.currentPoll) { return vote.poll === this.currentPoll.id }
+                  if (this.currentPoll) {
+                    return vote.poll === this.currentPoll.id
+                  }
                   return false
                 });
                 if (this.votes.length) {
@@ -133,19 +126,6 @@ export class PollComponent implements OnInit, OnDestroy {
         this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
       }
     })
-  }
-
-  filterParticipants(value: string): Participant[] {
-    return this.participants.filter((participant: Participant) => {
-      const fullName = `${participant.user.first_name} ${participant.user.last_name}`.toLowerCase();
-      return fullName.includes(value);
-    });
-  }
-
-  selectParticipant(participant: any): void {
-    // Esegui le operazioni desiderate con il partecipante selezionato
-    this.form.patchValue({id: participant.id, vote: `${participant.user.first_name} ${participant.user.last_name}`})
-    this.filteredParticipants = [];
   }
 
   sendVote() {
@@ -201,13 +181,13 @@ export class PollComponent implements OnInit, OnDestroy {
       }
 
       if (this.vote) {
-        this.vote.vote = this.form.value['id']
+        this.vote.vote = this.form.value['vote']
         this.pollService.putPollVote(this.vote.id, this.vote).subscribe(observer)
       } else {
         if (this.currentPoll) {
           const newVote: PollVoteCreation = {
             poll: this.currentPoll.id,
-            vote: this.form.value['id']
+            vote: this.form.value['vote']
           }
           this.pollService.postPollVote(newVote).subscribe(observer)
         }

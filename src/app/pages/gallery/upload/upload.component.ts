@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { GalleryData, Gallery, FileStore } from '@app/@core/data/galley';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-upload',
@@ -15,7 +16,7 @@ export class UploadComponent implements OnInit {
   previewImageSrc: string;
   uploading: boolean = false;
 
-  constructor(private galleryService: GalleryData) {}
+  constructor(private galleryService: GalleryData, private router: Router) {}
 
   ngOnInit() {
     this.galleryService.getGallery().subscribe({
@@ -43,9 +44,9 @@ export class UploadComponent implements OnInit {
   uploadPhoto(event: Event) {
     event.preventDefault();
 
-    if (this.selectedFile) {     
+    if (this.selectedFile) {
 
-      this.uploading = true; 
+      this.uploading = true;
 
       const formData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -53,10 +54,10 @@ export class UploadComponent implements OnInit {
       formData.append('type', this.selectedFile.type);
 
       this.galleryService.postFile(formData).subscribe({
-        next: (data) => { 
-          this.file = data 
+        next: (data) => {
+          this.file = data
           setTimeout(() => {
-            window.location.reload();
+            this.router.navigateByUrl('/gallery/photos').then();
           }, 3000);
         }
       });

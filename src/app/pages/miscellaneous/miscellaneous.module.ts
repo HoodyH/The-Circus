@@ -4,12 +4,14 @@ import {ThemeModule} from "@theme/theme.module";
 import {MiscellaneousRoutingModule} from "@app/pages/miscellaneous/miscellaneous-routing.module";
 import {MiscellaneousComponent} from "@app/pages/miscellaneous/miscellaneous.component";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BlankComponent } from './blank/blank.component';
 
 
 @NgModule({
   declarations: [
     MiscellaneousComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    BlankComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,11 @@
+.dropdown-menu {
+  display: block;
+  border-radius: var(--border-radius);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  border-radius: var(--border-radius);
+  border: 1px solid;
+}

@@ -1,0 +1,30 @@
+<div class="form-group">
+  <label *ngIf="label" for="valueInput"></label>
+  <div class="input-group">
+    <input
+      #valueInput
+      type="text"
+      placeholder="Nome Cognome"
+      class="form-control"
+      id="valueInput"
+      [formControl]="valueControl"
+    >
+    <div *ngIf="selectedValue" class="input-group-text bg-danger">
+      <button type="button" class="btn" (click)="clearName()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <div class="dropdown" *ngIf="showDropdown">
+    <ul class="dropdown-menu p-2"
+    [style.width.px]="inputElement.nativeElement.offsetWidth"
+    >
+      <p *ngIf="filteredOptions.length == 0" class="text-center mb-0">Non ci sono risultati</p>
+      <li
+        class=" mb-1 text-center dropdown-item"
+        *ngFor="let option of filteredOptions"
+        (click)="selectName(option)"
+      >{{ option.value }}</li>
+    </ul>
+  </div>
+</div>

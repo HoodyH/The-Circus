@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {RouterModule} from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 // directives
 
@@ -20,6 +21,8 @@ import {SpotifyPlaylistComponent} from './components/spotify-playlist/spotify-pl
 import {MeteoStatusComponent} from './components/meteo-status/meteo-status.component';
 import { CurrentStatusComponent } from './components/current-status/current-status.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
+
 
 
 const COMPONENTS: any = [
@@ -33,6 +36,7 @@ const COMPONENTS: any = [
   MeteoStatusComponent,
   ActivityComponent,
   CurrentStatusComponent,
+  DropdownComponent,
 ];
 
 const DIRECTIVES: any = [];
@@ -51,6 +55,8 @@ const PIPES: any = [
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
   ],
   entryComponents: [],
