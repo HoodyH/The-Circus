@@ -1,13 +1,16 @@
-import { Observable, Subject } from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 export interface Background {
-    color: string;
-  }
-  
-  export abstract class LiveData {
+  color: string;
+}
 
-    abstract backgroundSubject: Subject<Background>;
-    
-    abstract subscribeBackground(): any;
-    abstract getBackground(): Observable<Background>;
-  }
+export const defaultBackground: Background = {
+  color: '#eee'
+}
+
+export abstract class LiveData {
+
+  abstract backgroundSubject: Subject<Background>;
+  abstract subscribeBackground(): any;
+  abstract getBackground(): Observable<Background>;
+}

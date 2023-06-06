@@ -1,30 +1,38 @@
-<section class="vh-100 d-flex align-items-center" [style.background]="background ? background.color : '#eee'">
+<section class="vh-100 d-flex align-items-center" [style.background]="background.color">
 
-    <ul class="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-    </ul>
+  <ul *ngIf="liveScreenConfiguration.lights" class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
 
-  <div class="container">
-    <div class="row" *ngIf="currentLiveDisplay == currentLiveService.carusel">
-      <app-carousel class="col text-center mx-auto" [files]="files"
-        (lastScrolledPhoto)="getCaruselData($event)"></app-carousel>
+  <div *ngIf="event" class="container">
+    <div class="row" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.CAROUSEL">
+      <app-carousel
+        class="col text-center mx-auto"
+        [files]="files"
+        (lastScrolledPhoto)="getCarouselData($event)"
+      ></app-carousel>
     </div>
 
-    <div class="row" *ngIf="currentLiveDisplay == currentLiveService.poll">
+    <div class="row" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.POLL">
+      <h2>Momento Sondaggio</h2>
       <app-poll-chart [results]="currentPollResults"></app-poll-chart>
     </div>
 
-    <div class="row" *ngIf="event">
-      <app-current-status [activities]="event.activities" [eventDate]="event.start_datetime"></app-current-status>
+    <div class="row">
+      <app-current-status
+        [activities]="event.activities"
+        [eventDate]="event.start_datetime"
+        (currentActivityChange)="currentActivityChange($event)"
+      ></app-current-status>
     </div>
   </div>
 

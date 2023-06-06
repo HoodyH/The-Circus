@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Background, LiveData } from "../data/live";
+import { Background, LiveData, defaultBackground } from "../data/live";
 import { Observable, Subject, interval, of as observableOf } from "rxjs";
 
 @Injectable()
@@ -9,20 +9,31 @@ export class LiveService extends LiveData {
   private hue = this.hueRange.min;
   private hueDirection = 1;
 
-  private background: Background = {
-    color: '#eee'
-  };
+  private background: Background = defaultBackground;
   public backgroundSubject: Subject<Background> = new Subject<Background>();
 
   subscribeBackground(): any {
-    return interval(100).subscribe(() => {
+
+    const transitionDuration = 5000;
+    const period = 100;
+    const alphaTransitionStep = transitionDuration / period;
+    let transitionStep = 10;
+
+    return interval(period).subscribe(() => {
+      transitionStep++;
+
+      let alpha = 100;
+      if (transitionStep <= alphaTransitionStep) {
+        alpha = (1 - transitionStep / alphaTransitionStep) * 100;
+        console.log(alpha);
+      }
 
       this.hue += this.hueDirection;
       if (this.hue > this.hueRange.max || this.hue < this.hueRange.min) {
         this.hueDirection *= -1;
       }
-      const color = `hsl(${this.hue}, 100%, 50%)`;
-      this.background.color = color;
+
+      this.background.color = `hsl(${this.hue}, 100%, 50%, ${alpha}%)`;
       this.backgroundSubject.next(this.background);
     });
   }

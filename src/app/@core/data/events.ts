@@ -1,15 +1,35 @@
 import {Observable} from "rxjs";
 import {User} from "@core/data/users";
+import {Background} from "@core/data/live";
 
+
+export enum LiveScreenTypes {
+  CAROUSEL = 'carousel',
+  POLL = 'poll',
+}
+
+export enum ActivityLinkTypes {
+  SPOTIFY = 'spotify',
+  LINK = 'website',
+  POLL = 'poll',
+  PAGE = 'page',
+}
 
 export interface ActivityAction {
   id: number;
-  type: string;
+  type: ActivityLinkTypes;
   name: string;
   url: string;
   blank: boolean;
   is_live_only: boolean;
   description: string;
+}
+
+export interface LiveConfiguration {
+  id: number;
+  name: string;
+  lights: boolean;
+  main_block: LiveScreenTypes;
 }
 
 export interface Activity {
@@ -20,6 +40,7 @@ export interface Activity {
   description: string;
   live_description: string;
   actions: ActivityAction[];
+  live_configuration: LiveConfiguration;
 }
 
 export interface Participant {
@@ -55,6 +76,13 @@ export interface Event {
   staff: Staff[];
   location: Location;
 }
+
+export const defaultLiveScreenConfiguration: LiveConfiguration = {
+    id: 0,
+    name: 'default',
+    main_block: LiveScreenTypes.CAROUSEL,
+    lights: false,
+  }
 
 export abstract class EventsData {
   abstract getEvent(): Observable<Event>;

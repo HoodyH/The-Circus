@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Activity} from "@core/data/events";
 
 @Component({
@@ -10,6 +10,7 @@ export class CurrentStatusComponent implements OnInit {
 
   @Input() eventDate: string;
   @Input() activities: Activity[] = []
+  @Output() currentActivityChange: EventEmitter<Activity> = new EventEmitter<Activity>()
 
   currentActivity: Activity
 
@@ -23,9 +24,13 @@ export class CurrentStatusComponent implements OnInit {
   getCurrentActivity() {
     if (new Date(this.eventDate) < new Date()) {
       if (this.activities.length > 0) {
-        this.currentActivity = this.activities.reduce((prev, current) => {
+        const activity = this.activities.reduce((prev, current) => {
           return new Date(current.start_datetime) > new Date(prev.start_datetime) ? current : prev;
         });
+        if (activity != this.currentActivity) {
+          this.currentActivity = activity;
+          this.currentActivityChange.emit(activity);
+        }
       }
     }
   }

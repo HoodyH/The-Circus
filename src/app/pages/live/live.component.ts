@@ -1,16 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Background, LiveData } from '@app/@core/data/live';
-import { Poll, PollCountResult, PollData } from '@app/@core/data/poll';
-import { Event, EventsData } from "@core/data/events";
-import { FileStore, Gallery, GalleryData } from "@core/data/galley";
-
-
-export class CurrentLiveService {
-  public readonly empty = "empty";
-  public readonly poll = "poll";
-  public readonly carusel = "carusel";
-}
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Background, defaultBackground, LiveData} from '@app/@core/data/live';
+import {Poll, PollCountResult, PollData} from '@app/@core/data/poll';
+import {
+  Activity,
+  defaultLiveScreenConfiguration,
+  Event,
+  EventsData,
+  LiveConfiguration,
+  LiveScreenTypes
+} from "@core/data/events";
+import {FileStore, Gallery, GalleryData} from "@core/data/galley";
 
 @Component({
   selector: 'app-live',
@@ -22,31 +21,33 @@ export class LiveComponent implements OnInit, OnDestroy {
   event: Event;
   gallery: Gallery;
   files: FileStore[];
-  
+
+  currentActivity: Activity | undefined;
+
   polls: Poll[];
   currentPoll: Poll | null;
   currentPollResults: PollCountResult[] = [];
-  pollDataSubscripton: any;
+  pollDataSubscription: any;
 
-  currentLiveService = new CurrentLiveService()
-  currentLiveDisplay: string = this.currentLiveService.carusel
-
-  background: Background;
+  liveScreenTypes = LiveScreenTypes
+  liveScreenConfiguration: LiveConfiguration = defaultLiveScreenConfiguration;
+  background: Background = defaultBackground;
   backgroundSubscription: any = null;
 
 
-  constructor(private eventService: EventsData, private galleryService: GalleryData, 
-    private pollService: PollData, private liveService: LiveData) {
+  constructor(private eventService: EventsData, private galleryService: GalleryData,
+              private pollService: PollData, private liveService: LiveData) {
   }
 
   ngOnInit(): void {
+
     this.eventService.getEvent().subscribe({
       next: (event) => {
         this.event = event
       }
     })
 
-    this.getCaruselData();
+    this.getCarouselData();
 
     this.pollService.getPoll().subscribe({
       next: (polls) => {
@@ -54,13 +55,12 @@ export class LiveComponent implements OnInit, OnDestroy {
       }
     })
 
+    // connect background subject
     this.liveService.backgroundSubject.subscribe({
       next: (background) => {
         this.background = background;
       }
     })
-
-    this.backgroundSubscription = this.liveService.subscribeBackground()
   }
 
   ngOnDestroy(): void {
@@ -69,8 +69,19 @@ export class LiveComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkAction() {
+  currentActivityChange(event: Activity) {
+    this.currentActivity = event;
+    this.liveScreenConfiguration = this.currentActivity.live_configuration;
 
+    // activate or deactivate lights
+    if (this.liveScreenConfiguration.lights) {
+      this.backgroundSubscription = this.liveService.subscribeBackground();
+    } else {
+      if (this.backgroundSubscription) {
+        this.backgroundSubscription.unsubscrive();
+      }
+      this.background = defaultBackground;
+    }
   }
 
   getPollData() {
@@ -89,7 +100,7 @@ export class LiveComponent implements OnInit, OnDestroy {
     });
   }
 
-  getCaruselData(lastFile: FileStore | undefined = undefined) {
+  getCarouselData(lastFile: FileStore | undefined = undefined) {
     this.galleryService.getFiles().subscribe({
       next: (PaginatedFiles) => {
         // get the new images
