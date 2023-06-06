@@ -23,8 +23,8 @@
     </div>
 
     <div class="row" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.POLL">
-      <h2>Momento Sondaggio</h2>
-      <app-poll-chart [results]="currentPollResults"></app-poll-chart>
+      <h2>{{currentPoll?.question}}</h2>
+      <app-poll-chart [poll]="currentPoll" [results]="currentPollResults" [maxResultsLive]="7"></app-poll-chart>
     </div>
 
     <div class="row">

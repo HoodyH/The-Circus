@@ -100,7 +100,6 @@ export class PollComponent implements OnInit, OnDestroy {
                 if (this.votes.length) {
                   this.vote = this.votes[0];
                 }
-                this.loading = false;
               }
             });
           }
@@ -111,6 +110,7 @@ export class PollComponent implements OnInit, OnDestroy {
           // if no active pool found load the latest one as closed
           if (this.pollService.isClosed(poll.end_datetime) && !populated) {
             this.currentPoll = poll;
+            populated = true;
           }
         }
 
@@ -121,9 +121,14 @@ export class PollComponent implements OnInit, OnDestroy {
         }
       }
 
+      if (!populated) {
+        this.currentPoll = null;
+      }
+
       // if a poll has been loaded, calculate the data
       if (this.currentPoll) {
         this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
+        this.loading = false;
       }
     })
   }

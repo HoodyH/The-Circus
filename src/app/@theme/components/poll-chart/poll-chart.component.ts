@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import { PollCountResult } from '@core/data/poll';
+import { Poll, PollCountResult } from '@core/data/poll';
 
 @Component({
   selector: 'app-poll-chart',
@@ -8,15 +8,22 @@ import { PollCountResult } from '@core/data/poll';
 })
 export class PollChartComponent implements OnChanges {
 
+  @Input() poll: Poll | null;
   @Input() results: PollCountResult[];
-  @Input() maxResults: number = 5;
+  @Input() maxResults: number = 3;
+  @Input() maxResultsLive: number = 5;
 
   chartOptions: any;
 
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['results'] && changes['results'].currentValue) {
-      const data = this.results.slice(0, this.maxResults);
+      
+      let maxResults = this.maxResultsLive;
+      if (this.poll && !this.poll.is_active) {
+        maxResults = this.maxResults
+      }
+      const data = this.results.slice(0, maxResults);
 
       this.chartOptions = {
         tooltip: {},

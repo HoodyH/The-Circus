@@ -27,7 +27,7 @@ export class LiveComponent implements OnInit, OnDestroy {
   polls: Poll[];
   currentPoll: Poll | null;
   currentPollResults: PollCountResult[] = [];
-  pollDataSubscription: any;
+  currentPollSubscription: any;
 
   liveScreenTypes = LiveScreenTypes
   liveScreenConfiguration: LiveConfiguration = defaultLiveScreenConfiguration;
@@ -82,17 +82,49 @@ export class LiveComponent implements OnInit, OnDestroy {
       }
       this.background = defaultBackground;
     }
+
+    // activate or deactivate poll
+    if (this.liveScreenConfiguration.main_block == this.liveScreenTypes.POLL) {
+      this.getPollData();
+      this.currentPollSubscription = setInterval(() => {
+        this.getPollData();
+      }, 5000);
+    } else {
+      if (this.currentPollSubscription) {
+        this.currentPollSubscription.unsubscrive();
+      }
+      this.currentPoll = null;
+      this.currentPollResults = [];
+    }
   }
 
   getPollData() {
     this.pollService.getPoll().subscribe({
       next: (polls) => {
+
+        let populated = false;
+
         for (const poll of polls) {
           if (this.pollService.isActive(poll.start_datetime, poll.end_datetime)) {
             // if the poll has changed from the current one
             this.currentPoll = poll;
+            populated = true;
+            break;
+
+          } else {
+            // if the poll has changed status or has been deleted, do actions
+            // if no active pool found load the latest one as closed
+            if (this.pollService.isClosed(poll.end_datetime) && !populated) {
+              this.currentPoll = poll;
+              populated = true;
+            }
           }
         }
+
+        if (!populated) {
+          this.currentPoll = null;
+        }
+
         if (this.currentPoll) {
           this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
         }
@@ -119,5 +151,4 @@ export class LiveComponent implements OnInit, OnDestroy {
       }
     })
   }
-
 }

@@ -14,7 +14,7 @@ export class LiveService extends LiveData {
 
   subscribeBackground(): any {
 
-    const transitionDuration = 5000;
+    const transitionDuration = 10000;
     const period = 100;
     const alphaTransitionStep = transitionDuration / period;
     let transitionStep = 10;
@@ -24,8 +24,7 @@ export class LiveService extends LiveData {
 
       let alpha = 100;
       if (transitionStep <= alphaTransitionStep) {
-        alpha = (1 - transitionStep / alphaTransitionStep) * 100;
-        console.log(alpha);
+        alpha = 100 - (1 - transitionStep / alphaTransitionStep) * 100;
       }
 
       this.hue += this.hueDirection;

@@ -18,19 +18,20 @@ export class CurrentStatusComponent implements OnInit {
     this.getCurrentActivity();
     setInterval(() => {
       this.getCurrentActivity();
-    }, 5000);
+    }, 1000);
   }
 
   getCurrentActivity() {
-    if (new Date(this.eventDate) < new Date()) {
-      if (this.activities.length > 0) {
-        const activity = this.activities.reduce((prev, current) => {
-          return new Date(current.start_datetime) > new Date(prev.start_datetime) ? current : prev;
-        });
-        if (activity != this.currentActivity) {
-          this.currentActivity = activity;
-          this.currentActivityChange.emit(activity);
-        }
+    if (this.activities.length > 0) {
+      const now = new Date();
+      const startedActivities = this.activities.filter(activity => new Date(activity.start_datetime) <= now);
+      const activity = startedActivities.reduce((prev, current) => {
+        return new Date(current.start_datetime) > new Date(prev.start_datetime) ? current : prev;
+      });
+
+      if (activity != this.currentActivity) {
+        this.currentActivity = activity;
+        this.currentActivityChange.emit(activity);
       }
     }
   }
