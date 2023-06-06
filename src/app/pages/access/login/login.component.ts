@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AuthData } from '@core/data/auth';
+import {AuthData} from '@core/data/auth';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -12,7 +12,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   loginFailed = false;
-  next: string
+  loginSuccess = false;
+  next: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthData,
               private fb: FormBuilder) {
@@ -24,13 +25,29 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['']).then();
-    }
 
     if (this.route.snapshot.queryParams['next']) {
-        this.next = this.route.snapshot.queryParams['next'];
+      this.next = this.route.snapshot.queryParams['next'];
     }
+
+    let login = false;
+    if (this.route.snapshot.queryParams['key']) {
+      login = this.autoLogin(this.route.snapshot.queryParams['key']);
+    }
+
+    if (!login && this.authService.isLoggedIn()) {
+      this.router.navigate(['']).then();
+    }
+  }
+
+  autoLogin(key: string): boolean {
+    const decodedKey = Buffer.from(key, 'base64').toString('latin1');
+    const [phone, password] = decodedKey.split(",");
+
+    this.loginForm.patchValue({phone, password});
+
+    this.onSubmit();
+    return true
   }
 
   onSubmit() {
@@ -48,17 +65,21 @@ export class LoginComponent implements OnInit {
     this.authService.login(data).subscribe({
       next: (success) => {
         if (success) {
-          if (this.next) {
-            this.router.navigateByUrl(this.next).catch(
-              () => this.router.navigate(['']).then()
-            );
-          } else {
-            this.router.navigate(['']).then()
-          }
+          this.loginFailed = false;
+          this.loginSuccess = true;
+          setTimeout(() => {
+            if (this.next) {
+              this.router.navigateByUrl(this.next).catch(
+                () => this.router.navigate(['']).then()
+              );
+            } else {
+              this.router.navigate(['']).then()
+            }
+          }, 1000)
         }
       },
       error: (err => {
-        this.loginFailed = true
+        this.loginFailed = true;
       })
     })
   }
