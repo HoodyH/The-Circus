@@ -15,6 +15,8 @@ export class UploadComponent implements OnInit {
   selectedFile: File;
   previewImageSrc: string;
   uploading: boolean = false;
+  error: boolean = false;
+  errorMessage: string = '';
 
   constructor(private galleryService: GalleryData, private router: Router) {}
 
@@ -59,6 +61,30 @@ export class UploadComponent implements OnInit {
           setTimeout(() => {
             this.router.navigateByUrl('/gallery/photos').then();
           }, 3000);
+        },
+        error: (e) => { 
+          this.error = true;
+          console.log(e);
+          if (e.error.code) {
+            switch (e.error.code[0]) {
+              case "size": {
+                this.errorMessage = "file superiore a 10 mega";
+                break;
+              }
+              case "participant": {
+                this.errorMessage = "non sei un partecipante all'evento";
+                break;
+              }
+              case "cooldown": {
+                this.errorMessage = "puoi caricare massimo una foto al minuto";
+                break;
+              }
+            }
+          }
+          setTimeout(() => {
+            this.router.navigateByUrl('').then();
+          }, 
+          3000);
         }
       });
     }

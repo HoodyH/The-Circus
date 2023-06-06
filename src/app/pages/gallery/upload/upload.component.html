@@ -18,7 +18,8 @@
           </div>
           
           <p *ngIf="uploading && !file" class="mt-2">Caricamento in corso...</p>
-          <p *ngIf="file" class="text-success mt-2">Caricamento completato</p>
+          <p *ngIf="file" class="alert alert-success mt-2">Caricamento completato</p>
+          <p *ngIf="error" class="alert alert-danger mt-2">Caricamento fallito {{errorMessage}}</p>
         </form>
       </div>
     </div>
