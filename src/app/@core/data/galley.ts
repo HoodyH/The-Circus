@@ -1,18 +1,23 @@
 import {Observable} from "rxjs";
 import { User } from "./users";
 
+enum FileTypes {
+  JPEG = 'image/jpeg',
+  PNG = 'image/png',
+  MP4 = 'video/mp4',
+}
+
 export interface FileUpload {
   gallery: number;
   type: string;
   file: any;
 }
 
-
 export interface FileStore {
   id: number;
   gallery: number;
   user: User;
-  type: string;
+  type: FileTypes;
   received_at: string;
   blob: string;
   url: string;

@@ -1,16 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Background, LiveData } from '@app/@core/data/live';
-import { Poll, PollCountResult, PollData } from '@app/@core/data/poll';
-import { Event, EventsData } from "@core/data/events";
-import { FileStore, Gallery, GalleryData } from "@core/data/galley";
-
-
-export class CurrentLiveService {
-  public readonly empty = "empty";
-  public readonly poll = "poll";
-  public readonly carusel = "carusel";
-}
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Background, defaultBackground, LiveData} from '@app/@core/data/live';
+import {Poll, PollCountResult, PollData} from '@app/@core/data/poll';
+import {
+  Activity,
+  defaultLiveScreenConfiguration,
+  Event,
+  EventsData,
+  LiveConfiguration,
+  LiveScreenTypes
+} from "@core/data/events";
+import {FileStore, Gallery, GalleryData} from "@core/data/galley";
 
 @Component({
   selector: 'app-live',
@@ -22,31 +21,33 @@ export class LiveComponent implements OnInit, OnDestroy {
   event: Event;
   gallery: Gallery;
   files: FileStore[];
-  
+
+  currentActivity: Activity | undefined;
+
   polls: Poll[];
   currentPoll: Poll | null;
   currentPollResults: PollCountResult[] = [];
-  pollDataSubscripton: any;
+  currentPollSubscription: any;
 
-  currentLiveService = new CurrentLiveService()
-  currentLiveDisplay: string = this.currentLiveService.carusel
-
-  background: Background;
+  liveScreenTypes = LiveScreenTypes
+  liveScreenConfiguration: LiveConfiguration = defaultLiveScreenConfiguration;
+  background: Background = defaultBackground;
   backgroundSubscription: any = null;
 
 
-  constructor(private eventService: EventsData, private galleryService: GalleryData, 
-    private pollService: PollData, private liveService: LiveData) {
+  constructor(private eventService: EventsData, private galleryService: GalleryData,
+              private pollService: PollData, private liveService: LiveData) {
   }
 
   ngOnInit(): void {
+
     this.eventService.getEvent().subscribe({
       next: (event) => {
         this.event = event
       }
     })
 
-    this.getCaruselData();
+    this.getCarouselData();
 
     this.pollService.getPoll().subscribe({
       next: (polls) => {
@@ -54,13 +55,12 @@ export class LiveComponent implements OnInit, OnDestroy {
       }
     })
 
+    // connect background subject
     this.liveService.backgroundSubject.subscribe({
       next: (background) => {
         this.background = background;
       }
     })
-
-    this.backgroundSubscription = this.liveService.subscribeBackground()
   }
 
   ngOnDestroy(): void {
@@ -69,19 +69,62 @@ export class LiveComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkAction() {
+  currentActivityChange(event: Activity) {
+    this.currentActivity = event;
+    this.liveScreenConfiguration = this.currentActivity.live_configuration;
 
+    // activate or deactivate lights
+    if (this.liveScreenConfiguration.lights) {
+      this.backgroundSubscription = this.liveService.subscribeBackground();
+    } else {
+      if (this.backgroundSubscription) {
+        this.backgroundSubscription.unsubscrive();
+      }
+      this.background = defaultBackground;
+    }
+
+    // activate or deactivate poll
+    if (this.liveScreenConfiguration.main_block == this.liveScreenTypes.POLL) {
+      this.getPollData();
+      this.currentPollSubscription = setInterval(() => {
+        this.getPollData();
+      }, 5000);
+    } else {
+      if (this.currentPollSubscription) {
+        this.currentPollSubscription.unsubscrive();
+      }
+      this.currentPoll = null;
+      this.currentPollResults = [];
+    }
   }
 
   getPollData() {
     this.pollService.getPoll().subscribe({
       next: (polls) => {
+
+        let populated = false;
+
         for (const poll of polls) {
           if (this.pollService.isActive(poll.start_datetime, poll.end_datetime)) {
             // if the poll has changed from the current one
             this.currentPoll = poll;
+            populated = true;
+            break;
+
+          } else {
+            // if the poll has changed status or has been deleted, do actions
+            // if no active pool found load the latest one as closed
+            if (this.pollService.isClosed(poll.end_datetime) && !populated) {
+              this.currentPoll = poll;
+              populated = true;
+            }
           }
         }
+
+        if (!populated) {
+          this.currentPoll = null;
+        }
+
         if (this.currentPoll) {
           this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
         }
@@ -89,7 +132,7 @@ export class LiveComponent implements OnInit, OnDestroy {
     });
   }
 
-  getCaruselData(lastFile: FileStore | undefined = undefined) {
+  getCarouselData(lastFile: FileStore | undefined = undefined) {
     this.galleryService.getFiles().subscribe({
       next: (PaginatedFiles) => {
         // get the new images
@@ -108,5 +151,4 @@ export class LiveComponent implements OnInit, OnDestroy {
       }
     })
   }
-
 }

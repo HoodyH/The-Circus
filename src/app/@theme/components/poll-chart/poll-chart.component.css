@@ -6,11 +6,20 @@
   position: relative;
 }
 
-.no-data-banner {
+.banner {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--secondary-color);
   border-radius: var(--border-radius);
+  backdrop-filter: blur(4px);
+}
+
+.no-data {
+  background-color: var(--secondary-color);
+}
+
+.winner {
+  background-color: goldenrod;
+  background-color: rgba(218, 165, 32, 0.5);
 }
