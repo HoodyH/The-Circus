@@ -25,11 +25,12 @@ export interface Poll {
   question: string;
   start_datetime: string;
   end_datetime: string;
-  is_active?: boolean;
+  is_active: boolean;
+  is_ended: boolean;
   votes: PollVote[];
 }
 
-export interface PollCountResult { 
+export interface PollCountResult {
   firstName: string;
   lastName: string;
   count: number;
@@ -66,9 +67,9 @@ export abstract class PollData {
   isFuture(start_datetime: string): boolean {
     return new Date() < new Date(start_datetime);
   }
-  
+
   /**
-   * 
+   *
    * @param votes list of poll votes
    * @returns ordered PollCountResult
    */
