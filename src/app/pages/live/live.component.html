@@ -29,6 +29,7 @@
 
     <div class="row">
       <app-current-status
+        [showActivitiesActions]="false"
         [activities]="event.activities"
         [eventDate]="event.start_datetime"
         (currentActivityChange)="currentActivityChange($event)"
