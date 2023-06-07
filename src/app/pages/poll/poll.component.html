@@ -36,12 +36,13 @@
         <form
           *ngIf="currentPoll.is_active && !vote || (vote && vote.is_vote_editable)"
           [formGroup]="form"
-          (ngSubmit)="sendVote()"
+          (ngSubmit)="sendVote(null)"
           class="mt-3 text-center"
         >
           <app-dropdown
             [options]="options"
-            (valueSelected)="form.setValue({vote: $event?.id})"
+            [valueId]="form.value['vote']"
+            (valueSelected)="sendVote($event)"
           ></app-dropdown>
 
           <br>
@@ -59,7 +60,7 @@
             Non puoi votare per te stesso, daiii
           </div>
 
-          <button type="submit" [disabled]="form.invalid" class="mt-3 btn btn-secondary">Invia</button>
+          <!-- button type="submit" [disabled]="form.invalid" class="mt-3 btn btn-secondary">Invia</button -->
         </form>
       </div>
     </div>

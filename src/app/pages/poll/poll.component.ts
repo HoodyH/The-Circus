@@ -99,6 +99,7 @@ export class PollComponent implements OnInit, OnDestroy {
                 });
                 if (this.votes.length) {
                   this.vote = this.votes[0];
+                  this.form.setValue({vote: this.vote.vote.id})
                 }
               }
             });
@@ -133,7 +134,24 @@ export class PollComponent implements OnInit, OnDestroy {
     })
   }
 
-  sendVote() {
+  deleteVote(event: Option | null) {
+    if (event) {
+      this.pollService.deletePollVote(event.id).subscribe({
+        next: () => {
+          this.form.reset({vote: null});
+          this.vote = null;
+        }
+      })
+    }
+  }
+
+  sendVote(event: Option | null) {
+    if (!event) {
+      return
+    }
+
+    this.form.setValue({vote: event.id})
+
     if (this.form.valid) {
 
       this.error = this.errorService.noError;
