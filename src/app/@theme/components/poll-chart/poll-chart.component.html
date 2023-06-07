@@ -1,12 +1,12 @@
 <div class="chart-container">
   <div echarts [options]="chartOptions" class="chart"></div>
-  <div *ngIf="poll == undefined" class="banner no-data p-4"> 
+  <div *ngIf="poll == undefined" class="banner no-data p-4">
     <h4 class="mb-0">La votazione sta per iniziare</h4>
   </div>
-  <div *ngIf="poll && (!results || results.length === 0)" class="banner no-data p-4"> 
+  <div *ngIf="poll && poll.is_active && (!results || results.length === 0)" class="banner no-data p-4">
     <h4 class="mb-0">In attesa di voti</h4>
   </div>
-  <div *ngIf="poll && !poll.is_active && results" class="banner winner p-4"> 
+  <div *ngIf="poll && poll.is_ended && results.length" class="banner winner p-4">
     <h3 class="mb-0">Vince {{results[0].firstName}} {{results[0].lastName}}</h3>
   </div>
 </div>
