@@ -10,7 +10,7 @@
         [live]="true"
         [title]="currentActivity.title" 
         [description]="currentActivity.live_description" 
-        [actions]="currentActivity.actions"
+        [actions]="showActivitiesActions ? currentActivity.actions : []"
       ></app-activity>
     </div>
 

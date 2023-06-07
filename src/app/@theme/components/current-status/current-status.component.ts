@@ -10,6 +10,7 @@ export class CurrentStatusComponent implements OnInit {
 
   @Input() eventDate: string;
   @Input() activities: Activity[] = []
+  @Input() showActivitiesActions: boolean = true
   @Output() currentActivityChange: EventEmitter<Activity> = new EventEmitter<Activity>()
 
   currentActivity: Activity
