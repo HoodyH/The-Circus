@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   useHash: true,
   event: 'backdrop',
-  api: 'https://dioniso.azurewebsites.net',
-  _api: 'http://localhost:8000',
+  _api: 'https://dioniso.azurewebsites.net',
+  api: 'http://localhost:8000',
 };
 
 /*

@@ -1,3 +1,7 @@
+input, .input-group-text {
+  height: 3em;
+}
+
 .dropdown-menu {
   display: block;
   border-radius: var(--border-radius);

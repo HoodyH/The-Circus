@@ -37,6 +37,13 @@ export interface PollCountResult {
   lastVoteAt: string;
 }
 
+export interface PollLiveData {
+  currentPoll: Poll | null;
+  nextPoll: Poll | null;
+  populated: boolean;
+  currentPollResults: PollCountResult[],
+}
+
 
 
 export abstract class PollData {
@@ -45,6 +52,50 @@ export abstract class PollData {
   abstract postPollVote(data: PollVoteCreation): Observable<PollVoteDetail>;
   abstract putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail>;
   abstract deletePollVote(id: number): Observable<PollVoteDetail>;
+
+  /**
+   * Obtain the valuable poll data
+   * @param polls
+   */
+  getPollData(polls: Poll[]): PollLiveData {
+
+    const data: PollLiveData = {
+      currentPoll: null,
+      currentPollResults: [],
+      nextPoll: null,
+      populated: false,
+    }
+
+    for (const poll of polls) {
+
+      if (this.isActive(poll.start_datetime, poll.end_datetime)) {
+        // if the poll has changed from the current one
+        data.currentPoll = poll;
+        data.populated = true;
+        break;
+
+      } else {
+        // if the poll has changed status or has been deleted, do actions
+        // if no active pool found load the latest one as closed
+        if (this.isClosed(poll.end_datetime) && !data.populated) {
+          data.currentPoll = poll;
+          data.populated = true;
+        }
+      }
+
+      // get fist future poll
+      if (!data.nextPoll && this.isFuture(poll.start_datetime)) {
+        data.nextPoll = poll;
+      }
+    }
+
+    // if a poll has been loaded, calculate the data
+    if (data.currentPoll) {
+      data.currentPollResults = this.generateResults(data.currentPoll.votes);
+    }
+
+    return data
+  };
 
   isClosed(end_datetime: string): boolean {
     return new Date() > new Date(end_datetime)
@@ -69,7 +120,6 @@ export abstract class PollData {
   }
 
   /**
-   *
    * @param votes list of poll votes
    * @returns ordered PollCountResult
    */
@@ -90,11 +140,17 @@ export abstract class PollData {
           firstName: vote.user.first_name,
           lastName: vote.user.last_name,
           count: 1,
-          lastVoteAt: ''
+          lastVoteAt: element.voted_at
         };
       }
     }
 
-    return Object.values(counts).sort((a, b) => b.count - a.count);
+    return Object.values(counts).sort((a, b) => {
+      if (a.count === b.count) {
+        // return the one with the older last vote
+        return new Date(a.lastVoteAt).getTime() - new Date(b.lastVoteAt).getTime();
+      }
+      return b.count - a.count
+    });
   }
 }

@@ -1,9 +1,15 @@
-import {ThisReceiver} from '@angular/compiler';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {EventsData, Participant} from '@app/@core/data/events';
-import {Poll, PollCountResult, PollData, PollVote, PollVoteCreation, PollVoteDetail} from '@app/@core/data/poll';
+import {EventsData} from '@app/@core/data/events';
+import {
+  Poll,
+  PollCountResult,
+  PollData, PollLiveData,
+  PollVoteCreation,
+  PollVoteDetail
+} from '@app/@core/data/poll';
 import {Option} from "@theme/components/dropdown/dropdown.component";
+
 
 export class ErrorService {
   public readonly noError = "no_error";
@@ -22,18 +28,20 @@ export class ErrorService {
 })
 export class PollComponent implements OnInit, OnDestroy {
 
-  polls: Poll[];
-  currentPoll: Poll | null;
-  nextPoll: Poll | null;
+  pollLiveData: PollLiveData;
+
   votes: PollVoteDetail[];
   vote: PollVoteDetail | null;
   options: Option[] = [];
 
+  voteCheckSubscription: any;
   currentPollSubscription: any;
-  currentPollResults: PollCountResult[] = [];
 
   form: FormGroup;
 
+  /**
+   * The page is loading the data, show the spinner
+   */
   loading: boolean = true;
 
   errorService = new ErrorService()
@@ -47,10 +55,21 @@ export class PollComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getData();
+
     this.currentPollSubscription = setInterval(() => {
       this.getData();
     }, 5000);
 
+    // locally update is_vote_editable when time is expired
+    this.voteCheckSubscription = setInterval(() => {
+      if( this.vote && this.vote.is_vote_editable ) {
+        if (new Date(Date.now() - 5 * 60 * 1000) > new Date(this.vote.voted_at)) {
+          this.vote.is_vote_editable = false;
+        }
+      }
+    }, 1000);
+
+    // get event participants and create the options for the drop down selection
     this.eventService.getParticipants().subscribe({
       next: (participants) => {
         this.options = participants.map((participant) => {
@@ -60,12 +79,22 @@ export class PollComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Unsubscribe from intervals and other subscriptions
+   */
   ngOnDestroy(): void {
+    if (this.voteCheckSubscription) {
+      clearInterval(this.voteCheckSubscription);
+    }
     if (this.currentPollSubscription) {
       clearInterval(this.currentPollSubscription);
     }
   }
 
+  /**
+   * Popolate the data of the poll
+   * currentPoll, nextPoll, generate results
+   */
   getData() {
     this.pollService.getPoll().subscribe((polls) => {
 
@@ -73,78 +102,66 @@ export class PollComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
 
-      this.polls = polls;
-      this.nextPoll = null;
-      let populated = false;
-      const currentPoll = this.currentPoll;
+      let currentPoll = null;
+      if (this.pollLiveData) {
+        currentPoll = this.pollLiveData.currentPoll;
+      }
 
-      for (const poll of polls) {
+      this.pollLiveData = this.pollService.getPollData(polls);
 
-        if (this.pollService.isActive(poll.start_datetime, poll.end_datetime)) {
-          // if the poll has changed from the current one
-          this.currentPoll = poll;
-          populated = true;
+      // loading done
+      // will be set again as true if the vote have to be load
+      this.loading = false;
 
-          // update vote only on poll change
-          if ((!currentPoll && currentPoll !== poll) || (currentPoll && currentPoll.id !== poll.id)) {
-            this.vote = null;
-            // load the votes on poll change
-            this.pollService.getPollVote().subscribe({
-              next: (votes) => {
-                this.votes = votes.filter(vote => {
-                  if (this.currentPoll) {
-                    return vote.poll === this.currentPoll.id
-                  }
-                  return false
-                });
-                if (this.votes.length) {
-                  this.vote = this.votes[0];
-                  this.form.setValue({vote: this.vote.vote.id})
+      if (this.pollLiveData.currentPoll && this.pollLiveData.populated){
+        // update vote only on poll change
+        if ((!currentPoll && currentPoll !== this.pollLiveData.currentPoll) || (currentPoll && currentPoll.id !== this.pollLiveData.currentPoll.id)) {
+          this.loading = true;
+          this.vote = null;
+          // load the votes on poll change
+          this.pollService.getPollVote().subscribe({
+            next: (votes) => {
+              this.loading = false;
+              this.votes = votes.filter(vote => {
+                if (this.pollLiveData.currentPoll) {
+                  return vote.poll === this.pollLiveData.currentPoll.id
                 }
+                return false
+              });
+              if (this.votes.length) {
+                this.vote = this.votes[0];
+                this.form.setValue({vote: this.vote.vote.id})
               }
-            });
-          }
-          break;
-
-        } else {
-          // if the poll has changed status or has been deleted, do actions
-          // if no active pool found load the latest one as closed
-          if (this.pollService.isClosed(poll.end_datetime) && !populated) {
-            this.currentPoll = poll;
-            populated = true;
-          }
+            },
+            error: () => { this.loading = false; }
+          });
         }
-
-        // get fist future poll
-        if (!this.nextPoll && this.pollService.isFuture(poll.start_datetime)) {
-          this.nextPoll = poll;
-          this.loading = false;
-        }
-      }
-
-      if (!populated) {
-        this.currentPoll = null;
-      }
-
-      // if a poll has been loaded, calculate the data
-      if (this.currentPoll) {
-        this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
-        this.loading = false;
       }
     })
   }
 
+  /**
+   * Not used yet but, the idea is that the vote can be deleted by the user
+   * Backend deletion is disabled atm
+   * @param event
+   */
   deleteVote(event: Option | null) {
     if (event) {
-      this.pollService.deletePollVote(event.id).subscribe({
-        next: () => {
-          this.form.reset({vote: null});
-          this.vote = null;
-        }
-      })
+      this.error = '';
+
+      // this.pollService.deletePollVote(event.id).subscribe({
+      //   next: () => {
+      //     this.form.reset({vote: null});
+      //     this.vote = null;
+      //   }
+      // })
     }
   }
 
+  /**
+   * Post or put the vote
+   * @param event
+   */
   sendVote(event: Option | null) {
     if (!event) {
       return
@@ -200,16 +217,18 @@ export class PollComponent implements OnInit, OnDestroy {
               }
             }
           }
+          console.log(this.vote);
         }
       }
 
+      // chose post or put and call api
       if (this.vote) {
         this.vote.vote = this.form.value['vote']
         this.pollService.putPollVote(this.vote.id, this.vote).subscribe(observer)
       } else {
-        if (this.currentPoll) {
+        if (this.pollLiveData.currentPoll) {
           const newVote: PollVoteCreation = {
-            poll: this.currentPoll.id,
+            poll: this.pollLiveData.currentPoll.id,
             vote: this.form.value['vote']
           }
           this.pollService.postPollVote(newVote).subscribe(observer)

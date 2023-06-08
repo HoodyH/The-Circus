@@ -1,16 +1,7 @@
 <section class="vh-100 d-flex align-items-center" [style.background]="background.color">
 
   <ul *ngIf="liveScreenConfiguration.lights" class="circles">
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
+    <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li> <li></li>
   </ul>
 
   <div *ngIf="event" class="container">
@@ -22,9 +13,9 @@
       ></app-carousel>
     </div>
 
-    <div class="row" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.POLL">
-      <h2>{{currentPoll?.question}}</h2>
-      <app-poll-chart [poll]="currentPoll" [results]="currentPollResults" [maxResultsLive]="7"></app-poll-chart>
+    <div class="row" *ngIf="pollLiveData && liveScreenConfiguration.main_block == liveScreenTypes.POLL">
+      <h2>{{pollLiveData.currentPoll?.question}}</h2>
+      <app-poll-chart [poll]="pollLiveData.currentPoll" [results]="pollLiveData.currentPollResults" [maxResultsLive]="7"></app-poll-chart>
     </div>
 
     <div class="row">

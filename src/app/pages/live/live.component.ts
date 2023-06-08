@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Background, defaultBackground, LiveData} from '@app/@core/data/live';
-import {Poll, PollCountResult, PollData} from '@app/@core/data/poll';
+import {PollData, PollLiveData} from '@app/@core/data/poll';
 import {
   Activity,
   defaultLiveScreenConfiguration,
@@ -24,9 +24,7 @@ export class LiveComponent implements OnInit, OnDestroy {
 
   currentActivity: Activity | undefined;
 
-  polls: Poll[];
-  currentPoll: Poll | null;
-  currentPollResults: PollCountResult[] = [];
+  pollLiveData: PollLiveData;
   currentPollSubscription: any;
 
   liveScreenTypes = LiveScreenTypes
@@ -48,12 +46,6 @@ export class LiveComponent implements OnInit, OnDestroy {
     })
 
     this.getCarouselData();
-
-    this.pollService.getPoll().subscribe({
-      next: (polls) => {
-        this.polls = polls;
-      }
-    })
 
     // connect background subject
     this.liveService.backgroundSubject.subscribe({
@@ -93,41 +85,15 @@ export class LiveComponent implements OnInit, OnDestroy {
       if (this.currentPollSubscription) {
         this.currentPollSubscription.unsubscrive();
       }
-      this.currentPoll = null;
-      this.currentPollResults = [];
+      this.pollLiveData.currentPoll = null;
+      this.pollLiveData.currentPollResults = [];
     }
   }
 
   getPollData() {
     this.pollService.getPoll().subscribe({
       next: (polls) => {
-
-        let populated = false;
-
-        for (const poll of polls) {
-          if (this.pollService.isActive(poll.start_datetime, poll.end_datetime)) {
-            // if the poll has changed from the current one
-            this.currentPoll = poll;
-            populated = true;
-            break;
-
-          } else {
-            // if the poll has changed status or has been deleted, do actions
-            // if no active pool found load the latest one as closed
-            if (this.pollService.isClosed(poll.end_datetime) && !populated) {
-              this.currentPoll = poll;
-              populated = true;
-            }
-          }
-        }
-
-        if (!populated) {
-          this.currentPoll = null;
-        }
-
-        if (this.currentPoll) {
-          this.currentPollResults = this.pollService.generateResults(this.currentPoll.votes);
-        }
+        this.pollLiveData = this.pollService.getPollData(polls);
       }
     });
   }

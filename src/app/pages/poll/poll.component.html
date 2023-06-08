@@ -1,40 +1,40 @@
 <div class="section d-flex align-items-center min-vh-100">
 
-  <div class="container" *ngIf="loading || polls == undefined">
+  <div class="container" *ngIf="loading">
     <div class="row justify-content-center">
       <app-loading-animation></app-loading-animation>
     </div>
   </div>
 
-  <div class="container" *ngIf="!loading && !currentPoll && ((polls && nextPoll) || !loading)">
+  <div class="container" *ngIf="!loading && !pollLiveData.currentPoll && ((pollLiveData.nextPoll) || !loading)">
     <div class="row justify-content-center">
-      <app-no-poll-active [nextPoll]="nextPoll"></app-no-poll-active>
+      <app-no-poll-active [nextPoll]="pollLiveData.nextPoll"></app-no-poll-active>
     </div>
   </div>
 
-  <div class="container" *ngIf="!loading && currentPoll">
+  <div class="container" *ngIf="!loading && pollLiveData.currentPoll">
     <div class="row justify-content-center">
       <div class="col-md-6 text-center">
 
-        <h2 class="mb-3 title">{{currentPoll.question}}</h2>
-        <p *ngIf="currentPoll.is_active && !vote">Scrivi il nome di un Partecipante per votare</p>
-        <div *ngIf="!currentPoll.is_active">
+        <h2 class="mb-3 title">{{pollLiveData.currentPoll.question}}</h2>
+        <p *ngIf="pollLiveData.currentPoll.is_active && !vote">Scrivi il nome di un Partecipante per votare</p>
+        <div *ngIf="!pollLiveData.currentPoll.is_active">
           <p>Sondaggio chiuso, non si accettano più voti</p>
-          <p *ngIf="nextPoll">Prossima votazione {{nextPoll.start_datetime | customDate}}</p>
+          <p *ngIf="pollLiveData.nextPoll">Prossima votazione {{pollLiveData.nextPoll.start_datetime | customDate}}</p>
         </div>
 
         <div *ngIf="vote && vote.vote.user" class="card mb-3 vote-result">
           <div class="card-body">
             <p>Hai votato per:</p>
             <h4>{{ vote.vote.user.first_name }} {{ vote.vote.user.last_name }}</h4>
-            <p *ngIf="!vote || (vote && vote.is_vote_editable)">
+            <p *ngIf="pollLiveData.currentPoll.is_active && (!vote || (vote && vote.is_vote_editable))">
               Vota di nuovo per modificare il voto, hai 5 minuti per modificare la tua scelta
             </p>
           </div>
         </div>
 
         <form
-          *ngIf="currentPoll.is_active && !vote || (vote && vote.is_vote_editable)"
+          *ngIf="pollLiveData.currentPoll.is_active && (!vote || (vote && vote.is_vote_editable))"
           [formGroup]="form"
           (ngSubmit)="sendVote(null)"
           class="mt-3 text-center"
@@ -43,6 +43,7 @@
             [options]="options"
             [valueId]="form.value['vote']"
             (valueSelected)="sendVote($event)"
+            (deleteValue)="deleteVote($event)"
           ></app-dropdown>
 
           <br>
@@ -57,7 +58,7 @@
             Contatto non trovato
           </div>
           <div *ngIf="error==errorService.selfVote" class="alert alert-danger">
-            Non puoi votare per te stesso, daiii
+            So che ti senti bellissimƏ ma non puoi votare per te stesso, daiii
           </div>
 
           <!-- button type="submit" [disabled]="form.invalid" class="mt-3 btn btn-secondary">Invia</button -->
@@ -66,12 +67,12 @@
     </div>
     <div class="row justify-content-center">
       <div class="col">
-        <app-poll-chart [poll]="currentPoll" [results]="currentPollResults"></app-poll-chart>
+        <app-poll-chart [poll]="pollLiveData.currentPoll" [results]="pollLiveData.currentPollResults"></app-poll-chart>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col">
-        <app-poll-results-list [results]="currentPollResults"></app-poll-results-list>
+        <app-poll-results-list [results]="pollLiveData.currentPollResults"></app-poll-results-list>
       </div>
     </div>
   </div>

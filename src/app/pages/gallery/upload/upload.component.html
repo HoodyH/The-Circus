@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col text-center mx-auto">
-        <h3 class="m-2">Carica foto e video</h3>
+        <h3 class="m-2">Carica foto e video 😈</h3>
         <div *ngIf="selectedFile && previewImageSrc" class="mt-4">
           <div class="media-container">
             <img [src]="previewImageSrc" class="img-fluid img-preview">
@@ -16,7 +16,7 @@
             <button class="btn btn-danger mx-2" (click)="resetFile()">Remove</button>
             <button  class="btn btn-secondary" (click)="uploadPhoto($event)">Carica Foto</button>
           </div>
-          
+
           <p *ngIf="uploading && !file" class="mt-2">Caricamento in corso...</p>
           <p *ngIf="file" class="alert alert-success mt-2">Caricamento completato</p>
           <p *ngIf="error" class="alert alert-danger mt-2">Caricamento fallito {{errorMessage}}</p>
