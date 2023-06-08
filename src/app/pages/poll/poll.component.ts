@@ -107,7 +107,7 @@ export class PollComponent implements OnInit, OnDestroy {
         currentPoll = this.pollLiveData.currentPoll;
       }
 
-      this.pollLiveData = this.pollService.getPollData(polls)
+      this.pollLiveData = this.pollService.getPollData(polls);
 
       // loading done
       // will be set again as true if the vote have to be load

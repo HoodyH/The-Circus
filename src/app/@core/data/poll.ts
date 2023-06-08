@@ -120,7 +120,6 @@ export abstract class PollData {
   }
 
   /**
-   *
    * @param votes list of poll votes
    * @returns ordered PollCountResult
    */
@@ -146,6 +145,12 @@ export abstract class PollData {
       }
     }
 
-    return Object.values(counts).sort((a, b) => b.count - a.count);
+    return Object.values(counts).sort((a, b) => {
+      if (a.count === b.count) {
+        // return the one with the older last vote
+        return new Date(a.lastVoteAt).getTime() - new Date(b.lastVoteAt).getTime();
+      }
+      return b.count - a.count
+    });
   }
 }
