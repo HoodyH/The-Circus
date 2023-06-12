@@ -5,15 +5,15 @@ import {LiveRoutingModule} from "@app/pages/live/live-routing.module";
 
 // Components
 import {LiveComponent} from "./live.component";
-import {NowPlayingComponent} from "./now-playing/now-playing.component";
-import { CarouselComponent } from './carousel/carousel.component';
+import { DisplayAComponent } from './display-a/display-a.component';
+import { DisplayBComponent } from './display-b/display-b.component';
 
 
 @NgModule({
   declarations: [
     LiveComponent,
-    NowPlayingComponent,
-    CarouselComponent,
+    DisplayAComponent,
+    DisplayBComponent,
   ],
   imports: [
     CommonModule,

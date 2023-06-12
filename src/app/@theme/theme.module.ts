@@ -19,10 +19,11 @@ import {PollChartComponent} from './components/poll-chart/poll-chart.component';
 import {LoadingAnimationComponent} from './components/loading-animation/loading-animation.component';
 import {SpotifyPlaylistComponent} from './components/spotify-playlist/spotify-playlist.component';
 import {MeteoStatusComponent} from './components/meteo-status/meteo-status.component';
-import { CurrentStatusComponent } from './components/current-status/current-status.component';
-import { ActivityComponent } from './components/activity/activity.component';
-import { DropdownComponent } from './components/dropdown/dropdown.component';
-
+import {CurrentStatusComponent} from './components/current-status/current-status.component';
+import {ActivityComponent} from './components/activity/activity.component';
+import {DropdownComponent} from './components/dropdown/dropdown.component';
+import {NowPlayingComponent} from "./components/now-playing/now-playing.component";
+import {CarouselComponent} from './components/carousel/carousel.component';
 
 
 const COMPONENTS: any = [
@@ -37,6 +38,8 @@ const COMPONENTS: any = [
   ActivityComponent,
   CurrentStatusComponent,
   DropdownComponent,
+  NowPlayingComponent,
+  CarouselComponent
 ];
 
 const DIRECTIVES: any = [];

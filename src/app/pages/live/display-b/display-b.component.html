@@ -1,0 +1,49 @@
+<section class="vh-100 d-flex align-items-center" [style.background]="background.color">
+
+  <ul *ngIf="liveScreenConfiguration.lights" class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <div *ngIf="event" class="container">
+    <div class="row">
+      <div class="col-3">
+        <div class="row">
+          <app-current-status
+            [showActivitiesActions]="false"
+            [activities]="event.activities"
+            [eventDate]="event.start_datetime"
+            (currentActivityChange)="currentActivityChange($event)"
+          ></app-current-status>
+        </div>
+      </div>
+
+      <!-- Main Windows -->
+      <div class="col-9">
+        <div class="row" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.CAROUSEL">
+          <app-carousel
+            class="col text-center mx-auto"
+            [files]="files"
+            (lastScrolledPhoto)="getCarouselData($event)"
+          ></app-carousel>
+        </div>
+
+        <div class="row" *ngIf="pollLiveData && liveScreenConfiguration.main_block == liveScreenTypes.POLL">
+          <h2>{{pollLiveData.currentPoll?.question}}</h2>
+          <app-poll-chart [poll]="pollLiveData.currentPoll" [results]="pollLiveData.currentPollResults"
+                          [maxResultsLive]="7"></app-poll-chart>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
