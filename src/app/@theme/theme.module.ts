@@ -24,6 +24,7 @@ import {ActivityComponent} from './components/activity/activity.component';
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {NowPlayingComponent} from "./components/now-playing/now-playing.component";
 import {CarouselComponent} from './components/carousel/carousel.component';
+import { CurrentTimeComponent } from './components/current-time/current-time.component';
 
 
 const COMPONENTS: any = [
@@ -39,7 +40,8 @@ const COMPONENTS: any = [
   CurrentStatusComponent,
   DropdownComponent,
   NowPlayingComponent,
-  CarouselComponent
+  CarouselComponent,
+  CurrentTimeComponent,
 ];
 
 const DIRECTIVES: any = [];
