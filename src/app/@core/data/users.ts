@@ -5,6 +5,8 @@ export interface User {
   phone: string;
   first_name: string;
   last_name: string;
+  username: string;
+  is_staff: string;
   date_joined: string;
   last_login: string;
 }

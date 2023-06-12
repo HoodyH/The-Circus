@@ -18,6 +18,8 @@ import { AuthService } from './services/auth.service';
 import { AuthAppInterceptor } from './interceptors/auth.interceptor';
 import { LiveData } from './data/live';
 import { LiveService } from './services/live.service';
+import { UsersData } from './data/users';
+import { UsersService } from './services/users.service';
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
@@ -26,6 +28,7 @@ const DATA_SERVICES = [
   {provide: PollData, useClass: PollService},
   {provide: AuthData, useClass: AuthService},
   {provide: LiveData, useClass: LiveService},
+  {provide: UsersData, useClass: UsersService},
 ]
 
 

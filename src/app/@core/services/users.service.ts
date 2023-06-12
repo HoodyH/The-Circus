@@ -8,12 +8,12 @@ import {User, UsersData} from "@core/data/users";
 @Injectable()
 export class UsersService extends UsersData {
 
-    constructor(private http: HttpClient) {
-        super();
-      }
-      
-    getUser(): Observable<User> {
-       return this.http.get<User>(ApiUrls.U_USER());
-    }
+  constructor(private http: HttpClient) {
+    super();
+  }
+    
+  getUser(): Observable<User> {
+    return this.http.get<User>(ApiUrls.U_USER());
+  }
 
 }

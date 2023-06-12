@@ -1,11 +1,13 @@
 :root {
   --primary-color: #4f4f4f;
   --primary-color-accent: #555555;
+  --background-color: #ffffff;
   --secondary-color: #eee;
   --secondary-color-accent: #e4e4e4;
   --text-color: #3f3f3f;
   --font-family: "Poppins", sans-serif;
   --border-radius: 2em;
+  --border-radius-small: 1em;
   --animation-time: 2s;
 }
 
@@ -13,6 +15,7 @@ html, body {
   height: 100%;
   color: var(--text-color) !important;
   font-family: var(--font-family) !important;
+  background-color: var(--background-color);
 }
 
 body {
@@ -73,6 +76,7 @@ p, label {
 
 .alert {
   border-radius: var(--border-radius);
+  border: none;
 }
 
 .alert-danger {

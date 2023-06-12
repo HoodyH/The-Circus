@@ -23,7 +23,25 @@ nav button {
 .acid-glass-background {
   background-color: rgba(79, 79, 79, 0.2);
   backdrop-filter: blur(4px);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-small);
   padding: 5px 10px;
   color: white;
+  border: none;
+}
+
+.nav-link::content {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.dropdown-menu {
+  border-top: 1px solid grey;
+  border-radius: 0;
+  border-bottom-right-radius: var(--border-radius-small);
+  border-bottom-left-radius: var(--border-radius-small);
+  margin-top: 0;
+}
+
+.dropdown-item:hover {
+  background-color: transparent;
 }
