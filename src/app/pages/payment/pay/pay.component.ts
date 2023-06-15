@@ -17,8 +17,10 @@ export class PayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.getEvent().subscribe((event) => {
-      this.event = event
+    this.eventService.getEvent(this.eventService.eventId).subscribe({
+      next: (event) => {
+        this.event = event
+      }
     })
 
     this.paymentService.getPaymentMethods().subscribe((paymentMethods) => {

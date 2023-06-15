@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {of as observableOf, Observable} from 'rxjs';
-import {EventsData, Event, Activity, Staff, Participant} from '@core/data/events';
-import {Poll} from "@core/data/poll";
+import {Observable, tap, map} from 'rxjs';
+import {EventsData, Event, Participant} from '@core/data/events';
 import {ApiUrls} from "@core/data/api";
 import {HttpClient} from "@angular/common/http";
 
@@ -12,11 +11,22 @@ export class EventsService extends EventsData {
     super();
   }
 
-  getEvent(): Observable<Event> {
-    return this.http.get<Event>(`${ApiUrls.U_EVENT(ApiUrls.EVENT_ID)}`);
+  override loadEvent(id: string) {
+    this._eventId = id;
+    return this.http.get<Event>(`${ApiUrls.U_EVENT(this.eventId)}`).pipe(
+      tap((event: Event) => {
+        this.event = event;
+      }),
+      // send forward the result
+      map((event: Event) => event)
+    );
   }
 
-  getParticipants(): Observable<Participant[]> {
-    return this.http.get<Participant[]>(`${ApiUrls.U_PARTICIPANTS()}?event__code=${ApiUrls.EVENT_ID}`);
+  getEvent(id: string): Observable<Event> {
+    return this.http.get<Event>(`${ApiUrls.U_EVENT(id)}`);
+  }
+
+  getParticipants(id: string): Observable<Participant[]> {
+    return this.http.get<Participant[]>(`${ApiUrls.U_PARTICIPANTS()}?event__code=${id}`);
   }
 }

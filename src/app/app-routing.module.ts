@@ -3,11 +3,11 @@ import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {environment} from "environments/environment";
 import {AuthGuard} from "@core/guards/auth.guard";
 
-
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('@app/pages/pages.module').then(m => m.PagesModule),
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {
     path: 'access',
@@ -17,6 +17,10 @@ const routes: Routes = [
     path: 'live',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/live/live.module').then(m => m.LiveModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('@app/pages/pages.module').then(m => m.PagesModule),
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: 'black-hole/404' },

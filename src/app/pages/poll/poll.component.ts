@@ -70,7 +70,7 @@ export class PollComponent implements OnInit, OnDestroy {
     }, 1000);
 
     // get event participants and create the options for the drop down selection
-    this.eventService.getParticipants().subscribe({
+    this.eventService.getParticipants(this.eventService.eventId).subscribe({
       next: (participants) => {
         this.options = participants.map((participant) => {
           return {id: participant.id, value: `${participant.user.first_name} ${participant.user.last_name}`};

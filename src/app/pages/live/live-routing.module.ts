@@ -18,7 +18,7 @@ const routes: Routes = [
         component: DisplayBComponent
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

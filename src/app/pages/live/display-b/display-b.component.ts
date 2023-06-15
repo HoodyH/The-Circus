@@ -39,7 +39,7 @@ export class DisplayBComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.eventService.getEvent().subscribe({
+    this.eventService.getEvent(this.eventService.eventId).subscribe({
       next: (event) => {
         this.event = event
       }

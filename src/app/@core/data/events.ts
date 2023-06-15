@@ -85,8 +85,17 @@ export const defaultLiveScreenConfiguration: LiveConfiguration = {
   }
 
 export abstract class EventsData {
-  abstract getEvent(): Observable<Event>;
-  abstract getParticipants(): Observable<Participant[]>;
+
+  protected _eventId: string;
+  protected event: Event;
+
+  abstract loadEvent(id: string): Observable<Event>;
+  abstract getEvent(id: string): Observable<Event>;
+  abstract getParticipants(id: string): Observable<Participant[]>;
+
+  get eventId(): string {
+    return this._eventId;
+  }
 
   isEventStarted(end_datetime: string): boolean {
     return new Date() > new Date(end_datetime)

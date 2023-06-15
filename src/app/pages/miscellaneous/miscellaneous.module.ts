@@ -5,13 +5,15 @@ import {MiscellaneousRoutingModule} from "@app/pages/miscellaneous/miscellaneous
 import {MiscellaneousComponent} from "@app/pages/miscellaneous/miscellaneous.component";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { BlankComponent } from './blank/blank.component';
+import { EventNotFoundComponent } from './event-not-found/event-not-found.component';
 
 
 @NgModule({
   declarations: [
     MiscellaneousComponent,
     PageNotFoundComponent,
-    BlankComponent
+    BlankComponent,
+    EventNotFoundComponent
   ],
   imports: [
     CommonModule,
