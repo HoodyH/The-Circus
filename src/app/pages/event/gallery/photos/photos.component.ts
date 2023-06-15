@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FileStore, GalleryData, PaginatedFiles } from '@core/data/galley';
+import {EventsData} from "@core/data/events";
 
 @Component({
   selector: 'app-photos',
@@ -18,17 +19,17 @@ export class PhotosComponent implements OnInit {
   scrollThreshold = 400;
   loading = false;
 
-  constructor(private galleryService: GalleryData, private router: Router, private elementRef: ElementRef) {
+  constructor(private eventService: EventsData, private galleryService: GalleryData, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.galleryService.getFiles().subscribe({
+    this.galleryService.getFiles(this.eventService.eventCode).subscribe({
       next: (paginatedFiles) => {
         this.currentPaginatedFiles = paginatedFiles
         this.mediaList = paginatedFiles.results;
         this.loadMoreFiles();
       }
-    })
+    });
   }
 
   @HostListener('window:scroll')

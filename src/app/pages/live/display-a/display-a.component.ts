@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Background, defaultBackground, LiveData} from '@app/@core/data/live';
-import {PollData, PollLiveData} from '@app/@core/data/poll';
+import {Background, defaultBackground, LiveData} from '@core/data/live';
+import {PollData, PollLiveData} from '@core/data/poll';
 import {
   Activity,
   defaultLiveScreenConfiguration,
@@ -39,7 +39,7 @@ export class DisplayAComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.eventService.getEvent(this.eventService.eventId).subscribe({
+    this.eventService.getEvent(this.eventService.eventCode).subscribe({
       next: (event) => {
         this.event = event
       }
@@ -91,7 +91,7 @@ export class DisplayAComponent implements OnInit, OnDestroy {
   }
 
   getPollData() {
-    this.pollService.getPoll().subscribe({
+    this.pollService.getPoll(this.eventService.eventCode).subscribe({
       next: (polls) => {
         this.pollLiveData = this.pollService.getPollData(polls);
       }
@@ -99,7 +99,7 @@ export class DisplayAComponent implements OnInit, OnDestroy {
   }
 
   getCarouselData(lastFile: FileStore | undefined = undefined) {
-    this.galleryService.getFiles().subscribe({
+    this.galleryService.getFiles(this.eventService.eventCode).subscribe({
       next: (PaginatedFiles) => {
         // get the new images
         const files = PaginatedFiles.results;

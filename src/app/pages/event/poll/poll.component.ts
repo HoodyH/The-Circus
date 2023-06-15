@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {EventsData} from '@app/@core/data/events';
+import {EventsData} from '@core/data/events';
 import {
   Poll,
   PollCountResult,
   PollData, PollLiveData,
   PollVoteCreation,
   PollVoteDetail
-} from '@app/@core/data/poll';
+} from '@core/data/poll';
 import {Option} from "@theme/components/dropdown/dropdown.component";
 
 
@@ -54,8 +54,8 @@ export class PollComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getData();
 
+    this.getData();
     this.currentPollSubscription = setInterval(() => {
       this.getData();
     }, 5000);
@@ -68,15 +68,6 @@ export class PollComponent implements OnInit, OnDestroy {
         }
       }
     }, 1000);
-
-    // get event participants and create the options for the drop down selection
-    this.eventService.getParticipants(this.eventService.eventId).subscribe({
-      next: (participants) => {
-        this.options = participants.map((participant) => {
-          return {id: participant.id, value: `${participant.user.first_name} ${participant.user.last_name}`};
-        });
-      }
-    });
   }
 
   /**
@@ -96,7 +87,7 @@ export class PollComponent implements OnInit, OnDestroy {
    * currentPoll, nextPoll, generate results
    */
   getData() {
-    this.pollService.getPoll().subscribe((polls) => {
+    this.pollService.getPoll(this.eventService.eventCode).subscribe((polls) => {
 
       if (!polls.length) {
         this.loading = false;
@@ -118,8 +109,16 @@ export class PollComponent implements OnInit, OnDestroy {
         if ((!currentPoll && currentPoll !== this.pollLiveData.currentPoll) || (currentPoll && currentPoll.id !== this.pollLiveData.currentPoll.id)) {
           this.loading = true;
           this.vote = null;
+          // get event participants and create the options for the drop down selection
+          this.eventService.getParticipants(this.eventService.eventCode).subscribe({
+            next: (participants) => {
+              this.options = participants.map((participant) => {
+                return {id: participant.id, value: `${participant.user.first_name} ${participant.user.last_name}`};
+              });
+            }
+          });
           // load the votes on poll change
-          this.pollService.getPollVote().subscribe({
+          this.pollService.getPollVote(this.eventService.eventCode).subscribe({
             next: (votes) => {
               this.loading = false;
               this.votes = votes.filter(vote => {

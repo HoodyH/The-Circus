@@ -7,7 +7,7 @@ import {ThemeModule} from "@theme/theme.module";
 import {HomeComponent} from './home.component';
 import {TimelineComponent} from "./timeline/timeline.component";
 import {StaffComponent} from "./staff/staff.component";
-import {LocationComponent} from "@app/pages/home/location/location.component";
+import {LocationComponent} from "@app/pages/event/home/location/location.component";
 
 
 const COMPONENTS: any = [

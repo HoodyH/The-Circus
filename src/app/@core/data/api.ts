@@ -6,7 +6,6 @@ export class ApiUrls {
    global url service
    */
   static API_URL = environment.api;
-  static EVENT_ID = environment.event
 
   // the auth endpoints are handled with the Nebular module: ApiUrls.API_URL * U_PATH
   static U_LOGIN = () => `${ApiUrls.API_URL}/api/auth/login/`;

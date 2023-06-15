@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Background, LiveData, defaultBackground } from "../data/live";
-import { Observable, Subject, interval, of as observableOf } from "rxjs";
+import { Observable, interval, of as observableOf } from "rxjs";
+import {ApiUrls} from "@core/data/api";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class LiveService extends LiveData {
@@ -10,7 +12,10 @@ export class LiveService extends LiveData {
   private hueDirection = 1;
 
   private background: Background = defaultBackground;
-  public backgroundSubject: Subject<Background> = new Subject<Background>();
+
+  constructor(public http: HttpClient) {
+    super();
+  }
 
   subscribeBackground(): any {
 

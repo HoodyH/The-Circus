@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {EventsData} from "@core/data/events";
 
 @Component({
   selector: 'app-event',
@@ -10,9 +12,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventsData) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.eventService.loadEvent(params['id']).subscribe({
+        next: () => {},
+        error: (e) => {
+          if (e.status === 404) {
+            this.router.navigate(['/black-hole/no-event']).then();
+          }
+        }
+      });
+    });
   }
 
 }

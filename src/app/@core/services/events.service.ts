@@ -4,16 +4,17 @@ import {EventsData, Event, Participant} from '@core/data/events';
 import {ApiUrls} from "@core/data/api";
 import {HttpClient} from "@angular/common/http";
 
+
 @Injectable()
 export class EventsService extends EventsData {
 
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
     super();
   }
 
-  override loadEvent(id: string) {
-    this._eventId = id;
-    return this.http.get<Event>(`${ApiUrls.U_EVENT(this.eventId)}`).pipe(
+  loadEvent(eventCode: string) {
+    this._eventCode = eventCode;
+    return this.getEvent(this.eventCode).pipe(
       tap((event: Event) => {
         this.event = event;
       }),
@@ -22,11 +23,11 @@ export class EventsService extends EventsData {
     );
   }
 
-  getEvent(id: string): Observable<Event> {
-    return this.http.get<Event>(`${ApiUrls.U_EVENT(id)}`);
+  getEvent(eventCode: string): Observable<Event> {
+    return this.http.get<Event>(`${ApiUrls.U_EVENT(eventCode)}`);
   }
 
-  getParticipants(id: string): Observable<Participant[]> {
-    return this.http.get<Participant[]>(`${ApiUrls.U_PARTICIPANTS()}?event__code=${id}`);
+  getParticipants(eventCode: string): Observable<Participant[]> {
+    return this.http.get<Participant[]>(`${ApiUrls.U_PARTICIPANTS()}?event__code=${eventCode}`);
   }
 }

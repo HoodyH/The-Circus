@@ -6,7 +6,7 @@ import {DisplayBComponent} from "@app/pages/live/display-b/display-b.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: LiveComponent,
     children: [
       {
@@ -19,6 +19,7 @@ const routes: Routes = [
       }
     ]
   },
+  { path: '', redirectTo: 'a', pathMatch: 'full' },
 ];
 
 @NgModule({

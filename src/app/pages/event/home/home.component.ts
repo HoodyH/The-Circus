@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.getEvent(this.eventService.eventId).subscribe((event) => {
+    this.eventService.getEvent(this.eventService.eventCode).subscribe((event) => {
       this.event = event
     })
 

@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from "@app/pages/home/home.component";
-import {EventComponent} from "@app/pages/event/event.component";
+import {AuthGuard} from "@core/guards/auth.guard";
+import {EventComponent} from "./event.component";
+import {HomeComponent} from "./home/home.component";
+
 
 const routes: Routes = [
   {
@@ -11,6 +13,20 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent
+      },
+      {
+        path: 'pay',
+        loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
+      },
+      {
+        path: 'poll',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./poll/poll.module').then(m => m.PollModule),
+      },
+      {
+        path: 'gallery',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./gallery/gallery.module').then(m => m.GalleryModule),
       },
     ]
   }

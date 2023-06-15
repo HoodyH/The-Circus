@@ -8,13 +8,13 @@ import { WetherData, Wether } from "@core/data/wether";
 
 
 @Injectable()
-export class WetherService extends WetherData {
-    
+export class WeatherService extends WetherData {
+
     constructor(private http: HttpClient) {
         super();
     }
 
-    getWether(): Observable<Wether> {
+    getWeather(): Observable<Wether> {
         return this.http.get<Wether>('');
     }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { GalleryData, Gallery, FileStore } from '@app/@core/data/galley';
+import { GalleryData, Gallery, FileStore } from '@core/data/galley';
 import {Router} from "@angular/router";
+import {EventsData} from "@core/data/events";
 
 @Component({
   selector: 'app-upload',
@@ -18,10 +19,10 @@ export class UploadComponent implements OnInit {
   error: boolean = false;
   errorMessage: string = '';
 
-  constructor(private galleryService: GalleryData, private router: Router) {}
+  constructor(private eventService: EventsData, private galleryService: GalleryData, private router: Router) {}
 
   ngOnInit() {
-    this.galleryService.getGallery().subscribe({
+    this.galleryService.getGallery(this.eventService.eventCode).subscribe({
       next: (gallery) => {
         this.gallery = gallery;
       }
@@ -62,7 +63,7 @@ export class UploadComponent implements OnInit {
             this.router.navigateByUrl('/gallery/photos').then();
           }, 3000);
         },
-        error: (e) => { 
+        error: (e) => {
           this.error = true;
           console.log(e);
           if (e.error.code) {
@@ -83,7 +84,7 @@ export class UploadComponent implements OnInit {
           }
           setTimeout(() => {
             this.router.navigateByUrl('').then();
-          }, 
+          },
           3000);
         }
       });

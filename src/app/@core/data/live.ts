@@ -10,7 +10,8 @@ export const defaultBackground: Background = {
 
 export abstract class LiveData {
 
-  abstract backgroundSubject: Subject<Background>;
+  public backgroundSubject: Subject<Background> = new Subject<Background>();
+
   abstract subscribeBackground(): any;
   abstract getBackground(): Observable<Background>;
 }
