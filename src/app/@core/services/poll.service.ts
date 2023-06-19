@@ -13,12 +13,12 @@ export class PollService extends PollData {
     super();
   }
 
-  getPoll(): Observable<Poll[]> {
-    return this.http.get<Poll[]>(`${ApiUrls.U_POLL()}?event__code=${ApiUrls.EVENT_ID}`);
+  getPoll(eventCode: string): Observable<Poll[]> {
+    return this.http.get<Poll[]>(`${ApiUrls.U_POLL()}?event__code=${eventCode}`);
   }
 
-  getPollVote(): Observable<PollVoteDetail[]> {
-    return this.http.get<PollVoteDetail[]>(`${ApiUrls.U_POLL_VOTE()}?poll__event__code=${ApiUrls.EVENT_ID}`);
+  getPollVote(eventCode: string): Observable<PollVoteDetail[]> {
+    return this.http.get<PollVoteDetail[]>(`${ApiUrls.U_POLL_VOTE()}?poll__event__code=${eventCode}`);
   }
 
   postPollVote(data: PollVoteCreation): Observable<PollVoteDetail> {

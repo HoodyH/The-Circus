@@ -30,12 +30,12 @@ export class GalleryService extends GalleryData {
     return observableOf(this.eventData);
   }
 
-  getGallery(): Observable<Gallery> {
-    return this.http.get<Gallery>(`${ApiUrls.U_GALLERY(ApiUrls.EVENT_ID)}`);
+  getGallery(eventCode: string): Observable<Gallery> {
+    return this.http.get<Gallery>(`${ApiUrls.U_GALLERY(eventCode)}`);
   }
 
-  getFiles(page: number = 1): Observable<PaginatedFiles> {
-    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${ApiUrls.EVENT_ID}&page=${page}`);
+  getFiles(eventCode: string, page: number = 1): Observable<PaginatedFiles> {
+    return this.http.get<PaginatedFiles>(`${ApiUrls.U_GALLERY_FILES()}?gallery__event__code=${eventCode}&page=${page}`);
   }
 
   getFilesNextPage(next: string): Observable<PaginatedFiles> {

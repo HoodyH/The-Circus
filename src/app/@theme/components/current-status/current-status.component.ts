@@ -14,6 +14,7 @@ export class CurrentStatusComponent implements OnInit {
   @Output() currentActivityChange: EventEmitter<Activity> = new EventEmitter<Activity>()
 
   currentActivity: Activity
+  nextActivity: Activity
 
   ngOnInit(): void {
     this.getCurrentActivity();

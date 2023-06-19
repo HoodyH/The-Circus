@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {EventsData} from "@core/data/events";
 
 @Component({
   selector: 'app-pages-component',
   template: `
-    <app-header></app-header>
     <router-outlet></router-outlet>
-    <app-footer></app-footer>
   `
 })
 

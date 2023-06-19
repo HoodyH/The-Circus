@@ -47,8 +47,8 @@ export interface PollLiveData {
 
 
 export abstract class PollData {
-  abstract getPoll(): Observable<Poll[]>;
-  abstract getPollVote(): Observable<PollVoteDetail[]>;
+  abstract getPoll(eventCode: string): Observable<Poll[]>;
+  abstract getPollVote(eventCode: string): Observable<PollVoteDetail[]>;
   abstract postPollVote(data: PollVoteCreation): Observable<PollVoteDetail>;
   abstract putPollVote(id: number, data: PollVoteDetail): Observable<PollVoteDetail>;
   abstract deletePollVote(id: number): Observable<PollVoteDetail>;

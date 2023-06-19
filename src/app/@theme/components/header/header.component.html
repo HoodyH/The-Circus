@@ -4,12 +4,20 @@
     <button *ngIf="!isHomePage()" (click)="goHome()"><i class="fas fa-home"></i></button>
     <div class="navbar-nav d-flex align-items-center">
       <ul class="navbar-nav">
-        <li class="nav-item" *ngIf="authService.isLoggedIn()">
-          <a class="nav-link acid-glass-background" routerLink="access/logout">Logout</a>
+        <li class="nav-item" *ngIf="!authService.isLoggedIn(); else loggedInUser">
+          <a class="nav-link acid-glass-background" routerLink="/access/login">Login</a>
         </li>
-        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
-          <a class="nav-link acid-glass-background" routerLink="access/login">Login</a>
-        </li>
+        <ng-template #loggedInUser>
+          <li class="nav-item dropdown" [class.show]="isUserDropdownOpen" (click)="isUserDropdownOpen = !isUserDropdownOpen">
+            <a class="nav-link acid-glass-background" href="javascript:void(0)">
+              {{ loggedUser.first_name }} <i class="fas fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu acid-glass-background" [ngClass]="{ 'show': isUserDropdownOpen }">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" routerLink="/access/logout">Logout</a></li>
+            </ul>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>

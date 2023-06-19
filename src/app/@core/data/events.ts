@@ -1,7 +1,5 @@
 import {Observable} from "rxjs";
 import {User} from "@core/data/users";
-import {Background} from "@core/data/live";
-
 
 export enum LiveScreenTypes {
   CAROUSEL = 'carousel',
@@ -85,8 +83,17 @@ export const defaultLiveScreenConfiguration: LiveConfiguration = {
   }
 
 export abstract class EventsData {
-  abstract getEvent(): Observable<Event>;
-  abstract getParticipants(): Observable<Participant[]>;
+
+  protected event: Event;
+  protected _eventCode: string;
+
+  abstract loadEvent(eventCode: string): Observable<any>;
+  abstract getEvent(eventCode: string): Observable<Event>;
+  abstract getParticipants(eventCode: string): Observable<Participant[]>;
+
+  get eventCode(): string {
+    return this._eventCode;
+  }
 
   isEventStarted(end_datetime: string): boolean {
     return new Date() > new Date(end_datetime)

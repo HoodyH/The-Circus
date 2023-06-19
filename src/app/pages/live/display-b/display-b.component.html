@@ -1,0 +1,61 @@
+<section class="vh-100 d-flex align-items-center" [style.background]="background.color">
+
+  <ul *ngIf="liveScreenConfiguration.lights" class="circles">
+    <li><p class="emoji-big">🤣</p></li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+    <li>🤣</li>
+  </ul>
+
+  <div *ngIf="event" class="container">
+    <div class="row h-100">
+      <div class="col-3">
+        <div class="row">
+          <app-current-time></app-current-time>
+        </div>
+        <div class="row">
+          <app-current-status
+            class="mt-3"
+            [showActivitiesActions]="false"
+            [activities]="event.activities"
+            [eventDate]="event.start_datetime"
+            (currentActivityChange)="currentActivityChange($event)"
+          ></app-current-status>
+        </div>
+        <div class="row">
+          <app-now-playing
+            class="mt-3"
+          [song]="{ title: 'Titolo canzone', artist: 'Nome artista', imageUrl: 'https://fastly.picsum.photos/id/304/300/300.jpg?hmac=G0uliBCivPslLUmoPIL5MvjxOfbM9nSZBMv5sYD-6DM' }"
+          [currentTime]="'1:30'"
+          [remainingTime]="'3:30'"
+          ></app-now-playing>
+        </div>
+      </div>
+
+      <!-- Main Windows -->
+      <div class="col-9 m-auto">
+        <div class="row align-items-center" *ngIf="liveScreenConfiguration.main_block == liveScreenTypes.CAROUSEL">
+          <app-carousel
+            class="col text-center mx-auto"
+            [files]="files"
+            (lastScrolledPhoto)="getCarouselData($event)"
+          ></app-carousel>
+        </div>
+
+        <div class="row align-items-center" *ngIf="pollLiveData && liveScreenConfiguration.main_block == liveScreenTypes.POLL">
+          <h2>{{pollLiveData.currentPoll?.question}}</h2>
+          <app-poll-chart [poll]="pollLiveData.currentPoll" [results]="pollLiveData.currentPollResults"
+                          [maxResultsLive]="7"></app-poll-chart>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>

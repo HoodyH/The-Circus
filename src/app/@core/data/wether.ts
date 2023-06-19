@@ -5,5 +5,5 @@ export interface Wether {
 }
 
 export abstract class WetherData {
-    abstract getWether(): Observable<Wether>;
+    abstract getWeather(): Observable<Wether>;
 }
