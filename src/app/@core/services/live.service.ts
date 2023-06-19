@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Background, LiveData, defaultBackground } from "../data/live";
+import {Background, LiveData, defaultBackground, SongPlaying} from "../data/live";
 import { Observable, interval, of as observableOf } from "rxjs";
 import {ApiUrls} from "@core/data/api";
 import {HttpClient} from "@angular/common/http";
@@ -44,6 +44,10 @@ export class LiveService extends LiveData {
 
   getBackground(): Observable<Background> {
     return observableOf(this.background);
+  }
+
+  getSongPlaying(): Observable<SongPlaying> {
+    return observableOf();
   }
 
 }

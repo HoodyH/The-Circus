@@ -9,10 +9,6 @@ const routes: Routes = [
     component: SplashComponent
   },
   {
-    path: '',
-    loadChildren: () => import('./event/event.module').then(m => m.EventModule),
-  },
-  {
     path: 'access',
     loadChildren: () => import('./access/access.module').then(m => m.AccessModule),
   },
@@ -29,6 +25,10 @@ const routes: Routes = [
   {
     path: 'black-hole',
     loadChildren: () => import('./miscellaneous/miscellaneous.module').then(m => m.MiscellaneousModule),
+  },
+  {
+    path: '',
+    loadChildren: () => import('./event/event.module').then(m => m.EventModule),
   },
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];

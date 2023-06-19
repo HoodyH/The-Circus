@@ -6,7 +6,7 @@ import {HomeComponent} from "./home/home.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
@@ -16,7 +16,6 @@ const routes: Routes = [
       }
     ]
   }
-
 ];
 
 @NgModule({

@@ -16,8 +16,8 @@
         ></app-current-status>
       </div>
       <br>
-      <div class="row">
-        <app-location *ngIf="event" [location]="event.location"></app-location>
+      <div class="row" *ngIf="event && event.location">
+        <app-location [location]="event.location"></app-location>
       </div>
       <div class="scroll-arrow">
         <i class="fas fa-chevron-down"></i>
@@ -27,11 +27,11 @@
 
   <br>
 
-  <section class="container" *ngIf="event">
+  <section class="container" *ngIf="event && event.description">
     <div class="row text-center" [innerHTML]="event.description"></div>
   </section>
 
-  <section class="container" *ngIf="event">
+  <section class="container" *ngIf="event && event.activities.length">
     <app-timeline [activities]="event.activities"></app-timeline>
   </section>
 
@@ -51,7 +51,7 @@
     </div>
   </section>
 
-  <section class="container" *ngIf="event">
+  <section class="container" *ngIf="event && event.staff.length">
     <div class="row title">
       <h2>Contatti</h2>
     </div>
