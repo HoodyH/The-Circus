@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 import { AuthData } from '@app/@core/data/auth';
@@ -11,22 +11,30 @@ import { User, UsersData } from '@app/@core/data/users';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input() name: string = "The Circus";
+  @Input() baseUri: string = "/";
+  @Input() navItems: { label: string, path: string }[] = [];
+
   user: User
   userRequestPending: boolean = false;
   isUserDropdownOpen: boolean = false;
 
-  constructor(private router: Router, private location: Location, public authService: AuthData, 
+  constructor(private router: Router, private location: Location, public authService: AuthData,
               public userService: UsersData) {
   }
 
   ngOnInit(): void {
   }
 
-  isHomePage(): boolean {
+  get isHomePage(): boolean {
     return this.router.isActive(
-      '/',
+      this.baseUri,
       {paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored'}
     )
+  }
+
+  get getUserMinWidth(): number {
+    return Math.max(6.5, this.loggedUser.first_name.length * 0.7);
   }
 
   goHome(): void {
