@@ -23,7 +23,8 @@ export class MeComponent implements OnInit {
       personalInfo: this.formBuilder.group({
         firstName: { value: '', disabled: true },
         lastName: { value: '', disabled: true },
-        phoneNumber: { value: '', disabled: true }
+        phoneNumber: { value: '', disabled: true },
+        email: { value: '', disabled: true },
       }),
       events: this.formBuilder.array([])
     });
@@ -35,10 +36,20 @@ export class MeComponent implements OnInit {
         personalInfo.patchValue({
           firstName: user.first_name,
           lastName: user.last_name,
-          phoneNumber: user.phone
+          phoneNumber: user.phone,
+          email: user.email
+        });
+      }
+    })
+
+    this.eventService.getEvents().subscribe({
+      next: (events) => {
+        this.userEvents = events.sort((a, b) => {
+          const dateA = new Date(a.start_datetime);
+          const dateB = new Date(b.start_datetime);
+          return dateB.getTime() - dateA.getTime();
         });
       }
     })
   }
-
 }

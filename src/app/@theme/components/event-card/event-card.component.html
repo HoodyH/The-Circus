@@ -1,0 +1,7 @@
+<div class="card" [routerLink]="['/', event.code]">
+  <div class="card-body text-center">
+    <h5 class="card-title">{{ event.name }}</h5>
+    <h6 class="card-subtitle mb-2">{{ event.tagline }}</h6>
+    <h6 class="card-text text-muted">{{ event.start_datetime | date }}</h6>
+  </div>
+</div>

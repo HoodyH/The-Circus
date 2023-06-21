@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
 import { AuthData } from '@app/@core/data/auth';
@@ -19,11 +19,21 @@ export class HeaderComponent implements OnInit {
   userRequestPending: boolean = false;
   isUserDropdownOpen: boolean = false;
 
+  @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
+
   constructor(private router: Router, private location: Location, public authService: AuthData,
               public userService: UsersData) {
   }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('window:click', ['$event'])
+  onClick(event: MouseEvent) {
+    if (!this.dropdown.nativeElement.contains(event.target)) {
+      console.log("Click intercettato in qualsiasi punto della pagina!");
+      this.isUserDropdownOpen = false;
+    }
   }
 
   get isHomePage(): boolean {

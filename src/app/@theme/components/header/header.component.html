@@ -13,7 +13,7 @@
     </ul>
   </div>
 
-  <ul class="navbar-nav">
+  <ul #dropdown class="navbar-nav">
     <li class="nav-item" *ngIf="!authService.isLoggedIn(); else loggedInUser">
       <a class="nav-link acid-glass-background" routerLink="/access/login">Login</a>
     </li>
