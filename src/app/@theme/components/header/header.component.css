@@ -25,20 +25,26 @@ nav button {
   backdrop-filter: blur(4px);
   border-radius: var(--border-radius-small);
   padding: 5px 10px;
-  color: white;
   border: none;
 }
 
-.nav-link::content {
+.open {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
+.dropdown-user {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 10rem;
+  z-index: 1000;
+  overflow: hidden;
+}
+
 .dropdown-menu {
   border-top: 1px solid grey;
-  border-radius: 0;
-  border-bottom-right-radius: var(--border-radius-small);
-  border-bottom-left-radius: var(--border-radius-small);
+  border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
   margin-top: 0;
 }
 

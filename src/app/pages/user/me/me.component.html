@@ -1,0 +1,40 @@
+<section class="section-banner d-flex align-items-center min-vh-100">
+  <div class="container">
+    <div class="row mt-5">
+      <h1>uSER pROFILE</h1>
+    </div>
+    <div class="row mt-5">
+      <form [formGroup]="userDataForm">
+        <div class="col" formGroupName="personalInfo">
+          <h2>Dati personali</h2>
+          <div class="form-group mt-2">
+            <label>Nome</label>
+            <input class="form-control text-center" type="text" formControlName="firstName">
+          </div>
+          <div class="form-group mt-2">
+            <label>Cognome</label>
+            <input class="form-control" type="text" formControlName="lastName">
+          </div>
+          <div class="form-group mt-2">
+            <label>Numero di telefono</label>
+            <input class="form-control" type="text" formControlName="phoneNumber">
+          </div>
+          <div class="form-group mt-2">
+            <label>Email</label>
+            <input class="form-control" type="text" formControlName="email">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="userEvents.length" class="row mt-5 mb-3">
+      <div class="col">
+        <h2>I miei Eventi</h2>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let event of userEvents">
+            <app-event-card [event]="event"></app-event-card>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

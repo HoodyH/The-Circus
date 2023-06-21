@@ -23,6 +23,13 @@ export class EventsService extends EventsData {
     );
   }
 
+  /**
+   * Retrive the events, the logged user can see only the ones where he is in
+   */
+  getEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${ApiUrls.U_EVENTS()}`);
+  }
+
   getEvent(eventCode: string): Observable<Event> {
     return this.http.get<Event>(`${ApiUrls.U_EVENT(eventCode)}`);
   }

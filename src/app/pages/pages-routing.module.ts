@@ -2,11 +2,17 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "@core/guards/auth.guard";
 import {SplashComponent} from "@app/pages/splash/splash.component";
+import {UserComponent} from "@app/pages/user/user.component";
 
 const routes: Routes = [
   {
     path: '',
     component: SplashComponent
+  },
+  {
+    path: 'me',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {
     path: 'access',

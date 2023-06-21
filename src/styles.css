@@ -95,3 +95,11 @@ img, video {
   margin-top: 1px;
   border-radius: var(--border-radius);
 }
+
+.form-group {
+  text-align: center;
+}
+.form-control {
+
+  text-align: center;
+}

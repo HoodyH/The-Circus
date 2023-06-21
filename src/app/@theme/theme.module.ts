@@ -25,6 +25,7 @@ import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {NowPlayingComponent} from "./components/now-playing/now-playing.component";
 import {CarouselComponent} from './components/carousel/carousel.component';
 import { CurrentTimeComponent } from './components/current-time/current-time.component';
+import { EventCardComponent } from './components/event-card/event-card.component';
 
 
 const COMPONENTS: any = [
@@ -42,6 +43,7 @@ const COMPONENTS: any = [
   NowPlayingComponent,
   CarouselComponent,
   CurrentTimeComponent,
+  EventCardComponent,
 ];
 
 const DIRECTIVES: any = [];

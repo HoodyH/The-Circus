@@ -5,6 +5,7 @@ export interface User {
   phone: string;
   first_name: string;
   last_name: string;
+  email: string;
   username: string;
   is_staff: string;
   date_joined: string;
