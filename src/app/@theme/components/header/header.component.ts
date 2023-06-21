@@ -34,7 +34,11 @@ export class HeaderComponent implements OnInit {
   }
 
   get getUserMinWidth(): number {
-    return Math.max(6.5, this.loggedUser.first_name.length * 0.7);
+    const min = 6.5
+    if (this.user) {
+      return Math.max(min, this.loggedUser.first_name.length * 0.7);
+    }
+    return min;
   }
 
   goHome(): void {

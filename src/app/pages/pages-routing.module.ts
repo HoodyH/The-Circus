@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'me',
     canActivate: [AuthGuard],
-    component: UserComponent,
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
   {
     path: 'access',

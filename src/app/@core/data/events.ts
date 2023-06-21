@@ -88,6 +88,7 @@ export abstract class EventsData {
   protected _eventCode: string;
 
   abstract loadEvent(eventCode: string): Observable<any>;
+  abstract getEvents(): Observable<Event[]>;
   abstract getEvent(eventCode: string): Observable<Event>;
   abstract getParticipants(eventCode: string): Observable<Participant[]>;
 

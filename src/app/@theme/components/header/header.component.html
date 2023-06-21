@@ -22,7 +22,7 @@
           (click)="isUserDropdownOpen = !isUserDropdownOpen">
         <a class="nav-link acid-glass-background d-flex align-items-center" href="javascript:void(0)"
            [class.open]="isUserDropdownOpen" [style.min-width.em]="getUserMinWidth">
-          <span class="m-auto">{{ loggedUser.first_name }}</span>
+          <span class="m-auto">{{ loggedUser? loggedUser.first_name : '- - -' }}</span>
           <i class="fas" [class.fa-caret-down]="!isUserDropdownOpen" [class.fa-caret-up]="isUserDropdownOpen"></i>
         </a>
         <ul class="dropdown-menu dropdown-user acid-glass-background" [class.show]="isUserDropdownOpen"

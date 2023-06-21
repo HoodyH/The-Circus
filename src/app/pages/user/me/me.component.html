@@ -1,0 +1,31 @@
+<section class="section-banner d-flex align-items-center min-vh-100">
+  <div class="container">
+    <div class="row">
+      <form [formGroup]="userDataForm">
+        <div class="col" formGroupName="personalInfo">
+          <h2>Dati personali</h2>
+          <div class="form-group mt-2">
+            <label>Nome</label>
+            <input class="form-control text-center" type="text" formControlName="firstName">
+          </div>
+          <div class="form-group mt-2">
+            <label>Cognome</label>
+            <input class="form-control" type="text" formControlName="lastName">
+          </div>
+          <div class="form-group mt-2">
+            <label>Numero di telefono</label>
+            <input class="form-control" type="text" formControlName="phoneNumber">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="userEvents.length" class="row mt-5">
+      <div class="col">
+        <h2>I miei Eventi</h2>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let event of userEvents">{{ event }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

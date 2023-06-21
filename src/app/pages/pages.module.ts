@@ -5,7 +5,6 @@ import {PagesComponent} from "./pages.component";
 import {ThemeModule} from "@theme/theme.module";
 import {SplashModule} from "@app/pages/splash/splash.module";
 import {EventComponent} from './event/event.component';
-import {UserModule} from "@app/pages/user/user.module";
 
 
 @NgModule({
@@ -15,7 +14,6 @@ import {UserModule} from "@app/pages/user/user.module";
     ThemeModule,
     PagesRoutingModule,
     SplashModule,
-    UserModule,
   ],
 })
 export class PagesModule {
