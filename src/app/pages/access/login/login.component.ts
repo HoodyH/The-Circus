@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthData} from '@core/data/auth';
+import {UsersData} from "@core/data/users";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   loginSuccess = false;
   next: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthData,
+  constructor(private router: Router, private route: ActivatedRoute, private userService: UsersData,
               private fb: FormBuilder) {
 
     this.loginForm = this.fb.group({
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       login = this.autoLogin(this.route.snapshot.queryParams['key']);
     }
 
-    if (!login && this.authService.isLoggedIn()) {
+    if (!login && this.userService.isLoggedIn()) {
       this.router.navigate(['']).then();
     }
   }
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     }
 
-    this.authService.login(data).subscribe({
+    this.userService.login(data).subscribe({
       next: (success) => {
         if (success) {
           this.loginFailed = false;

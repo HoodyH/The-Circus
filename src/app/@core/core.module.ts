@@ -13,22 +13,22 @@ import {PaymentsService} from "@core/services/payments.service";
 import { PollData } from './data/poll';
 import { PollService } from './services/poll.service';
 import { StorageService } from './services/storage.service';
-import { AuthData } from './data/auth';
-import { AuthService } from './services/auth.service';
 import { AuthAppInterceptor } from './interceptors/auth.interceptor';
 import { LiveData } from './data/live';
 import { LiveService } from './services/live.service';
 import { UsersData } from './data/users';
 import { UsersService } from './services/users.service';
+import {ErrorsData} from "@core/data/errors";
+import {ErrorsService} from "@core/services/errors.service";
 
 const DATA_SERVICES = [
   {provide: EventsData, useClass: EventsService},
   {provide: GalleryData, useClass: GalleryService},
   {provide: PaymentsData, useClass: PaymentsService},
   {provide: PollData, useClass: PollService},
-  {provide: AuthData, useClass: AuthService},
   {provide: LiveData, useClass: LiveService},
   {provide: UsersData, useClass: UsersService},
+  {provide: ErrorsData, useClass: ErrorsService},
 ]
 
 

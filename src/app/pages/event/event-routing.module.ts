@@ -28,6 +28,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./gallery/gallery.module').then(m => m.GalleryModule),
       },
+      {
+        path: 'live',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./live/live.module').then(m => m.LiveModule),
+      },
     ]
   }
 

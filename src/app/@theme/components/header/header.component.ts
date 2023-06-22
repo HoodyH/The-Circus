@@ -1,8 +1,10 @@
 import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Location} from '@angular/common';
-import { AuthData } from '@app/@core/data/auth';
 import { User, UsersData } from '@app/@core/data/users';
+
+export interface NavItems { label: string, path: string }
+
 
 @Component({
   selector: 'app-header',
@@ -11,9 +13,12 @@ import { User, UsersData } from '@app/@core/data/users';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() name: string = "The Circus";
-  @Input() baseUri: string = "/";
-  @Input() navItems: { label: string, path: string }[] = [];
+  @Input() brand: string = "The Circus";
+  @Input() showBrand: boolean = true;
+  @Input() baseUri: string = "";
+  @Input() navItems: NavItems[] = [
+
+  ];
 
   user: User
   userRequestPending: boolean = false;
@@ -21,8 +26,7 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
 
-  constructor(private router: Router, private location: Location, public authService: AuthData,
-              public userService: UsersData) {
+  constructor(private router: Router, private location: Location, public userService: UsersData) {
   }
 
   ngOnInit(): void {
@@ -31,7 +35,6 @@ export class HeaderComponent implements OnInit {
   @HostListener('window:click', ['$event'])
   onClick(event: MouseEvent) {
     if (!this.dropdown.nativeElement.contains(event.target)) {
-      console.log("Click intercettato in qualsiasi punto della pagina!");
       this.isUserDropdownOpen = false;
     }
   }
@@ -52,7 +55,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goHome(): void {
-    this.router.navigate(['/']).then();
+    this.router.navigate(['/', this.baseUri]).then();
   }
 
   goBack(): void {

@@ -63,7 +63,7 @@ export interface Location {
 
 export interface Event {
   id: number;
-  code: number;
+  code: string;
   name: string;
   tagline: string;
   description: string
@@ -87,7 +87,7 @@ export abstract class EventsData {
   protected event: Event;
   protected _eventCode: string;
 
-  abstract loadEvent(eventCode: string): Observable<any>;
+  abstract loadEvent(eventCode: string): Observable<Event>;
   abstract getEvents(): Observable<Event[]>;
   abstract getEvent(eventCode: string): Observable<Event>;
   abstract getParticipants(eventCode: string): Observable<Participant[]>;

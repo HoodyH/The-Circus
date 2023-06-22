@@ -1,8 +1,10 @@
 <section class="section-banner d-flex align-items-center min-vh-100">
   <div class="container">
+
     <div class="row mt-5">
       <h1>uSER pROFILE</h1>
     </div>
+
     <div class="row mt-5">
       <form [formGroup]="userDataForm">
         <div class="col" formGroupName="personalInfo">
@@ -26,7 +28,28 @@
         </div>
       </form>
     </div>
-    <div *ngIf="userEvents.length" class="row mt-5 mb-3">
+
+    <div class="row mt-5">
+      <div class="col">
+        <h2>Spotify</h2>
+        <p class="text-center">Connetti il tuo spotify per aggiungere canzoni in coda agli eventi</p>
+        <p class="text-center text-info">Disponibile solo per Spotify premium</p>
+        <div class="badge-wrapper">
+          <div class="badge" [ngClass]="{ 'connected': spotifyAccess }">
+            <img src="./assets/spotify-logo.png" alt="Spotify Logo" class="logo">
+            <span>{{ spotifyAccess ? spotifyAccess.spotify_name : 'Non Collegato' }}</span>
+          </div>
+          <div *ngIf="spotifyAccess">
+            <button (click)="disconnectSpotify()" class="btn btn-danger m-2">Disconnetti</button>
+          </div>
+          <div *ngIf="!spotifyAccess">
+            <button (click)="connectSpotify()" class="btn btn-dark m-2">Connetti</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="userEvents.length" class="row mt-5">
       <div class="col">
         <h2>I miei Eventi</h2>
         <ul class="list-group">
@@ -34,6 +57,17 @@
             <app-event-card [event]="event"></app-event-card>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="row mt-5 mb-3">
+      <div class="col">
+        <h2 class="text-danger">Danger Zone</h2>
+        <p class="text-center">Elimina il tuo account e tutti i dati ad esso associati</p>
+        <p class="text-center">Dopo l'eliminazione i dati non sono più recuperabili</p>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-danger">Elimina Account</button>
+        </div>
       </div>
     </div>
   </div>
