@@ -22,6 +22,5 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: "dist/app"
-          config_file_location: "dist/app/configurations"
         env:
           NPM_CONFIG_LEGACY_PEER_DEPS: true
