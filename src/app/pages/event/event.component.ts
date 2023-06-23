@@ -1,27 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventsData} from "@core/data/events";
+import {ErrorsData, ErrorCode} from "@core/data/errors";
+import {NavItems} from "@theme/components/header/header.component";
+import {navItems} from "./event-nav";
 
 @Component({
   selector: 'app-event',
   template: `
-    <app-header></app-header>
+    <app-header [showBrand]="false" baseUri="{{code}}" [navItems]="navItems"></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
   `
 })
 export class EventComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventsData) {
+  code: string;
+  navItems: NavItems[] = navItems;
+
+  constructor(private route: ActivatedRoute, private router: Router, private eventService: EventsData,
+              private errorService: ErrorsData) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.eventService.loadEvent(params['id']).subscribe({
-        next: () => {},
+        next: (event) => {this.code = event.code ? event.code : ''},
         error: (e) => {
           if (e.status === 404) {
-            this.router.navigate(['/black-hole/no-event']).then();
+            this.errorService.displayError(ErrorCode.EVENT_NOT_FOUND_ERROR);
           }
         }
       });

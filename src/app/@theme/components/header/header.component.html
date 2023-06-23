@@ -1,44 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top p-2">
+<nav class="navbar navbar-expand navbar-light bg-transparent fixed-top container p-2">
+    <a *ngIf="showBrand" class="navbar-brand" href="#">The Circus</a>
 
-  <a class="navbar-brand" href="#">The Circus</a>
+    <div class="collapse navbar-collapse"> <!-- collapse navbar-collapse -->
+      <ul class="navbar-nav d-flex align-items-center">
+        <li class="nav-item me-2">
+          <a class="nav-link acid-glass-background"
+             *ngIf="baseUri"
+             (click)="goHome()"
+          ><i class="fas fa-home"></i></a>
+        </li>
+        <li class="nav-item px-1" *ngFor="let navItem of navItems">
+          <a class="nav-link"
+             routerLinkActive="active"
+             [routerLink]="['/'].concat(baseUri.split('/')).concat(navItem.path.split('/'))"
+          >{{navItem.label}}</a>
+        </li>
+      </ul>
+    </div>
 
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item">
-        <button *ngIf="!isHomePage" (click)="goHome()"><i class="fas fa-home"></i></button>
+    <ul #dropdown class="navbar-nav">
+      <li class="nav-item" *ngIf="!userService.isLoggedIn(); else loggedInUser">
+        <a class="nav-link acid-glass-background" routerLink="/access/login">Login</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
+      <ng-template #loggedInUser>
+        <li class="nav-item dropdown" [class.show]="isUserDropdownOpen"
+            (click)="isUserDropdownOpen = !isUserDropdownOpen">
+          <a class="nav-link acid-glass-background d-flex align-items-center" href="javascript:void(0)"
+             [class.open]="isUserDropdownOpen" [style.min-width.em]="getUserMinWidth">
+            <span class="m-auto">{{ loggedUser ? loggedUser.first_name : '- - -' }}</span>
+            <i class="fas" [class.fa-caret-down]="!isUserDropdownOpen" [class.fa-caret-up]="isUserDropdownOpen"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-user acid-glass-background" [class.show]="isUserDropdownOpen"
+              [style.min-width.em]="getUserMinWidth">
+            <li class="dropdown-item py-1 px-0">
+              <a class="nav-link p-0 d-flex align-items-center" routerLink="/me">
+                <i class="fas ps-1 fa-user"></i><span class="m-auto">Profile</span>
+              </a>
+            </li>
+            <li class="dropdown-item py-1 px-0">
+              <a class="nav-link p-0 d-flex align-items-center" routerLink="/access/logout">
+                <i class="fas ps-1 fa-power-off link-danger"></i><span class="m-auto">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-template>
     </ul>
-  </div>
-
-  <ul #dropdown class="navbar-nav">
-    <li class="nav-item" *ngIf="!authService.isLoggedIn(); else loggedInUser">
-      <a class="nav-link acid-glass-background" routerLink="/access/login">Login</a>
-    </li>
-    <ng-template #loggedInUser>
-      <li class="nav-item dropdown" [class.show]="isUserDropdownOpen"
-          (click)="isUserDropdownOpen = !isUserDropdownOpen">
-        <a class="nav-link acid-glass-background d-flex align-items-center" href="javascript:void(0)"
-           [class.open]="isUserDropdownOpen" [style.min-width.em]="getUserMinWidth">
-          <span class="m-auto">{{ loggedUser? loggedUser.first_name : '- - -' }}</span>
-          <i class="fas" [class.fa-caret-down]="!isUserDropdownOpen" [class.fa-caret-up]="isUserDropdownOpen"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-user acid-glass-background" [class.show]="isUserDropdownOpen"
-            [style.min-width.em]="getUserMinWidth">
-          <li class="dropdown-item py-1 px-0">
-            <a class="nav-link p-0 d-flex align-items-center" routerLink="/me">
-              <i class="fas ps-1 fa-user"></i><span class="m-auto">Profile</span>
-            </a>
-          </li>
-          <li class="dropdown-item py-1 px-0">
-            <a class="nav-link p-0 d-flex align-items-center" routerLink="/access/logout">
-              <i class="fas ps-1 fa-power-off link-danger"></i><span class="m-auto">Logout</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ng-template>
-  </ul>
 </nav>

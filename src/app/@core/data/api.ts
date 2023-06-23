@@ -13,6 +13,9 @@ export class ApiUrls {
 
   static U_USER = () => `${ApiUrls.API_URL}/api/user/me/`;
   static U_USERS = () => `${ApiUrls.API_URL}/api/user/list/`;
+  static U_USER_SPOTIFY_ACCESS = () => `${ApiUrls.API_URL}/api/user/spotify-access/`;
+  static U_USER_SPOTIFY_LOGIN = () => `${ApiUrls.API_URL}/api/user/spotify-login/`;
+  static U_USER_SPOTIFY_CALLBACK = () => `${ApiUrls.API_URL}/api/user/spotify-callback/`;
 
   static U_EVENT = (id: string) => `${ApiUrls.API_URL}/api/event/detail/${id}/`;
   static U_EVENTS = () => `${ApiUrls.API_URL}/api/event/list/`;

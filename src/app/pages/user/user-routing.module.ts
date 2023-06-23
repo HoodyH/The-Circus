@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "@core/guards/auth.guard";
 import {UserComponent} from "@app/pages/user/user.component";
 import {MeComponent} from "@app/pages/user/me/me.component";
+import {SpotifyCallbackComponent} from "@app/pages/user/spotify-callback/spotify-callback.component";
 
 const routes: Routes = [
   {
@@ -11,7 +12,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [AuthGuard],
         component: MeComponent,
+      },
+      {
+        path: 'spotify-callback',
+        component: SpotifyCallbackComponent,
       }
     ]
   }

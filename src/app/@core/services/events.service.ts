@@ -12,7 +12,7 @@ export class EventsService extends EventsData {
     super();
   }
 
-  loadEvent(eventCode: string) {
+  loadEvent(eventCode: string): Observable<Event> {
     this._eventCode = eventCode;
     return this.getEvent(this.eventCode).pipe(
       tap((event: Event) => {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthData } from '@app/@core/data/auth';
+import {UsersData} from "@core/data/users";
 
 
 @Component({
@@ -9,10 +9,10 @@ import { AuthData } from '@app/@core/data/auth';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthData) {}
+  constructor(private router: Router, private userService: UsersData) {}
 
   ngOnInit(): void {
-    this.authService.logout().subscribe();
+    this.userService.logout().subscribe();
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 3000);

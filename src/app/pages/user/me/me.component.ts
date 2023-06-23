@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Event, EventsData} from "@core/data/events";
-import {User, UsersData} from "@core/data/users";
+import {SpotifyAccess, User, UsersData} from "@core/data/users";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-me',
@@ -14,8 +15,10 @@ export class MeComponent implements OnInit {
 
   user: User;
   userEvents: Event[] = [];
+  spotifyAccess: SpotifyAccess | null;
 
-  constructor(private formBuilder: FormBuilder, private eventService: EventsData, private userService: UsersData) {
+  constructor(private formBuilder: FormBuilder, private eventService: EventsData, private userService: UsersData,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -51,5 +54,26 @@ export class MeComponent implements OnInit {
         });
       }
     })
+
+    this.userService.getUserSpotifyAccess().subscribe({
+      next: (spotifyAccess) => {
+        this.spotifyAccess = spotifyAccess;
+      }
+    });
+  }
+
+  connectSpotify() {
+    this.userService.getUserSpotifyConnectData().subscribe({
+      next: (data) => {
+        console.log(data);
+        window.open(data.auth_url);
+      }
+    });
+  }
+
+  disconnectSpotify() {
+    this.userService.deleteUserSpotifyAccess().subscribe({
+      next: () => this.spotifyAccess = null
+    });
   }
 }

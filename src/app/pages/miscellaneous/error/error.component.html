@@ -1,0 +1,7 @@
+<div class="section d-flex align-items-center justify-content-center vh-100">
+  <div *ngIf="error" class="container text-center">
+    <p><span class="emoji-big">{{error.emoji}}</span></p>
+    <p>{{error.message}}</p>
+    <h2>{{code}} {{error.verboseCode}}</h2>
+  </div>
+</div>

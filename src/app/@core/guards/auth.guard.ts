@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthData} from "@core/data/auth";
+import {UsersData} from "@core/data/users";
 
 
 @Injectable({
@@ -8,10 +8,10 @@ import {AuthData} from "@core/data/auth";
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthData, private router: Router) {}
+  constructor(private userData: UsersData, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isLoggedIn()) {
+    if (this.userData.isLoggedIn()) {
       return true;
     } else {
       this.router.navigate(['/access/login'], {queryParams:{'next':state.url}}).then();
