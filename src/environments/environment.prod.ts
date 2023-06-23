@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  useHash: true,
+  useHash: false,
   api: 'https://dioniso.azurewebsites.net'
 };

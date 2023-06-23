@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - x
 
 jobs:
   deploy:
@@ -28,4 +28,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.PUSH_GITHUB_TOKEN }}
-          publish_dir: ./dist/the-circus
+          publish_dir: ./dist/app

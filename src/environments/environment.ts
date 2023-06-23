@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  useHash: true,
+  useHash: false,
   _api: 'https://dioniso.azurewebsites.net',
   api: 'http://localhost:8000',
 };
