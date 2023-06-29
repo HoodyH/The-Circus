@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Background, LiveData, defaultBackground, SongPlaying} from "../data/live";
-import { Observable, interval, of as observableOf } from "rxjs";
+import {Observable, interval, of as observableOf} from "rxjs";
 import {ApiUrls} from "@core/data/api";
 import {HttpClient} from "@angular/common/http";
 
@@ -50,4 +50,26 @@ export class LiveService extends LiveData {
     return observableOf();
   }
 
+  public connectLiveSocket(eventCode?: string): void {
+    this.liveSocket = new WebSocket(`${ApiUrls.U_LIVE()}${eventCode}/`);
+
+    this.liveSocket.onopen = (event) => {
+      console.log('Live WebSocket connection established.');
+    };
+
+    this.liveSocket.onmessage = (event) => {
+      console.log('Live WebSocket message:', event.data);
+      this.liveSubject.next(JSON.parse(event.data));
+    };
+
+    this.liveSocket.onclose = (event) => {
+      console.log('Live WebSocket connection closed.');
+    };
+  }
+
+  public disconnectLiveSocket(): void {
+    if (this.liveSocket) {
+      this.liveSocket.close();
+    }
+  }
 }
