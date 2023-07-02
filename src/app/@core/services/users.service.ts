@@ -18,6 +18,10 @@ export class UsersService extends UsersData {
     return this.http.get<User>(ApiUrls.U_USER());
   }
 
+  deleteUser(): Observable<User> {
+    return this.http.delete<User>(ApiUrls.U_USER());
+  }
+
   getUserSpotifyAccess(): Observable<SpotifyAccess>{
     return this.http.get<SpotifyAccess>(ApiUrls.U_USER_SPOTIFY_ACCESS());
   }
