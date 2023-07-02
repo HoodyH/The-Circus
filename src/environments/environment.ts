@@ -7,6 +7,8 @@ export const environment = {
   useHash: false,
   _api: 'https://dioniso.azurewebsites.net',
   api: 'http://localhost:8000',
+  _websocket: 'wss://dioniso.azurewebsites.net',
+  websocket: 'ws://localhost:8000',
 };
 
 /*

@@ -12,15 +12,26 @@ export interface SongPlaying {
   remainingTime: string;
 }
 
+export interface LiveData {
+  message: string
+}
+
 export const defaultBackground: Background = {
   color: '#eee'
 }
 
 export abstract class LiveData {
 
-  public backgroundSubject: Subject<Background> = new Subject<Background>();
+  protected liveSocket: WebSocket;
 
+  public backgroundSubject: Subject<Background> = new Subject<Background>();
+  public liveSubject: Subject<LiveData> = new Subject<LiveData>();
+  
   abstract subscribeBackground(): any;
   abstract getBackground(): Observable<Background>;
   abstract getSongPlaying() : Observable<SongPlaying>
+
+  // websockets
+  abstract connectLiveSocket(eventCode?: string): void
+  abstract disconnectLiveSocket(): void
 }

@@ -33,6 +33,7 @@ export interface SpotifyConnectData {
 
 export abstract class UsersData {
   abstract getUser(): Observable<User>;
+  abstract deleteUser(): Observable<User>;
   abstract getUserSpotifyAccess(): Observable<SpotifyAccess>;
   abstract deleteUserSpotifyAccess(): Observable<SpotifyAccess>;
   abstract getUserSpotifyConnectData(): Observable<SpotifyConnectData>;
