@@ -68,6 +68,7 @@ export interface Event {
   tagline: string;
   description: string
   start_datetime: string;
+  end_datetime: string;
   backup_datetime: string;
   price: number;
   activities: Activity[];
@@ -96,7 +97,11 @@ export abstract class EventsData {
     return this._eventCode;
   }
 
-  isEventStarted(end_datetime: string): boolean {
-    return new Date() > new Date(end_datetime)
+  get isEventStarted(): boolean {
+    return new Date() > new Date(this.event.start_datetime)
+  };
+
+  get isEventEnded(): boolean {
+    return new Date() > new Date(this.event.end_datetime)
   };
 }

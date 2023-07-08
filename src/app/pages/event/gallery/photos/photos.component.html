@@ -11,39 +11,7 @@
       <button class="btn btn-secondary" (click)="navigateToUpload()">Pubblica Foto</button>
     </div>
 
-    <div class="row justify-content-start mb-4">
-      <div class="col-4 p-0" *ngFor="let media of mediaList" (click)="openModal(media)">
-        <div class="square-container">
-          <ng-container *ngIf="media.type !== 'video/mp4'">
-            <img class="square-img" [src]="media.url" alt="Media" />
-          </ng-container>
-          <ng-container *ngIf="media.type === 'video/mp4'">
-            <video class="square-img" [src]="media.url"></video>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" [class.open]="isModalOpen" (click)="closeModal()">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content p-2">
-          <ng-container *ngIf="selectedMedia && selectedMedia.type !== 'video/mp4'">
-            <img [src]="selectedMedia.url" alt="Media" class="modal-img"/>
-          </ng-container>
-          <ng-container *ngIf="selectedMedia && selectedMedia.type === 'video/mp4'">
-            <video #videoPlayer [src]="selectedMedia.url" controls class="modal-img"></video>
-          </ng-container>
-          <!-- div class="modal-footer m-2">
-            <button class="btn btn-primary btn-circle" (click)="downloadMedia(selectedMedia)">
-              <i class="fas fa-download"></i>
-            </button>
-            <button class="btn btn-info btn-circle" (click)="shareMedia(selectedMedia)">
-              <i class="fas fa-share-alt"></i>
-            </button>
-          </div -->
-        </div>
-      </div>
-    </div>
+    <app-gallery [mediaList]="mediaList"></app-gallery>
 
   </div>
 </section>
