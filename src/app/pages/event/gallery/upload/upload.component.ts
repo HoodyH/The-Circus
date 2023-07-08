@@ -52,7 +52,7 @@ export class UploadComponent implements OnInit {
       this.uploading = true;
 
       const formData = new FormData();
-      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('content', this.selectedFile, this.selectedFile.name);
       formData.append('gallery', this.gallery.id.toString());
       formData.append('type', this.selectedFile.type);
 
@@ -60,7 +60,7 @@ export class UploadComponent implements OnInit {
         next: (data) => {
           this.file = data
           setTimeout(() => {
-            this.router.navigateByUrl('/gallery/photos').then();
+            this.router.navigateByUrl(`/${this.eventService.eventCode}/gallery/photos`).then();
           }, 3000);
         },
         error: (e) => {
@@ -83,7 +83,7 @@ export class UploadComponent implements OnInit {
             }
           }
           setTimeout(() => {
-            this.router.navigateByUrl('').then();
+            this.router.navigateByUrl(`/${this.eventService.eventCode}`).then();
           },
           3000);
         }

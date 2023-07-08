@@ -71,27 +71,8 @@ export class PhotosComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  downloadMedia(photo: FileStore): void {
-    const link = document.createElement('a');
-    link.href = photo.url;
-    link.download = `photo_${photo.id}.jpg`;
-    link.click();
-  }
-
-  shareMedia(media: FileStore) {
-    if (navigator.share) {
-      navigator.share({
-        title: 'Condividi media',
-        text: 'Guarda questo media interessante!',
-        url: media.url
-      })
-        .then(() => console.log('Media condiviso con successo.'))
-        .catch((error) => console.log('Errore durante la condivisione del media:', error));
-    }
-  }
-
   navigateToUpload() {
-    this.router.navigateByUrl('/gallery/upload').then();
+    this.router.navigateByUrl(`/${this.eventService.eventCode}/gallery/upload`).then();
   }
 
 }

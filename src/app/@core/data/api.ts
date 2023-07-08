@@ -25,6 +25,8 @@ export class ApiUrls {
   static U_GALLERY = (id: string) => `${ApiUrls.API_URL}/api/gallery/containers/${id}/`;
   static U_GALLERY_FILES = () => `${ApiUrls.API_URL}/api/gallery/files/`;
   static U_GALLERY_UPLOAD = () => `${ApiUrls.API_URL}/api/gallery/upload/`;
+  static U_GALLERY_LIKE = () => `${ApiUrls.API_URL}/api/gallery/like/`;
+  static U_GALLERY_COMMENT = () => `${ApiUrls.API_URL}/api/gallery/comment/`;
 
   static U_POLL = () => `${ApiUrls.API_URL}/api/event/poll/`;
   static U_POLL_VOTE = () => `${ApiUrls.API_URL}/api/event/poll-vote/`;

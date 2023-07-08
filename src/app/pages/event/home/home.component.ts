@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {Event, EventsData} from "@core/data/events";
-import {StaticGallery, GalleryData} from "@core/data/galley";
+import {GalleryData, Gallery} from "@core/data/galley";
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ import {StaticGallery, GalleryData} from "@core/data/galley";
 export class HomeComponent implements OnInit {
 
   event: Event;
-  staticGallery: StaticGallery[] = []
+  gallery: Gallery;
 
   constructor(private eventService: EventsData, private galleryService: GalleryData, private router: Router) {
   }
@@ -21,13 +21,13 @@ export class HomeComponent implements OnInit {
       this.event = event
     })
 
-    this.galleryService.getStaticGallery().subscribe((staticGallery) => {
-      this.staticGallery = staticGallery
+    this.galleryService.getGallery(this.eventService.eventCode).subscribe((gallery) => {
+      this.gallery = gallery
     })
   }
 
   navigateToGallery() {
-    this.router.navigateByUrl('/gallery/photos').then()
+    this.router.navigateByUrl(`/${this.eventService.eventCode}/gallery/photos`).then();
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="card p-2">
   <div class="card-body">
-    <app-countdown *ngIf="!currentActivity" [eventDate]="eventDate"></app-countdown>
-    <div *ngIf="currentActivity" class="text-center">
+    <app-countdown *ngIf="!isEventEnded && !currentActivity" [eventDate]="eventStart"></app-countdown>
+    <div *ngIf="!isEventEnded && currentActivity" class="text-center">
       <div class="badge mb-4">
         <span class="dot"></span>
         <p class="now-live-text mb-0">Now Live</p>
@@ -13,6 +13,17 @@
         [actions]="showActivitiesActions ? currentActivity.actions : []"
       ></app-activity>
     </div>
+    <div *ngIf="isEventEnded" class="text-center">
+      <div class="badge mb-4">
+        <p class="now-live-text mb-0">Evento Terminato</p>
+      </div>
+      <app-activity 
+        [live]="true"
+        title="Ricapitoliamo" 
+        description="Apri la galleria per riviverti i momenti e commentare le foto della magica serata" 
+      ></app-activity>
+    </div>
+
 
   </div>
 </div>
