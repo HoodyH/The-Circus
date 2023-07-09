@@ -3,10 +3,16 @@ import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "@core/guards/auth.guard";
 import {DashboardComponent} from "./dashboard.component";
 import {HomeComponent} from "./home/home.component";
+import {SelectComponent} from './select/select.component';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: 'select',
+    component: SelectComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'code/:id',
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [

@@ -20,14 +20,17 @@
       <ng-container *ngIf="selectedMedia && selectedMedia.type === 'video/mp4'">
         <video #videoPlayer [src]="selectedMedia.url" controls class="modal-img"></video>
       </ng-container>
-      <!-- div class="modal-footer m-2">
+      <div class="modal-footer m-2">
+        <button class="btn btn-primary btn-circle" (click)="null">
+          <i class="fas fa-thumbs-up"></i>
+        </button>
         <button class="btn btn-primary btn-circle" (click)="downloadMedia(selectedMedia)">
           <i class="fas fa-download"></i>
         </button>
-        <button class="btn btn-info btn-circle" (click)="shareMedia(selectedMedia)">
+        <button class="btn btn-primary btn-circle" (click)="shareMedia(selectedMedia)">
           <i class="fas fa-share-alt"></i>
         </button>
-      </div -->
+      </div>
     </div>
   </div>
 </div>

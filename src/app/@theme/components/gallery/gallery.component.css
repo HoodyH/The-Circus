@@ -2,8 +2,7 @@
   position: relative;
   padding-top: 100%;
   overflow: hidden;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
+  border: 1px solid black;
 }
 
 .square-img {

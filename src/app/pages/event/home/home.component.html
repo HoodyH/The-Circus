@@ -46,7 +46,7 @@
     <div class="text-center">
       <p *ngIf="gallery.description">{{gallery.description}}</p>
     </div>
-    <app-gallery [mediaList]="gallery.files"></app-gallery>
+    <app-gallery [mediaList]="gallery.files.slice(0,6)"></app-gallery>
     <div class="row img-disclaimer">
       <p *ngIf="gallery.description">{{gallery.disclaimer}}</p>
     </div>
