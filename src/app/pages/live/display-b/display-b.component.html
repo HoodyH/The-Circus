@@ -24,7 +24,8 @@
             class="mt-3"
             [showActivitiesActions]="false"
             [activities]="event.activities"
-            [eventDate]="event.start_datetime"
+            [eventStart]="event.start_datetime"
+            [eventEnd]="event.end_datetime"
             (currentActivityChange)="currentActivityChange($event)"
           ></app-current-status>
         </div>

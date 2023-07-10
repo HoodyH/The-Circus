@@ -12,7 +12,7 @@
         <li class="nav-item px-1" *ngFor="let navItem of navItems">
           <a class="nav-link"
              routerLinkActive="active"
-             [routerLink]="['/'].concat(baseUri.split('/')).concat(navItem.path.split('/'))"
+             [routerLink]="parseRouterLink(navItem)"
           >{{navItem.label}}</a>
         </li>
       </ul>

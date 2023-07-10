@@ -11,7 +11,8 @@
       <div class="row">
         <app-current-status
           *ngIf="event"
-          [eventDate]="event.start_datetime"
+          [eventStart]="event.start_datetime"
+          [eventEnd]="event.end_datetime"
           [activities]="event.activities"
         ></app-current-status>
       </div>
@@ -35,7 +36,7 @@
     <app-timeline [activities]="event.activities"></app-timeline>
   </section>
 
-  <section class="container">
+  <section class="container" *ngIf="gallery">
     <div class="row title">
       <h2>Gallery</h2>
     </div>
@@ -43,11 +44,11 @@
       <button class="btn btn-secondary" (click)="navigateToGallery()">Apri la galeria</button>
     </div>
     <div class="text-center">
-      <p>Hai bisogno di inspirazione su come vestirti? Dai un occhiata alla collezione</p>
+      <p *ngIf="gallery.description">{{gallery.description}}</p>
     </div>
-    <app-gallery [gallery]="staticGallery"></app-gallery>
+    <app-gallery [mediaList]="gallery.files.slice(0,6)"></app-gallery>
     <div class="row img-disclaimer">
-      <p>generated with dall-e</p>
+      <p *ngIf="gallery.description">{{gallery.disclaimer}}</p>
     </div>
   </section>
 

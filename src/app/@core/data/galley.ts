@@ -7,12 +7,6 @@ enum FileTypes {
   MP4 = 'video/mp4',
 }
 
-export interface FileUpload {
-  gallery: number;
-  type: string;
-  file: any;
-}
-
 export interface FileStore {
   id: number;
   gallery: number;
@@ -34,16 +28,13 @@ export interface Gallery {
   id: number;
   container: string;
   event: number;
+  description: string;
+  disclaimer: string;
   files: FileStore[];
-}
-
-export interface StaticGallery {
-  src: string;
 }
 
 
 export abstract class GalleryData {
-  abstract getStaticGallery(): Observable<StaticGallery[]>;
   abstract getGallery(eventCode: string): Observable<Gallery>;
   abstract getFiles(eventCode: string, page?: number): Observable<PaginatedFiles>;
   abstract getFilesNextPage(next: string): Observable<PaginatedFiles>;

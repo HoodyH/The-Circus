@@ -8,7 +8,8 @@ import {Activity} from "@core/data/events";
 })
 export class CurrentStatusComponent implements OnInit {
 
-  @Input() eventDate: string;
+  @Input() eventStart: string;
+  @Input() eventEnd: string;
   @Input() activities: Activity[] = []
   @Input() showActivitiesActions: boolean = true
   @Output() currentActivityChange: EventEmitter<Activity> = new EventEmitter<Activity>()
@@ -37,5 +38,9 @@ export class CurrentStatusComponent implements OnInit {
       }
     }
   }
+
+  get isEventEnded(): boolean {
+    return new Date() > new Date(this.eventEnd)
+  };
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { navItems } from './splash-nav';
+import { NavItems } from '@app/@theme/components/header/header.component';
 
 @Component({
   selector: 'app-splash',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashComponent implements OnInit {
 
+  navItems: NavItems[] = navItems;
+  
   constructor() { }
 
   ngOnInit(): void {

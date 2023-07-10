@@ -4,4 +4,7 @@
     <h6 class="card-subtitle mb-2">{{ event.tagline }}</h6>
     <h6 class="card-text text-muted">{{ event.start_datetime | date }}</h6>
   </div>
+  <div class="text-center">
+    <a class="btn btn-primary" [routerLink]="['/dashboard/code', event.code]">Manage</a>
+  </div>
 </div>

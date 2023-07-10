@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   useHash: false,
-  _api: 'https://dioniso.azurewebsites.net',
-  api: 'http://localhost:8000',
-  _websocket: 'wss://dioniso.azurewebsites.net',
-  websocket: 'ws://localhost:8000',
+  api: 'https://dioniso.azurewebsites.net',
+  _api: 'http://localhost:8000',
+  websocket: 'wss://dioniso.azurewebsites.net',
+  _websocket: 'ws://localhost:8000',
 };
 
 /*

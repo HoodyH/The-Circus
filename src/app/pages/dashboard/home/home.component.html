@@ -1,1 +1,161 @@
-<p>home works!</p>
+<section class="section-banner d-flex align-items-center min-vh-100">
+    <div class="container">
+      <div class="row">
+        <div class="col banner-content">
+          <div class="text-center mb-4 tagline">
+            <h2 class="mt-5">Dashboard</h2>
+
+            <div class="accordion" id="accordionDashboard">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    General Data
+                  </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse show" data-bs-parent="#accordionDashboard">
+                  <div class="accordion-body">
+                    <form [formGroup]="eventForm" (ngSubmit)="submitEventForm()">
+                      <div class="form-group my-1">
+                        <label class="form-label">Code</label>
+                        <input type="text" class="form-control" formControlName="code" />
+                      </div>
+                      <div class="form-group my-1">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" formControlName="name" />
+                      </div>
+                      <div class="form-group my-1">
+                        <label class="form-label">Slogan</label>
+                        <input type="text" class="form-control" formControlName="tagline" />
+                      </div>
+                      <div class="row">
+                        <div class="form-group col-md-6 my-1">
+                          <label class="form-label">Inizio Evento</label>
+                          <input type="datetime-local" class="form-control" formControlName="start_datetime" />
+                        </div>
+                        <div class="form-group col-md-6 my-1">
+                          <label class="form-label">Fine Evento</label>
+                          <input type="datetime-local" class="form-control" formControlName="end_datetime" />
+                        </div>
+                      </div>
+                      <div class="form-group my-1">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="4" formControlName="description"></textarea>
+                      </div>
+                      <div class="form-group my-1">
+                        <label class="form-label">Price</label>
+                        <input type="number" class="form-control" formControlName="price" />
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Location
+                  </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                  <div class="accordion-body">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Activities
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                  <div class="accordion-body">
+                    <form [formGroup]="activitiesForm" (ngSubmit)="submitActivitiesForm()">
+                      <div formArrayName="activities">
+                        <div *ngFor="let activityGroup of activityControls; let i = index" [formGroupName]="i">
+                          <h3>Activity {{ i + 1 }}</h3>
+                          <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" formControlName="title" class="form-control" />
+                          </div>
+                          <div class="form-group">
+                            <label>Start Datetime</label>
+                            <input type="datetime-local" formControlName="start_datetime" class="form-control" />
+                          </div>
+                          <div class="form-group">
+                            <label>Description</label>
+                            <textarea formControlName="description" class="form-control"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label>Live Description</label>
+                            <textarea formControlName="live_description" class="form-control"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <!-- Add fields for actions -->
+                          </div>
+                          <div class="form-group">
+                            <!-- Add fields for live configuration -->
+                          </div>
+                          <button type="button" class="btn btn-danger" (click)="removeActivity(i)">Remove</button>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-primary" (click)="addActivity()">Add Activity</button>
+                      <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseParticipants" aria-expanded="false" aria-controls="collapseParticipants">
+                    Partecipanti
+                  </button>
+                </h2>
+                <div id="collapseParticipants" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                  <div class="accordion-body">
+                    <div class="card mb-3" *ngFor="let participant of participants">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col d-flex text-center align-items-center justify-content-center">
+                            <h4 class="m-0 long-name">
+                              {{ participant.user.first_name }} {{ participant.user.last_name }}</h4>
+                          </div>
+                          <div class="col-2 d-flex text-center align-items-center justify-content-center">
+                            <div>
+                              <p class="">Ticket</p>
+                              <p class="">{{participant.ticket}}</p>
+                            </div>
+                          </div>
+                          <div class="text-center">
+                            <a class="btn btn-light" (click)="null">Ticket</a>
+                            <a class="btn btn-danger" (click)="null">Remove</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLive" aria-expanded="false" aria-controls="collapseLive">
+                    Live
+                  </button>
+                </h2>
+                <div id="collapseLive" class="accordion-collapse collapse" data-bs-parent="#accordionDashboard">
+                  <div class="accordion-body">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

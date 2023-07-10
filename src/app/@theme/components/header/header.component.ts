@@ -79,4 +79,8 @@ export class HeaderComponent implements OnInit {
     return this.user
   }
 
+  parseRouterLink(navItem: NavItems) {
+    return ['/'].concat(this.baseUri.split('/')).concat(navItem.path.split('/')).filter(item => item !== '');
+  }
+
 }
