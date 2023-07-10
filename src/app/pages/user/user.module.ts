@@ -6,6 +6,7 @@ import {MeComponent} from './me/me.component';
 import {UserRoutingModule} from "@app/pages/user/user-routing.module";
 import {ThemeModule} from "@theme/theme.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FirstSetupComponent } from './first-setup/first-setup.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     UserComponent,
     SpotifyCallbackComponent,
     MeComponent,
+    FirstSetupComponent,
   ],
   imports: [
     CommonModule,

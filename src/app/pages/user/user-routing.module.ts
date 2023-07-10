@@ -4,6 +4,7 @@ import {AuthGuard} from "@core/guards/auth.guard";
 import {UserComponent} from "@app/pages/user/user.component";
 import {MeComponent} from "@app/pages/user/me/me.component";
 import {SpotifyCallbackComponent} from "@app/pages/user/spotify-callback/spotify-callback.component";
+import {FirstSetupComponent} from "@app/pages/user/first-setup/first-setup.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'spotify-callback',
         component: SpotifyCallbackComponent,
+      },
+      {
+        path: 'setup',
+        component: FirstSetupComponent,
       }
     ]
   }
